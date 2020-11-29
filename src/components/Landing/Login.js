@@ -2,6 +2,12 @@ import { Grid, Typography, TextField, Button } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles({
+    container: {
+        height: '100%',
+        position: 'relative',
+        boxSizing: "border-box",
+        paddingBottom: '12%',
+    },
     textField: {
         marginTop: 10,
     },
@@ -11,14 +17,15 @@ const useStyles = makeStyles({
         paddingBottom: 8,
     },
     toggle: {
-        marginTop: '5%',
+        position: 'absolute',
+        bottom: '5%',
     }
 });
 
 const Login = ({ setView }) => {
     const classes = useStyles();
     return (
-        <>
+        <div className={classes.container}>
             <Typography variant="h4">
                 Login
             </Typography>
@@ -31,7 +38,7 @@ const Login = ({ setView }) => {
                     Don't have an account? <Button variant="text" color="primary" onClick={() => setView('signup')}>Sign Up</Button>
                 </Grid>
             </Grid>
-        </>
+        </div>
     );
 };
 

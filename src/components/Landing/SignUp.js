@@ -4,6 +4,12 @@ import { makeStyles } from '@material-ui/core/styles';
 import { Visibility, VisibilityOff } from '@material-ui/icons';
 
 const useStyles = makeStyles({
+    container: {
+        height: '100%',
+        position: 'relative',
+        boxSizing: "border-box",
+        paddingBottom: '12%',
+    },
     textField: {
         marginTop: 10,
     },
@@ -13,7 +19,8 @@ const useStyles = makeStyles({
         paddingBottom: 8,
     },
     toggle: {
-        marginTop: '5%',
+        position: 'absolute',
+        bottom: '5%',
     }
 });
 
@@ -23,7 +30,7 @@ const SignUp = ({ setView }) => {
 
     const classes = useStyles();
     return (
-        <>
+        <div className={classes.container}>
             <Typography variant="h4">
                 Sign Up
             </Typography>
@@ -47,14 +54,13 @@ const SignUp = ({ setView }) => {
                         </InputAdornment>
                     )
                 }} />
-            <TextField type="password" label="Confirm Password" variant="outlined" fullWidth className={classes.textField} />
             <Button variant="contained" color="primary" fullWidth className={classes.button}>SIGN UP</Button>
             <Grid container justify="center" className={classes.toggle}>
                 <Grid item>
                     Have an account? <Button variant="text" color="primary" onClick={() => setView('login')}>Login</Button>
                 </Grid>
             </Grid>
-        </>
+        </div>
     );
 };
 
