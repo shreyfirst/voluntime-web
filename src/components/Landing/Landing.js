@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { Container, Grid, Hidden, makeStyles, Paper } from '@material-ui/core';
+import { Container, Grid, Hidden, Paper } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
 import Login from './Login';
 import SignUp from './SignUp';
 import Product from './Product';

@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import { makeStyles, Grid, Typography, TextField, Button, InputAdornment, IconButton } from '@material-ui/core';
-import Visibility from '@material-ui/icons/Visibility';
-import VisibilityOff from '@material-ui/icons/VisibilityOff';
+import { Grid, Typography, TextField, Button, InputAdornment, IconButton } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
+import { Visibility, VisibilityOff } from '@material-ui/icons';
 
 const useStyles = makeStyles({
     textField: {
@@ -28,7 +28,7 @@ const SignUp = ({ setView }) => {
                 Sign Up
             </Typography>
             <Typography variant="body1">
-                Create your Voluntime account to create and join organizations.
+                Register a Voluntime account to create and join organizations.
             </Typography>
             <br />
             <TextField type="text" label="First Name" variant="outlined" fullWidth className={classes.textField} /><br />

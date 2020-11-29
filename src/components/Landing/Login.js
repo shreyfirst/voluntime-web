@@ -1,4 +1,5 @@
-import { makeStyles, Grid, Typography, TextField, Button } from '@material-ui/core';
+import { Grid, Typography, TextField, Button } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles({
     textField: {
