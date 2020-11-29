@@ -33,7 +33,7 @@ const Landing = () => {
     return (
         <Container>
             <Grid container justify="center" className={classes.container}>
-                <Grid container item alignItems="stretch" justify="center" className={classes.productContainer} md={6} xs={12}>
+                <Grid container item alignItems="stretch" justify="center" className={classes.productContainer} md={6} sm={9} xs={12}>
                     <Product />
                 </Grid>
                 <Hidden xsDown>

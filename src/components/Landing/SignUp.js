@@ -10,6 +10,9 @@ const useStyles = makeStyles({
         boxSizing: "border-box",
         paddingBottom: '12%',
     },
+    fullWidth: {
+        width: '100%',
+    },
     textField: {
         marginTop: 10,
     },
@@ -38,8 +41,14 @@ const SignUp = ({ setView }) => {
                 Register a Voluntime account to create and join organizations.
             </Typography>
             <br />
-            <TextField type="text" label="First Name" variant="outlined" fullWidth className={classes.textField} /><br />
-            <TextField type="text" label="Last Name" variant="outlined" fullWidth className={classes.textField} /><br />
+            <Grid container className={classes.fullWidth} spacing={1}>
+                <Grid item lg={6} xs={12}>
+                    <TextField type="text" label="First Name" variant="outlined" className={classes.textField} fullWidth />
+                </Grid>
+                <Grid item lg={6} xs={12}>
+                    <TextField type="text" label="Last Name" variant="outlined" className={classes.textField} fullWidth />
+                </Grid>
+            </Grid>
             <TextField type="email" label="Email Address" variant="outlined" fullWidth className={classes.textField} /><br />
             <TextField type={showPassword ? "text" : "password"} label="Password" variant="outlined" fullWidth className={classes.textField}
                 InputProps={{
