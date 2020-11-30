@@ -27,7 +27,7 @@ const useStyles = makeStyles({
     }
 });
 
-const SignUp = ({ setView }) => {
+const SignUp = props => {
 
     var [showPassword, setShowPassword] = useState(false);
 
@@ -43,7 +43,7 @@ const SignUp = ({ setView }) => {
             <br />
             <Grid container className={classes.fullWidth} spacing={1}>
                 <Grid item lg={6} xs={12}>
-                    <TextField type="text" label="First Name" variant="outlined" className={classes.textField} fullWidth />
+                    <TextField type="text" label="First Name" variant="outlined" className={classes.textField} fullWidth inputRef={props.fieldRef} />
                 </Grid>
                 <Grid item lg={6} xs={12}>
                     <TextField type="text" label="Last Name" variant="outlined" className={classes.textField} fullWidth />
@@ -66,7 +66,7 @@ const SignUp = ({ setView }) => {
             <Button variant="contained" color="primary" fullWidth className={classes.button}>SIGN UP</Button>
             <Grid container justify="center" className={classes.toggle}>
                 <Grid item>
-                    Have an account? <Button variant="text" color="primary" onClick={() => setView('login')}>Login</Button>
+                    Have an account? <Button variant="text" color="primary" onClick={() => props.setView('login')}>Login</Button>
                 </Grid>
             </Grid>
         </div>

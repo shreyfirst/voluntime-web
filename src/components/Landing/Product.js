@@ -1,4 +1,5 @@
-import { Grid, Typography } from '@material-ui/core';
+import { memo } from 'react';
+import { Grid, Typography, Link, Hidden } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import ReactStoreBadges from 'react-store-badges';
 
@@ -9,14 +10,21 @@ const useStyles = makeStyles({
     title: {
         color: '#3d3d3c',
         fontWeight: 'bold',
+        marginBottom: 10
     },
     description: {
-        color: '#717171'
+        color: '#626262',
+        lineHeight: 1.75
+    },
+    learnMore: {
+        cursor: 'pointer',
+        display: 'inline'
     }
 });
 
-const Product = () => {
+const Product = props => {
     const classes = useStyles();
+
     return (
         <Grid
             container
@@ -26,10 +34,16 @@ const Product = () => {
                 <Typography variant="h2" component="h1" className={classes.title}>
                     Voluntime
                 </Typography>
-                <Typography variant="body1" className={classes.description}>
-                    An all-in-one volunteer management suite built for students by students. Voluntime connects organizations and volunteers together to help educate the youth and build the future.
+                <Typography variant="body1" component="span" className={classes.description}>
+                    An all-in-one volunteer management suite built for students by students.
+                    Voluntime connects organizations and volunteers together to help educate the youth and build the future.
                 </Typography>
-                <br />
+                <Hidden xsDown>{' '}</Hidden>
+                <Hidden smUp><br /></Hidden>
+                <Link onClick={props.scrollToAbout} color="primary" underline="none">
+                    <Typography variant="body1" className={classes.learnMore}>Learn More</Typography>
+                </Link>
+                <br /><br />
                 <Grid container spacing={1}>
                     <Grid item>
                         <ReactStoreBadges
@@ -51,4 +65,4 @@ const Product = () => {
     );
 };
 
-export default Product;
+export default memo(Product);

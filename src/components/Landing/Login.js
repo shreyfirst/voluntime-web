@@ -22,7 +22,7 @@ const useStyles = makeStyles({
     }
 });
 
-const Login = ({ setView }) => {
+const Login = props => {
     const classes = useStyles();
     return (
         <div className={classes.container}>
@@ -35,7 +35,7 @@ const Login = ({ setView }) => {
             <Button variant="contained" color="primary" fullWidth className={classes.button}>LOGIN</Button>
             <Grid container justify="center" className={classes.toggle}>
                 <Grid item>
-                    Don't have an account? <Button variant="text" color="primary" onClick={() => setView('signup')}>Sign Up</Button>
+                    Don't have an account? <Button variant="text" color="primary" onClick={() => props.setView('signup')}>Sign Up</Button>
                 </Grid>
             </Grid>
         </div>
