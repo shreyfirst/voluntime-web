@@ -1,6 +1,12 @@
-import { useState, useRef, useEffect, useCallback, memo } from 'react';
+import { useRef, useCallback, } from 'react';
 import { Container, Grid, Hidden, Paper } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
+import {
+    Switch,
+    Route,
+    useHistory,
+    useLocation
+} from "react-router-dom";
 import Login from './Login';
 import SignUp from './SignUp';
 import Product from './Product';
@@ -37,20 +43,18 @@ const useStyles = makeStyles({
 const Landing = () => {
     const classes = useStyles();
 
-    var [view, setView] = useState('login');
+
+    const history = useHistory();
+    const location = useLocation();
+
+    const path = location.pathname;
+
+    const setPath = setTo => {
+        history.push(`/${setTo}`);
+    }
 
     const aboutRef = useRef(null);
     const signUpFieldRef = useRef(null);
-
-    var focusField = useRef(false);
-    const setFocusField = (setTo) => { focusField.current = setTo; };
-
-    useEffect(() => {
-        if (focusField.current) {
-            focusSignUpField();
-            focusField.current = false;
-        }
-    }, [view]);
 
     const focusSignUpField = () => signUpFieldRef.current.focus({ preventScroll: true });
 
@@ -66,19 +70,23 @@ const Landing = () => {
                 <Hidden xsDown>
                     <Grid container item alignItems="stretch" justify="center" md={6} sm={9}>
                         <Paper className={classes.loginPaper} variant="outlined">
-                            {view === 'login'
-                                ? <Login setView={setView} />
-                                : <SignUp fieldRef={signUpFieldRef} setView={setView} />
-                            }
+                            <Switch>
+                                <Route exact path={['/', '/login']}>
+                                    <Login setPath={setPath} />
+                                </Route>
+                                <Route path='/signup'>
+                                    <SignUp fieldRef={signUpFieldRef} setPath={setPath} />
+                                </Route>
+                            </Switch>
                         </Paper>
                     </Grid>
                 </Hidden>
             </Grid>
             <Grid ref={aboutRef} container className={classes.about} alignItems="center" justify="center">
-                <About view={view} setView={setView} scrollToTop={scrollToTop} setFocusField={setFocusField} focusSignUpField={focusSignUpField} />
+                <About path={path} setPath={setPath} scrollToTop={scrollToTop} focusSignUpField={focusSignUpField} />
             </Grid>
         </Container>
     );
 };
 
-export default memo(Landing);
+export default Landing;

@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Grid, Typography, TextField, Button, InputAdornment, IconButton } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { Visibility, VisibilityOff } from '@material-ui/icons';
+//import { createUser } from '../../services';
 
 const useStyles = makeStyles({
     container: {
@@ -30,6 +31,15 @@ const useStyles = makeStyles({
 const SignUp = props => {
 
     var [showPassword, setShowPassword] = useState(false);
+
+    /*var [firstName, setFirstName] = useState('');
+    var [lastName, setLastName] = useState('');
+    var [email, setEmail] = useState('');
+    var [password, setPassword] = useState('');
+
+    const signUpClicked = () => {
+        createUser();
+    }*/
 
     const classes = useStyles();
     return (
@@ -66,7 +76,7 @@ const SignUp = props => {
             <Button variant="contained" color="primary" fullWidth className={classes.button}>SIGN UP</Button>
             <Grid container justify="center" className={classes.toggle}>
                 <Grid item>
-                    Have an account? <Button variant="text" color="primary" onClick={() => props.setView('login')}>Login</Button>
+                    Have an account? <Button variant="text" color="primary" onClick={() => props.setPath('login')}>Login</Button>
                 </Grid>
             </Grid>
         </div>

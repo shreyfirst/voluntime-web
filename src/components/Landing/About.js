@@ -12,8 +12,8 @@ const useStyles = makeStyles({
 const About = props => {
 
     const signUpClicked = () => {
-        if (props.view === 'login') {
-            props.setFocusField(true); props.setView('signup');
+        if (props.path !== '/signup') {
+            setTimeout(() => props.focusSignUpField(true), 100); props.setPath('signup');
         } else {
             props.focusSignUpField();
         }
