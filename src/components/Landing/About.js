@@ -1,4 +1,3 @@
-import { memo } from 'react';
 import { Grid, Typography, Button, Hidden } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import ReactStoreBadges from 'react-store-badges';
@@ -11,6 +10,7 @@ const useStyles = makeStyles({
 
 const About = props => {
     const classes = useStyles();
+
     return (
         <>
             <Grid item xs={9}>
@@ -58,4 +58,4 @@ const About = props => {
     );
 }
 
-export default memo(About);
+export default About;
