@@ -1,12 +1,6 @@
-import { useRef, useCallback, } from 'react';
+import { useRef, useCallback, useState, } from 'react';
 import { Container, Grid, Hidden, Paper } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import {
-    Switch,
-    Route,
-    useHistory,
-    useLocation
-} from "react-router-dom";
 import Login from './Login';
 import SignUp from './SignUp';
 import Product from './Product';
@@ -43,15 +37,7 @@ const useStyles = makeStyles({
 const Landing = () => {
     const classes = useStyles();
 
-
-    const history = useHistory();
-    const location = useLocation();
-
-    const path = location.pathname;
-
-    const setPath = setTo => {
-        history.push(`/${setTo}`);
-    }
+    var [view, setView] = useState('login');
 
     const aboutRef = useRef(null);
     const signUpFieldRef = useRef(null);
@@ -59,7 +45,16 @@ const Landing = () => {
     const focusSignUpField = () => signUpFieldRef.current.focus({ preventScroll: true });
 
     const scrollToAbout = useCallback(() => aboutRef.current.scrollIntoView({ behavior: 'smooth' }), []);
-    const scrollToTop = () => document.body.scrollIntoView({ behavior: 'smooth' });
+
+    const aboutSignUpClicked = () => {
+        if (view !== 'signup') {
+            setTimeout(focusSignUpField, 100);
+            setView('signup');
+        } else {
+            focusSignUpField();
+        }
+        document.body.scrollIntoView({ behavior: 'smooth' });
+    };
 
     return (
         <Container>
@@ -70,20 +65,17 @@ const Landing = () => {
                 <Hidden xsDown>
                     <Grid container item alignItems="stretch" justify="center" md={6} sm={9}>
                         <Paper className={classes.loginPaper} variant="outlined">
-                            <Switch>
-                                <Route exact path={['/', '/login']}>
-                                    <Login setPath={setPath} />
-                                </Route>
-                                <Route path='/signup'>
-                                    <SignUp fieldRef={signUpFieldRef} setPath={setPath} />
-                                </Route>
-                            </Switch>
+                            {
+                                view === 'login'
+                                ? <Login setView={setView} />
+                                : <SignUp fieldRef={signUpFieldRef} setView={setView} />
+                            }    
                         </Paper>
                     </Grid>
                 </Hidden>
             </Grid>
             <Grid ref={aboutRef} container className={classes.about} alignItems="center" justify="center">
-                <About path={path} setPath={setPath} scrollToTop={scrollToTop} focusSignUpField={focusSignUpField} />
+                <About aboutSignUpClicked={aboutSignUpClicked} />
             </Grid>
         </Container>
     );

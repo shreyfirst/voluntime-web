@@ -35,7 +35,7 @@ const Login = props => {
             <Button variant="contained" color="primary" fullWidth className={classes.button}>LOGIN</Button>
             <Grid container justify="center" className={classes.toggle}>
                 <Grid item>
-                    Don't have an account? <Button variant="text" color="primary" onClick={() => props.setPath('signup')}>Sign Up</Button>
+                    Don't have an account? <Button variant="text" color="primary" onClick={() => props.setView('signup')}>Sign Up</Button>
                 </Grid>
             </Grid>
         </div>

@@ -10,16 +10,6 @@ const useStyles = makeStyles({
 });
 
 const About = props => {
-
-    const signUpClicked = () => {
-        if (props.path !== '/signup') {
-            setTimeout(() => props.focusSignUpField(true), 100); props.setPath('signup');
-        } else {
-            props.focusSignUpField();
-        }
-        props.scrollToTop();
-    };
-
     const classes = useStyles();
     return (
         <>
@@ -42,7 +32,7 @@ const About = props => {
             <Grid container item xs={12} sm={9} justify="center" spacing={3}>
                 <Grid item>
                     <Hidden xsDown>
-                        <Button variant="contained" color="primary" onClick={signUpClicked}>Create an Account</Button>
+                        <Button variant="contained" color="primary" onClick={props.aboutSignUpClicked}>Create an Account</Button>
                     </Hidden>
                     <Hidden smUp>
                         <Grid container spacing={1}>

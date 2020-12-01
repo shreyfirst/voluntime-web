@@ -76,7 +76,7 @@ const SignUp = props => {
             <Button variant="contained" color="primary" fullWidth className={classes.button}>SIGN UP</Button>
             <Grid container justify="center" className={classes.toggle}>
                 <Grid item>
-                    Have an account? <Button variant="text" color="primary" onClick={() => props.setPath('login')}>Login</Button>
+                    Have an account? <Button variant="text" color="primary" onClick={() => props.setView('login')}>Login</Button>
                 </Grid>
             </Grid>
         </div>
