@@ -99,7 +99,7 @@ const SignUp = props => {
                                     </InputAdornment>
                                 )
                             }} />
-                        <Button onClick={signUpClicked} variant="contained" color="primary" fullWidth className={classes.button}>
+                        <Button disabled={loading} onClick={signUpClicked} variant="contained" color="primary" fullWidth className={classes.button}>
                             {
                                 loading
                                     ? <CircularProgress size={24} color='secondary' />

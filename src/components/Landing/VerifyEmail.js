@@ -53,7 +53,7 @@ const VerifyEmail = props => {
     };
 
     const verifyClicked = () => {
-
+        setVerifyLoading(true);
     };
 
     const classes = useStyles();
@@ -69,7 +69,7 @@ const VerifyEmail = props => {
                 Please click the link in the email to verify that email address belongs to you.
             </Typography>
             <br /><br />
-            <Button onClick={resendClicked} variant="contained" color="primary" fullWidth className={classes.button}>
+            <Button disabled={resendLoading} onClick={resendClicked} variant="contained" color="primary" fullWidth className={classes.button}>
                 {
                     resendLoading
                         ? <CircularProgress size={24} color='secondary' />
@@ -85,7 +85,7 @@ const VerifyEmail = props => {
                 resendError.length > 0 &&
                 <Alert severity="error">{resendError}</Alert>
             }
-            <Button onClick={verifyClicked} variant="contained" color="primary" fullWidth className={classes.button}>
+            <Button disabled={verifyLoading} onClick={verifyClicked} variant="contained" color="primary" fullWidth className={classes.button}>
                 {
                     verifyLoading
                         ? <CircularProgress size={24} color='secondary' />
