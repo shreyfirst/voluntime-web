@@ -53,7 +53,7 @@ const VerifyEmail = props => {
     };
 
     const verifyClicked = () => {
-        //setVerifyLoading(true);
+        setVerifyLoading(true);
         login({ email: props.user.email, password: props.user.password }, (err, data) => {
             setVerifyLoading(false);
             if (err) {

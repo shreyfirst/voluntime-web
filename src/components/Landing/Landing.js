@@ -67,7 +67,7 @@ const Landing = props => {
                         <Paper className={classes.loginPaper} variant="outlined">
                             {
                                 view === 'login'
-                                    ? <Login user={props.user} setUser={props.setUser} setView={setView} />
+                                    ? <Login setUser={props.setUser} setView={setView} />
                                     : <SignUp user={props.user} setUser={props.setUser} fieldRef={signUpFieldRef} setView={setView} />
                             }
                         </Paper>
