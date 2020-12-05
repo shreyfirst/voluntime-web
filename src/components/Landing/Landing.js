@@ -1,4 +1,4 @@
-import { useRef, useCallback, useState, } from 'react';
+import { useRef, useCallback, useState, memo } from 'react';
 import { Container, Grid, Hidden, Paper } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import Login from './Login';
@@ -34,10 +34,10 @@ const useStyles = makeStyles({
     }
 });
 
-const Landing = () => {
+const Landing = props => {
     const classes = useStyles();
 
-    var [view, setView] = useState('login');
+    const [view, setView] = useState('login');
 
     const aboutRef = useRef(null);
     const signUpFieldRef = useRef(null);
@@ -67,9 +67,9 @@ const Landing = () => {
                         <Paper className={classes.loginPaper} variant="outlined">
                             {
                                 view === 'login'
-                                ? <Login setView={setView} />
-                                : <SignUp fieldRef={signUpFieldRef} setView={setView} />
-                            }    
+                                    ? <Login user={props.user} setUser={props.setUser} setView={setView} />
+                                    : <SignUp user={props.user} setUser={props.setUser} fieldRef={signUpFieldRef} setView={setView} />
+                            }
                         </Paper>
                     </Grid>
                 </Hidden>
@@ -81,4 +81,4 @@ const Landing = () => {
     );
 };
 
-export default Landing;
+export default memo(Landing);

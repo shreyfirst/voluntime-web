@@ -1,8 +1,10 @@
 import { useState } from 'react';
-import { Grid, Typography, TextField, Button, InputAdornment, IconButton } from '@material-ui/core';
+import { Grid, Typography, TextField, Button, InputAdornment, IconButton, CircularProgress } from '@material-ui/core';
+import { Alert } from '@material-ui/lab';
 import { makeStyles } from '@material-ui/core/styles';
 import { Visibility, VisibilityOff } from '@material-ui/icons';
-//import { createUser } from '../../services';
+import { createUser } from '../../services';
+import VerifyEmail from './VerifyEmail';
 
 const useStyles = makeStyles({
     container: {
@@ -30,56 +32,93 @@ const useStyles = makeStyles({
 
 const SignUp = props => {
 
-    var [showPassword, setShowPassword] = useState(false);
+    const [view, setView] = useState('signup');
 
-    /*var [firstName, setFirstName] = useState('');
-    var [lastName, setLastName] = useState('');
-    var [email, setEmail] = useState('');
-    var [password, setPassword] = useState('');
+    const [showPassword, setShowPassword] = useState(false);
+
+    const [firstName, setFirstName] = useState('');
+    const [lastName, setLastName] = useState('');
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+
+    const [error, setError] = useState('');
+    const [loading, setLoading] = useState(false);
 
     const signUpClicked = () => {
-        createUser();
-    }*/
+        setLoading(true);
+        createUser({
+            firstName,
+            lastName,
+            email,
+            password
+        }, (err, data) => {
+            setLoading(false);
+            if (err) {
+                setError(data.message);
+            } else {
+                setError('');
+                props.setUser(data);
+                setView('verify');
+            }
+        });
+    };
 
     const classes = useStyles();
     return (
-        <div className={classes.container}>
-            <Typography variant="h4">
-                Sign Up
-            </Typography>
-            <Typography variant="body1">
-                Register a Voluntime account to create and join organizations.
-            </Typography>
-            <br />
-            <Grid container className={classes.fullWidth} spacing={1}>
-                <Grid item lg={6} xs={12}>
-                    <TextField type="text" label="First Name" variant="outlined" className={classes.textField} fullWidth inputRef={props.fieldRef} />
-                </Grid>
-                <Grid item lg={6} xs={12}>
-                    <TextField type="text" label="Last Name" variant="outlined" className={classes.textField} fullWidth />
-                </Grid>
-            </Grid>
-            <TextField type="email" label="Email Address" variant="outlined" fullWidth className={classes.textField} /><br />
-            <TextField type={showPassword ? "text" : "password"} label="Password" variant="outlined" fullWidth className={classes.textField}
-                InputProps={{
-                    endAdornment: (
-                        <InputAdornment position="end">
-                            <IconButton
-                                aria-label="show password"
-                                onClick={() => setShowPassword(!showPassword)}
-                            >
-                                {showPassword ? <Visibility /> : <VisibilityOff />}
-                            </IconButton>
-                        </InputAdornment>
-                    )
-                }} />
-            <Button variant="contained" color="primary" fullWidth className={classes.button}>SIGN UP</Button>
-            <Grid container justify="center" className={classes.toggle}>
-                <Grid item>
-                    Have an account? <Button variant="text" color="primary" onClick={() => props.setView('login')}>Login</Button>
-                </Grid>
-            </Grid>
-        </div>
+        <>
+            {
+                view === 'verify'
+                    ? <VerifyEmail user={props.user} setUser={props.setUser} setView={setView} />
+                    : <div className={classes.container}>
+                        <Typography variant="h4">
+                            Sign Up
+                        </Typography>
+                        <Typography variant="body1">
+                            Register a Voluntime account to create and join organizations.
+                        </Typography>
+                        <br />
+                        <Grid container className={classes.fullWidth} spacing={1}>
+                            <Grid item lg={6} xs={12}>
+                                <TextField onChange={event => setFirstName(event.target.value)} type="text" label="First Name" variant="outlined" className={classes.textField} fullWidth inputRef={props.fieldRef} />
+                            </Grid>
+                            <Grid item lg={6} xs={12}>
+                                <TextField onChange={event => setLastName(event.target.value)} type="text" label="Last Name" variant="outlined" className={classes.textField} fullWidth />
+                            </Grid>
+                        </Grid>
+                        <TextField onChange={event => setEmail(event.target.value)} type="email" label="Email Address" variant="outlined" fullWidth className={classes.textField} /><br />
+                        <TextField onChange={event => setPassword(event.target.value)} type={showPassword ? "text" : "password"} label="Password" variant="outlined" fullWidth className={classes.textField}
+                            InputProps={{
+                                endAdornment: (
+                                    <InputAdornment position="end">
+                                        <IconButton
+                                            aria-label="show password"
+                                            onClick={() => setShowPassword(!showPassword)}
+                                        >
+                                            {showPassword ? <Visibility /> : <VisibilityOff />}
+                                        </IconButton>
+                                    </InputAdornment>
+                                )
+                            }} />
+                        <Button onClick={signUpClicked} variant="contained" color="primary" fullWidth className={classes.button}>
+                            {
+                                loading
+                                    ? <CircularProgress size={24} color='secondary' />
+                                    : 'SIGN UP'
+                            }
+                        </Button>
+                        <br />
+                        {
+                            error.length > 0 &&
+                            <Alert severity="error">{error}</Alert>
+                        }
+                        <Grid container justify="center" className={classes.toggle}>
+                            <Grid item>
+                                Have an account? <Button variant="text" color="primary" onClick={() => props.setView('login')}>Login</Button>
+                            </Grid>
+                        </Grid>
+                    </div>
+            }
+        </>
     );
 };
 

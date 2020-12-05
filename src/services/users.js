@@ -1,13 +1,13 @@
-import axios from './axiosConfig';
+import { axios, handleResponse } from './axiosConfig';
 
 const createUser = (info, callback) => {
     axios.post('/users', info)
-    .then(response => {
-        callback(false, response.data);
-    })
-    .catch(error => {
-        callback(true, error.data);
-    });
+        .then(response => handleResponse(response, callback));
 };
 
-export { createUser };
+const resendVerifyEmail = (id, callback) => {
+    axios.post('/users/resendVerifyEmail', { id })
+        .then(response => handleResponse(response, callback));
+};
+
+export { createUser, resendVerifyEmail };
