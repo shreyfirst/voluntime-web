@@ -3,7 +3,7 @@ import { Typography, Button, CircularProgress } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { Alert } from '@material-ui/lab';
 import { ArrowBack } from '@material-ui/icons';
-import { resendVerifyEmail } from '../../services';
+import { resendVerifyEmail, login } from '../../services';
 
 const useStyles = makeStyles({
     container: {
@@ -53,7 +53,17 @@ const VerifyEmail = props => {
     };
 
     const verifyClicked = () => {
-        setVerifyLoading(true);
+        //setVerifyLoading(true);
+        login({ email: props.user.email, password: props.user.password }, (err, data) => {
+            setVerifyLoading(false);
+            if (err) {
+                setVerifyError(data.message);
+            } else {
+                setVerifyError('');
+                props.setUser(data);
+                //move to dashboard with new user
+            }
+        });
     };
 
     const classes = useStyles();

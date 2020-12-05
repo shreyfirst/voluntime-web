@@ -68,7 +68,7 @@ const SignUp = props => {
         <>
             {
                 view === 'verify'
-                    ? <VerifyEmail user={props.user} setUser={props.setUser} setView={setView} />
+                    ? <VerifyEmail user={{ ...props.user, password }} setUser={props.setUser} setView={setView} />
                     : <div className={classes.container}>
                         <Typography variant="h4">
                             Sign Up
