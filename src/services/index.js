@@ -1,2 +1,2 @@
-export { createUser, resendVerifyEmail } from './users';
+export { createUser, resendVerifyEmail, forgotPassword } from './users';
 export { login, loginToken } from './login';

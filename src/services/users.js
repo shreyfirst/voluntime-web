@@ -10,4 +10,9 @@ const resendVerifyEmail = (id, callback) => {
         .then(response => handleResponse(response, callback));
 };
 
-export { createUser, resendVerifyEmail };
+const forgotPassword = (email, callback) => {
+    axios.post('/users/forgotPassword', { email })
+        .then(response => handleResponse(response, callback));
+}
+
+export { createUser, resendVerifyEmail, forgotPassword };

@@ -3,6 +3,7 @@ import { Grid, Typography, TextField, Button, CircularProgress } from '@material
 import { Alert } from '@material-ui/lab';
 import { makeStyles } from '@material-ui/core/styles';
 import { login } from '../../services';
+import ForgotPassword from './ForgotPassword';
 
 const useStyles = makeStyles({
     container: {
@@ -19,13 +20,18 @@ const useStyles = makeStyles({
         paddingTop: 8,
         paddingBottom: 8,
     },
+    forgotPassword: {
+        textTransform: 'none',
+    },
     toggle: {
         position: 'absolute',
         bottom: '5%',
-    }
+    },
 });
 
 const Login = props => {
+
+    const [view, setView] = useState('login');
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -49,31 +55,40 @@ const Login = props => {
 
     const classes = useStyles();
     return (
-        <div className={classes.container}>
-            <Typography variant="h4">
-                Login
-            </Typography>
-            <br />
-            <TextField onChange={event => setEmail(event.target.value)} type="email" label="Email Address" variant="outlined" fullWidth className={classes.textField} /><br />
-            <TextField onChange={event => setPassword(event.target.value)} type="password" label="Password" variant="outlined" fullWidth className={classes.textField} />
-            <Button onClick={loginClicked} disabled={loading} variant="contained" color="primary" fullWidth className={classes.button}>
-                {
-                    loading
-                        ? <CircularProgress size={24} color='secondary' />
-                        : 'LOGIN'
-                }
-            </Button>
-            <br />
+        <>
             {
-                error.length > 0 &&
-                <Alert severity="error">{error}</Alert>
+                view === 'forgotPassword'
+                    ? <ForgotPassword setView={setView} />
+                    : <div className={classes.container}>
+                        <Typography variant="h4">
+                            Login
+                        </Typography>
+                        <br />
+                        <TextField onChange={event => setEmail(event.target.value)} type="email" label="Email Address" variant="outlined" fullWidth className={classes.textField} /><br />
+                        <TextField onChange={event => setPassword(event.target.value)} type="password" label="Password" variant="outlined" fullWidth className={classes.textField} />
+                        <Button onClick={loginClicked} disabled={loading} variant="contained" color="primary" fullWidth className={classes.button}>
+                            {
+                                loading
+                                    ? <CircularProgress size={24} color='secondary' />
+                                    : 'LOGIN'
+                            }
+                        </Button>
+                        <br />
+                        {
+                            error.length > 0 &&
+                            <Alert severity="error">{error}</Alert>
+                        }
+                        <br />
+                        <Button onClick={() => setView('forgotPassword')} variant="text" className={classes.forgotPassword}>Forgot Password?</Button>
+                        <Grid container justify="center" className={classes.toggle}>
+                            <Grid item>
+                                Don't have an account? <Button variant="text" color="primary" onClick={() => props.setView('signup')}>Sign Up</Button>
+                            </Grid>
+                        </Grid>
+                    </div>
             }
-            <Grid container justify="center" className={classes.toggle}>
-                <Grid item>
-                    Don't have an account? <Button variant="text" color="primary" onClick={() => props.setView('signup')}>Sign Up</Button>
-                </Grid>
-            </Grid>
-        </div>
+        </>
+
     );
 };
 
