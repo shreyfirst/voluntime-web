@@ -48,7 +48,7 @@ const ForgotPassword = props => {
                 setError(data.message);
             } else {
                 setError('');
-                setSuccess('Email sent! Open the email to reset your password.');
+                setSuccess('Email sent! Check your inbox to reset your password.');
             }
         });
     };
