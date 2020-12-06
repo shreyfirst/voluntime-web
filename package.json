@@ -23,7 +23,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "deploy": "yarn build && aws s3 sync build/ s3://mittaldev.com/voluntime"
+    "deploy": "yarn build && aws s3 sync build/ s3://mittaldev.com/voluntime && echo '\nView deployed site: https://mittaldev.com/voluntime/'"
   },
   "eslintConfig": {
     "extends": [
