@@ -1,6 +1,6 @@
 import { Grid, Typography, Button, Hidden } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import ReactStoreBadges from 'react-store-badges';
+import AppStoreBadge from './AppStoreBadge';
 
 const useStyles = makeStyles({
     bold: {
@@ -37,17 +37,15 @@ const About = props => {
                     <Hidden smUp>
                         <Grid container spacing={1}>
                             <Grid item>
-                                <ReactStoreBadges
+                                <AppStoreBadge
                                     platform='ios'
                                     url='https://mittaldev.com'
-                                    locale='en-us'
                                 />
                             </Grid>
                             <Grid item>
-                                <ReactStoreBadges
+                                <AppStoreBadge
                                     platform='android'
                                     url='https://mittaldev.com'
-                                    locale='en'
                                 />
                             </Grid>
                         </Grid>
