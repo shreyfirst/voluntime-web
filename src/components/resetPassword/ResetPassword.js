@@ -3,7 +3,7 @@ import { Container, Typography, Paper, Grid, TextField, InputAdornment, IconButt
 import { Alert } from '@material-ui/lab';
 import { makeStyles } from '@material-ui/core/styles';
 import { Visibility, VisibilityOff } from '@material-ui/icons';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import { resetPassword } from '../../services';
 
 const useStyles = makeStyles({
@@ -62,6 +62,11 @@ const ResetPassword = props => {
     const [error, setError] = useState('');
 
     const resetPasswordClicked = () => {
+        if (password.length < 5) {
+            setSuccess('');
+            setError('Please enter a password of at least 5 characters.');
+            return;
+        }
         if (password !== confirmPassword) {
             setSuccess('');
             setError('Confirm password doesn\'t match! Please make sure that both passwords are the same.');
@@ -83,6 +88,7 @@ const ResetPassword = props => {
                 setError(data.message);
             } else {
                 setError('');
+                props.setUser(data);
                 setSuccess('Your password has been reset!');
             }
         });
@@ -142,7 +148,7 @@ const ResetPassword = props => {
                         <br />
                         {
                             success.length > 0 &&
-                            <Alert severity="success" className={classes.alert}>{success}</Alert>
+                            <Alert severity="success" className={classes.alert}>{success} <Link to='/dashboard'>Continue to Voluntime</Link></Alert>
                         }
                         {
                             error.length > 0 &&
