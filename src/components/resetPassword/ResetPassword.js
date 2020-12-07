@@ -1,7 +1,7 @@
 import { useState, memo } from 'react';
-import { Container, Typography, Paper, Grid, TextField, InputAdornment, IconButton, Button, CircularProgress } from '@material-ui/core';
+import { Container, Typography, Paper, Grid, TextField, InputAdornment, IconButton, Button, CircularProgress, useMediaQuery } from '@material-ui/core';
 import { Alert } from '@material-ui/lab';
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles, useTheme } from '@material-ui/core/styles';
 import { Visibility, VisibilityOff } from '@material-ui/icons';
 import { useParams, Link } from 'react-router-dom';
 import { resetPassword } from '../../services';
@@ -50,6 +50,9 @@ const ResetPassword = props => {
 
     const { id } = useParams();
 
+    const theme = useTheme();
+    const isMobile = useMediaQuery(theme.breakpoints.down('xs'));
+
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
@@ -72,7 +75,7 @@ const ResetPassword = props => {
             setError('Confirm password doesn\'t match! Please make sure that both passwords are the same.');
             return;
         }
-        if(id === undefined || id === null || id.length < 1) {
+        if (id === undefined || id === null || id.length < 1) {
             setSuccess('');
             setError('Invalid URL! Make sure the URL is the same as what you recieved in your email and try again.');
             return;
@@ -148,7 +151,7 @@ const ResetPassword = props => {
                         <br />
                         {
                             success.length > 0 &&
-                            <Alert severity="success" className={classes.alert}>{success} <Link to='/dashboard'>Continue to Voluntime</Link></Alert>
+                            <Alert severity="success" className={classes.alert}>{success} {isMobile ? 'You may now log in to Voluntime.' : <Link to='/dashboard'>Continue to Voluntime</Link>}</Alert>
                         }
                         {
                             error.length > 0 &&
