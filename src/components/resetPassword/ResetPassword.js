@@ -64,7 +64,7 @@ const ResetPassword = props => {
     const [success, setSuccess] = useState('');
     const [error, setError] = useState('');
 
-    const resetPasswordClicked = () => {
+    const handleSubmit = () => {
         if (password.length < 5) {
             setSuccess('');
             setError('Please enter a password of at least 5 characters.');
@@ -97,6 +97,12 @@ const ResetPassword = props => {
         });
     };
 
+    const keyPress = event => {
+        if(event.key === 'Enter'){
+            handleSubmit();
+         }
+    };
+
     const classes = useStyles();
     return (
         <Container maxWidth={false} className={classes.container}>
@@ -115,7 +121,7 @@ const ResetPassword = props => {
                             Please fill out the textboxes below to reset the password to your Voluntime account.<br />
                             If you don't want to reset your password, you may simply exit this page.
                         </Typography><br /><br />
-                        <TextField onChange={event => setPassword(event.target.value)} type={showPassword ? "text" : "password"} label="New Password" variant="outlined" fullWidth className={classes.textField}
+                        <TextField onKeyDown={keyPress} onChange={event => setPassword(event.target.value)} type={showPassword ? "text" : "password"} label="New Password" variant="outlined" fullWidth className={classes.textField}
                             InputProps={{
                                 endAdornment: (
                                     <InputAdornment position="end">
@@ -128,7 +134,7 @@ const ResetPassword = props => {
                                     </InputAdornment>
                                 )
                             }} /><br /><br />
-                        <TextField onChange={event => setConfirmPassword(event.target.value)} type={showConfirmPassword ? "text" : "password"} label="Confirm Password" variant="outlined" fullWidth className={classes.textField}
+                        <TextField onKeyDown={keyPress} onChange={event => setConfirmPassword(event.target.value)} type={showConfirmPassword ? "text" : "password"} label="Confirm Password" variant="outlined" fullWidth className={classes.textField}
                             InputProps={{
                                 endAdornment: (
                                     <InputAdornment position="end">
@@ -141,7 +147,7 @@ const ResetPassword = props => {
                                     </InputAdornment>
                                 )
                             }} />
-                        <Button disabled={loading} onClick={resetPasswordClicked} variant="contained" color="primary" className={classes.button}>
+                        <Button disabled={loading} onClick={handleSubmit} variant="contained" color="primary" className={classes.button}>
                             {
                                 loading
                                     ? <CircularProgress size={24} color='secondary' />

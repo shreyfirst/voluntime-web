@@ -1,28 +1,13 @@
-import { axios, handleResponse } from './axiosConfig';
+import { post } from './axiosConfig';
 
-const createUser = (info, callback) => {
-    axios.post('/users', info)
-        .then(response => handleResponse(response, callback));
-};
+const createUser = (info, callback) => post('/users', info, callback);
 
-const resendVerifyEmail = (id, callback) => {
-    axios.post('/users/resendVerifyEmail', { id })
-        .then(response => handleResponse(response, callback));
-};
+const resendVerifyEmail = (id, callback) => post('/users/resendVerifyEmail', { id }, callback);
 
-const verifyEmail = (id, callback) => {
-    axios.post('/users/verifyEmail', { id })
-        .then(response => handleResponse(response, callback));
-}
+const verifyEmail = (id, callback) => post('/users/verifyEmail', { id }, callback);
 
-const forgotPassword = (email, callback) => {
-    axios.post('/users/forgotPassword', { email })
-        .then(response => handleResponse(response, callback));
-};
+const forgotPassword = (email, callback) => post('/users/forgotPassword', { email }, callback);
 
-const resetPassword = (info, callback) => {
-    axios.post('/users/resetPassword', info)
-        .then(response => handleResponse(response, callback));
-};
+const resetPassword = (info, callback) => post('/users/resetPassword', info, callback);
 
 export { createUser, resendVerifyEmail, verifyEmail, forgotPassword, resetPassword };

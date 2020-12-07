@@ -1,13 +1,7 @@
-import { axios, handleResponse } from './axiosConfig';
+import { post } from './axiosConfig';
 
-const login = (info, callback) => {
-    axios.post('/login', info)
-        .then(response => handleResponse(response, callback));
-};
+const login = (info, callback) => post('/login', info, callback);
 
-const loginToken = (info, callback) => {
-    axios.post('/loginToken', info)
-        .then(response => handleResponse(response, callback));
-};
+const loginToken = (token, callback) => post('/loginToken', { token }, callback);
 
 export { login, loginToken };

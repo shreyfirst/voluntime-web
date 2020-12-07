@@ -39,7 +39,15 @@ const Login = props => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
 
-    const loginClicked = () => {
+    const handleSubmit = () => {
+        if (email.length < 1) {
+            setError('Please enter your email address to login.');
+            return;
+        }
+        if (password.length < 1) {
+            setError('Please enter your password to login.');
+            return;
+        }
         setLoading(true);
         login({ email, password }, (err, data) => {
             setLoading(false);
@@ -53,6 +61,12 @@ const Login = props => {
         });
     };
 
+    const keyPress = event => {
+        if (event.key === 'Enter') {
+            handleSubmit();
+        }
+    };
+
     const classes = useStyles();
     return (
         <>
@@ -64,9 +78,9 @@ const Login = props => {
                             Login
                         </Typography>
                         <br />
-                        <TextField onChange={event => setEmail(event.target.value)} type="email" label="Email Address" variant="outlined" fullWidth className={classes.textField} /><br />
-                        <TextField onChange={event => setPassword(event.target.value)} type="password" label="Password" variant="outlined" fullWidth className={classes.textField} />
-                        <Button onClick={loginClicked} disabled={loading} variant="contained" color="primary" fullWidth className={classes.button}>
+                        <TextField onKeyDown={keyPress} onChange={event => setEmail(event.target.value)} type="email" label="Email Address" variant="outlined" fullWidth className={classes.textField} /><br />
+                        <TextField onKeyDown={keyPress} onChange={event => setPassword(event.target.value)} type="password" label="Password" variant="outlined" fullWidth className={classes.textField} />
+                        <Button onClick={handleSubmit} disabled={loading} variant="contained" color="primary" fullWidth className={classes.button}>
                             {
                                 loading
                                     ? <CircularProgress size={24} color='secondary' />

@@ -39,7 +39,11 @@ const ForgotPassword = props => {
         props.setView('signup');
     };
 
-    const sendEmail = () => {
+    const handleSubmit = () => {
+        if(email.length < 1) {
+            setError('Please enter the email address of your Voluntime account.');
+            return;
+        }
         setLoading(true);
         forgotPassword(email, (err, data) => {
             setLoading(false);
@@ -53,19 +57,25 @@ const ForgotPassword = props => {
         });
     };
 
+    const keyPress = event => {
+        if (event.key === 'Enter') {
+            handleSubmit();
+        }
+    };
+
     const classes = useStyles();
     return (
         <div className={classes.container}>
             <Button className={classes.backButton} variant='text' startIcon={<ArrowBack />} onClick={backButtonClicked}>Back</Button>
 
             <Typography variant="h4">
-                Reset Password
+                Forgot Password
             </Typography><br /><br />
             <Typography variant="body1">
                 Please enter your account's email address. An email will be sent to you with a link to reset your password.
             </Typography><br /><br />
-            <TextField onChange={event => setEmail(event.target.value)} type="email" label="Email Address" variant="outlined" fullWidth className={classes.textField} />
-            <Button onClick={sendEmail} disabled={loading} variant="contained" color="primary" fullWidth className={classes.button}>
+            <TextField onKeyDown={keyPress} onChange={event => setEmail(event.target.value)} type="email" label="Email Address" variant="outlined" fullWidth className={classes.textField} />
+            <Button onClick={handleSubmit} disabled={loading} variant="contained" color="primary" fullWidth className={classes.button}>
                 {
                     loading
                         ? <CircularProgress size={24} color='secondary' />

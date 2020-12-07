@@ -44,7 +44,19 @@ const SignUp = props => {
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
 
-    const signUpClicked = () => {
+    const handleSubmit = () => {
+        if(firstName.length < 1 || lastName.length < 1) {
+            setError('Please enter your first and last name.');
+            return;
+        }
+        if (email.length < 1 || !/\S+@\S+\.\S+/.test(email)) {
+            setError('Please enter a valid email address.');
+            return;
+        }
+        if (password.length < 5) {
+            setError('Please enter a password of at least 5 characters.');
+            return;
+        }
         setLoading(true);
         createUser({
             firstName,
@@ -63,6 +75,12 @@ const SignUp = props => {
         });
     };
 
+    const keyPress = event => {
+        if (event.key === 'Enter') {
+            handleSubmit();
+        }
+    };
+
     const classes = useStyles();
     return (
         <>
@@ -79,14 +97,14 @@ const SignUp = props => {
                         <br />
                         <Grid container className={classes.fullWidth} spacing={1}>
                             <Grid item lg={6} xs={12}>
-                                <TextField onChange={event => setFirstName(event.target.value)} type="text" label="First Name" variant="outlined" className={classes.textField} fullWidth inputRef={props.fieldRef} />
+                                <TextField onKeyDown={keyPress} onChange={event => setFirstName(event.target.value)} type="text" label="First Name" variant="outlined" className={classes.textField} fullWidth inputRef={props.fieldRef} />
                             </Grid>
                             <Grid item lg={6} xs={12}>
-                                <TextField onChange={event => setLastName(event.target.value)} type="text" label="Last Name" variant="outlined" className={classes.textField} fullWidth />
+                                <TextField onKeyDown={keyPress} onChange={event => setLastName(event.target.value)} type="text" label="Last Name" variant="outlined" className={classes.textField} fullWidth />
                             </Grid>
                         </Grid>
-                        <TextField onChange={event => setEmail(event.target.value)} type="email" label="Email Address" variant="outlined" fullWidth className={classes.textField} /><br />
-                        <TextField onChange={event => setPassword(event.target.value)} type={showPassword ? "text" : "password"} label="Password" variant="outlined" fullWidth className={classes.textField}
+                        <TextField onKeyDown={keyPress} onChange={event => setEmail(event.target.value)} type="email" label="Email Address" variant="outlined" fullWidth className={classes.textField} /><br />
+                        <TextField onKeyDown={keyPress} onChange={event => setPassword(event.target.value)} type={showPassword ? "text" : "password"} label="Password" variant="outlined" fullWidth className={classes.textField}
                             InputProps={{
                                 endAdornment: (
                                     <InputAdornment position="end">
@@ -99,7 +117,7 @@ const SignUp = props => {
                                     </InputAdornment>
                                 )
                             }} />
-                        <Button disabled={loading} onClick={signUpClicked} variant="contained" color="primary" fullWidth className={classes.button}>
+                        <Button disabled={loading} onClick={handleSubmit} variant="contained" color="primary" fullWidth className={classes.button}>
                             {
                                 loading
                                     ? <CircularProgress size={24} color='secondary' />
