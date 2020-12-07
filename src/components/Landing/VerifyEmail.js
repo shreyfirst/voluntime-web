@@ -4,6 +4,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { Alert } from '@material-ui/lab';
 import { ArrowBack } from '@material-ui/icons';
 import { resendVerifyEmail, login } from '../../services';
+import {useHistory} from 'react-router-dom';
 
 const useStyles = makeStyles({
     container: {
@@ -28,6 +29,9 @@ const useStyles = makeStyles({
 });
 
 const VerifyEmail = props => {
+
+    const history = useHistory();
+
     const [resendLoading, setResendLoading] = useState(false);
     const [verifyLoading, setVerifyLoading] = useState(false);
     const [resendError, setResendError] = useState('');
@@ -61,7 +65,7 @@ const VerifyEmail = props => {
             } else {
                 setVerifyError('');
                 props.setUser(data);
-                //move to dashboard with new user
+                history.push('/dashboard');
             }
         });
     };

@@ -4,6 +4,7 @@ import { Alert } from '@material-ui/lab';
 import { makeStyles } from '@material-ui/core/styles';
 import { login } from '../../services';
 import ForgotPassword from './ForgotPassword';
+import { useHistory } from 'react-router-dom';
 
 const useStyles = makeStyles({
     container: {
@@ -31,6 +32,8 @@ const useStyles = makeStyles({
 
 const Login = props => {
 
+    const history = useHistory();
+
     const [view, setView] = useState('login');
 
     const [email, setEmail] = useState('');
@@ -56,7 +59,7 @@ const Login = props => {
             } else {
                 setError('');
                 props.setUser(data);
-                //move to dashboard with new user
+                history.push('/dashboard');
             }
         });
     };

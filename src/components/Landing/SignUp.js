@@ -45,7 +45,7 @@ const SignUp = props => {
     const [loading, setLoading] = useState(false);
 
     const handleSubmit = () => {
-        if(firstName.length < 1 || lastName.length < 1) {
+        if (firstName.length < 1 || lastName.length < 1) {
             setError('Please enter your first and last name.');
             return;
         }

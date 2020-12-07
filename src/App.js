@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import Landing from './components/landing/Landing';
 import Dashboard from './components/dashboard/Dashboard';
 import VerifyEmail from './components/verifyEmail/VerifyEmail';
@@ -6,6 +6,7 @@ import ResetPassword from './components/resetPassword/ResetPassword';
 import { HashRouter as Router, Switch, Route } from 'react-router-dom';
 
 const App = () => {
+
     const [user, setUser] = useState({ loggedIn: false, });
 
     return (
