@@ -2,7 +2,7 @@
   "name": "voluntime-web",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://mittaldev.com/voluntime",
+  "homepage": "https://voluntime.mittaldev.com",
   "dependencies": {
     "@material-ui/core": "^4.11.1",
     "@material-ui/icons": "^4.9.1",
@@ -23,7 +23,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "deploy": "yarn build && aws s3 sync build/ s3://mittaldev.com/voluntime && echo '\nView deployed site: https://mittaldev.com/voluntime/\n'"
+    "deploy": "yarn build && aws s3 sync build/ s3://voluntime.mittaldev.com && echo '\nView deployed site: https://voluntime.mittaldev.com/\n'"
   },
   "eslintConfig": {
     "extends": [

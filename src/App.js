@@ -1,16 +1,16 @@
-import { useState, useCallback } from 'react';
+import { useState } from 'react';
 import Landing from './components/landing/Landing';
 import Dashboard from './components/dashboard/Dashboard';
 import VerifyEmail from './components/verifyEmail/VerifyEmail';
 import ResetPassword from './components/resetPassword/ResetPassword';
-import { HashRouter as Router, Switch, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 const App = () => {
 
     const [user, setUser] = useState({ loggedIn: false, });
 
     return (
-        <Router basename='/' hashType='slash'>
+        <Router>
             <Switch>
                 <Route exact path='/'>
                     <Landing user={{ id: user.id, email: user.email }} setUser={setUser} />
