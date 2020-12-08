@@ -35,9 +35,7 @@ const ForgotPassword = props => {
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
 
-    const backButtonClicked = () => {
-        props.setView('signup');
-    };
+    const backButtonClicked = () => props.setView('signup');
 
     const handleSubmit = () => {
         if(email.length < 1) {

@@ -38,9 +38,7 @@ const VerifyEmail = props => {
     const [verifyError, setVerifyError] = useState('');
     const [resendSuccess, setResendSuccess] = useState('');
 
-    const backButtonClicked = () => {
-        props.setView('signup');
-    };
+    const backButtonClicked = () => props.setView('signup');
 
     const resendClicked = () => {
         setResendLoading(true);
