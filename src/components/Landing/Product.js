@@ -2,15 +2,16 @@ import { memo } from 'react';
 import { Grid, Typography, Link, Hidden } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import AppStoreBadge from './AppStoreBadge';
+import VIcon from '../../images/icon.png';
 
-const useStyles = makeStyles({
+const useStyles = makeStyles(theme => ({
     textContainer: {
         minHeight: '40%',
     },
     title: {
         color: '#3d3d3c',
         fontWeight: 'bold',
-        marginBottom: 10
+        marginBottom: 10,
     },
     description: {
         color: '#626262',
@@ -19,8 +20,21 @@ const useStyles = makeStyles({
     learnMore: {
         cursor: 'pointer',
         display: 'inline'
-    }
-});
+    },
+    vIcon: {
+        display: 'inline-block',
+        position: 'relative',
+        top: 5,
+        [theme.breakpoints.only('xs')]: {
+            height: '3.25rem',
+            paddingRight: 5,
+        },
+        [theme.breakpoints.up('sm')]: {
+            height: '4rem',
+            paddingRight: 10,
+        },
+    },
+}));
 
 const Product = props => {
     const classes = useStyles();
@@ -32,6 +46,7 @@ const Product = props => {
         >
             <Grid item xs={12} className={classes.textContainer}>
                 <Typography variant="h2" component="h1" className={classes.title}>
+                    <img className={classes.vIcon} src={VIcon} alt='' />
                     Voluntime
                 </Typography>
                 <Typography variant="body1" component="span" className={classes.description}>
@@ -44,6 +59,7 @@ const Product = props => {
                     <Typography variant="body1" className={classes.learnMore}>Learn More</Typography>
                 </Link>
                 <br /><br />
+                <Hidden smUp><br /></Hidden>
                 <Grid container spacing={1}>
                     <Grid item>
                         <AppStoreBadge
