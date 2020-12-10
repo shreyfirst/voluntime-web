@@ -2,7 +2,6 @@ import { memo } from 'react';
 import { Grid, Typography, Link, Hidden } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import AppStoreBadge from './AppStoreBadge';
-import VIcon from '../../images/icon.png';
 
 const useStyles = makeStyles(theme => ({
     textContainer: {
@@ -21,19 +20,6 @@ const useStyles = makeStyles(theme => ({
         cursor: 'pointer',
         display: 'inline'
     },
-    vIcon: {
-        display: 'inline-block',
-        position: 'relative',
-        top: 5,
-        [theme.breakpoints.only('xs')]: {
-            height: '3.25rem',
-            paddingRight: 5,
-        },
-        [theme.breakpoints.up('sm')]: {
-            height: '4rem',
-            paddingRight: 10,
-        },
-    },
 }));
 
 const Product = props => {
@@ -46,7 +32,6 @@ const Product = props => {
         >
             <Grid item xs={12} className={classes.textContainer}>
                 <Typography variant="h2" component="h1" className={classes.title}>
-                    <img className={classes.vIcon} src={VIcon} alt='' />
                     Voluntime
                 </Typography>
                 <Typography variant="body1" component="span" className={classes.description}>
