@@ -3,8 +3,11 @@ import { Grid, Typography, TextField, Button, CircularProgress } from '@material
 import { Alert } from '@material-ui/lab';
 import { makeStyles } from '@material-ui/core/styles';
 import { login } from '../../services';
+import { loginToken } from '../../services';
 import ForgotPassword from './ForgotPassword';
 import { useHistory } from 'react-router-dom';
+import GoogleLogin from 'react-google-login';
+import GoogleIcon from './GoogleIcon';
 
 const useStyles = makeStyles({
     container: {
@@ -27,6 +30,11 @@ const useStyles = makeStyles({
     toggle: {
         position: 'absolute',
         bottom: '5%',
+    },
+    googleLogin: {
+        textTransform: 'none',
+        backgroundColor: '#FFF',
+        minWidth: '50%'
     },
 });
 
@@ -70,6 +78,26 @@ const Login = props => {
         }
     };
 
+    const responseGoogle = response => {
+        if (response.error === undefined) {
+            setLoading(true);
+            loginToken(response.tokenObj.id_token, 'google', (err, data) => {
+                setLoading(false);
+                if (err) {
+                    setError(data.message);
+                } else {
+                    setError('');
+                    props.setUser(data);
+                    history.push('/dashboard');
+                }
+            });
+        } else {
+            if (response.error === 'idpiframe_initialization_failed') {
+                setError('Cookies must be enabled to use Sign in with Google.');
+            }
+        }
+    };
+
     const classes = useStyles();
     return (
         <>
@@ -97,6 +125,17 @@ const Login = props => {
                         }
                         <br />
                         <Button onClick={() => setView('forgotPassword')} variant="text" className={classes.forgotPassword}>Forgot Password?</Button>
+                        <br /><br />
+                        <GoogleLogin
+                            clientId="978484937841-gg9qpc12jq2ccdom9mqv5mjbibfgu886.apps.googleusercontent.com"
+                            buttonText="Login with Google"
+                            onSuccess={responseGoogle}
+                            onFailure={responseGoogle}
+                            cookiePolicy='single_host_origin'
+                            render={renderProps => (
+                                <Button startIcon={<GoogleIcon />} className={classes.googleLogin} onClick={renderProps.onClick} disabled={renderProps.disabled} variant='contained' autoCapitalize='false'>Sign in with Google</Button>
+                            )}
+                        />
                         <Grid container justify="center" className={classes.toggle}>
                             <Grid item>
                                 Don't have an account? <Button variant="text" color="primary" onClick={() => props.setView('signup')}>Sign Up</Button>
