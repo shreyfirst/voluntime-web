@@ -24,6 +24,7 @@ const App = () => {
                 <Route path={['/reset-password/:id', '/reset-password']}>
                     <ResetPassword setUser={setUser} />
                 </Route>
+                <Route path={['/privacy-policy', '/terms-of-service', '/tos']} render={() => { window.location.href = "privacy-policy.html" }} />
             </Switch>
         </Router>
     );
