@@ -4,7 +4,10 @@ import { Alert } from '@material-ui/lab';
 import { makeStyles } from '@material-ui/core/styles';
 import { Visibility, VisibilityOff } from '@material-ui/icons';
 import { createUser } from '../../services';
+import { useHistory } from 'react-router-dom';
 import VerifyEmail from './VerifyEmail';
+import GoogleLogin from 'react-google-login';
+import GoogleIcon from './GoogleIcon';
 
 const useStyles = makeStyles({
     container: {
@@ -27,10 +30,17 @@ const useStyles = makeStyles({
     toggle: {
         position: 'absolute',
         bottom: '5%',
-    }
+    },
+    googleLogin: {
+        textTransform: 'none',
+        backgroundColor: '#FFF',
+        minWidth: '50%'
+    },
 });
 
 const SignUp = props => {
+
+    const history = useHistory();
 
     const [view, setView] = useState('signup');
 
@@ -78,6 +88,26 @@ const SignUp = props => {
     const keyPress = event => {
         if (event.key === 'Enter') {
             handleSubmit();
+        }
+    };
+
+    const responseGoogle = response => {
+        if (response.error === undefined) {
+            setLoading(true);
+            createUser({ token: response.tokenObj.id_token, method: 'google' }, (err, data) => {
+                setLoading(false);
+                if (err) {
+                    setError(data.message);
+                } else {
+                    setError('');
+                    props.setUser(data);
+                    history.push('/dashboard');
+                }
+            });
+        } else {
+            if (response.error === 'idpiframe_initialization_failed') {
+                setError('Cookies must be enabled to use Sign up with Google.');
+            }
         }
     };
 
@@ -129,6 +159,16 @@ const SignUp = props => {
                             error.length > 0 &&
                             <Alert severity="error">{error}</Alert>
                         }
+                        <br /><br />
+                        <GoogleLogin
+                            clientId="978484937841-gg9qpc12jq2ccdom9mqv5mjbibfgu886.apps.googleusercontent.com"
+                            onSuccess={responseGoogle}
+                            onFailure={responseGoogle}
+                            cookiePolicy='single_host_origin'
+                            render={renderProps => (
+                                <Button startIcon={<GoogleIcon />} className={classes.googleLogin} onClick={renderProps.onClick} disabled={renderProps.disabled} variant='contained' autoCapitalize='false'>Sign up with Google</Button>
+                            )}
+                        />
                         <Grid container justify="center" className={classes.toggle}>
                             <Grid item>
                                 Have an account? <Button variant="text" color="primary" onClick={() => props.setView('login')}>Login</Button>
