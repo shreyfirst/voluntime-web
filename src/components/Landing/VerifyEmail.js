@@ -4,7 +4,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { Alert } from '@material-ui/lab';
 import { ArrowBack } from '@material-ui/icons';
 import { resendVerifyEmail, login } from '../../services';
-import {useHistory} from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
 const useStyles = makeStyles({
     container: {
@@ -63,7 +63,7 @@ const VerifyEmail = props => {
             } else {
                 setVerifyError('');
                 props.setUser(data);
-                history.push('/dashboard');
+                history.push(props.from === undefined ? '/dashboard' : props.from);
             }
         });
     };

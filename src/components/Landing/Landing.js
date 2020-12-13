@@ -1,6 +1,7 @@
 import { useRef, useCallback, useState, memo } from 'react';
 import { Container, Grid, Hidden, Paper } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
+import { useLocation } from 'react-router-dom';
 import Login from './Login';
 import SignUp from './SignUp';
 import Product from './Product';
@@ -35,6 +36,8 @@ const useStyles = makeStyles({
 });
 
 const Landing = props => {
+    const location = useLocation();
+
     const classes = useStyles();
 
     const [view, setView] = useState('login');
@@ -67,8 +70,8 @@ const Landing = props => {
                         <Paper className={classes.loginPaper} variant="outlined">
                             {
                                 view === 'login'
-                                    ? <Login setUser={props.setUser} setView={setView} />
-                                    : <SignUp user={props.user} setUser={props.setUser} fieldRef={signUpFieldRef} setView={setView} />
+                                    ? <Login from={location.state === undefined ? undefined : location.state.from} setUser={props.setUser} setView={setView} />
+                                    : <SignUp from={location.state === undefined ? undefined : location.state.from} user={props.user} setUser={props.setUser} fieldRef={signUpFieldRef} setView={setView} />
                             }
                         </Paper>
                     </Grid>

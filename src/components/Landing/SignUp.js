@@ -101,7 +101,7 @@ const SignUp = props => {
                 } else {
                     setError('');
                     props.setUser(data);
-                    history.push('/dashboard');
+                    history.push(props.from === undefined ? '/dashboard' : props.from);
                 }
             });
         } else {
