@@ -12,10 +12,6 @@ const plugins = [
           'transform': '@material-ui/icons/esm/${member}',
           'preventFullImport': true
         },
-        '[\s\S]*': {
-            'transform': '${1}/${member}',
-            'preventFullImport': true
-        }
       }
     ]
   ];
