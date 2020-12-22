@@ -1,15 +1,16 @@
 import { memo, useState } from 'react';
-import { Divider, Drawer, List, Typography, ListItem, ListItemText, } from '@material-ui/core';
+import { Divider, Drawer, List, Typography, ListItem, ListItemText, Hidden } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import { AccountCircle as AccountIcon, DashboardOutlined as OverviewIcon, Group as OrgIcon, ListAlt as HoursIcon, ExitToApp as LogoutIcon } from '@material-ui/icons';
+import { AccountCircle as AccountIcon, DashboardOutlined as OverviewIcon, Group as OrgIcon, Event as EventIcon, ListAlt as HoursIcon, ContactSupportOutlined as ContactIcon } from '@material-ui/icons';
 import Account from './Account';
 import Overview from './Overview';
-import Orgs from './Orgs';
+import Orgs from './orgs/Orgs';
+import Events from './Events';
 import Hours from './Hours';
-import Logout from './Logout';
+import Contact from './Contact';
 import VIcon from '../../images/icon.png';
 
-const viewNames = { 'overview': 'Overview', 'hours': 'Hours', 'orgs': 'Organizations', 'account': 'Account', 'logout': 'Logout' };
+const viewNames = { 'overview': 'Overview', 'hours': 'Hours', 'orgs': 'Organizations', 'account': 'Account', 'events': 'Events', 'contact': 'Contact Us' };
 
 const useStyles = makeStyles(theme => ({
     container: {
@@ -17,14 +18,14 @@ const useStyles = makeStyles(theme => ({
         minHeight: '100vh',
     },
     drawerPaper: {
-        width: '15%',
+        width: '16%',
         height: '100%',
     },
     content: {
-        marginLeft: '15%',
-        width: '85%',
+        marginLeft: '16%',
+        width: '84%',
         boxSizing: 'border-box',
-        paddingLeft: '5%',
+        paddingLeft: '3%',
         paddingRight: '1%',
         paddingTop: '1%',
     },
@@ -80,7 +81,7 @@ const useStyles = makeStyles(theme => ({
 
 const Dashboard = props => {
     const classes = useStyles();
-    const [view, setView] = useState('overview');
+    const [view, setView] = useState('orgs');
 
     const NavButton = props => (
         <ListItem button key={props.view} onClick={() => setView(props.view)} className={view === props.view ? classes.activeNavButton : classes.navButton}>
@@ -90,11 +91,12 @@ const Dashboard = props => {
 
     const renderView = view => {
         switch (view) {
-            case 'account': return <Account />
-            case 'overview': return <Overview />
-            case 'orgs': return <Orgs />
-            case 'hours': return <Hours />
-            case 'logout': return <Logout />
+            case 'account': return <Account user={props.user} />
+            case 'overview': return <Overview user={props.user} />
+            case 'orgs': return <Orgs user={props.user} />
+            case 'events': return <Events user={props.user} />
+            case 'hours': return <Hours user={props.user} />
+            case 'contact': return <Contact user={props.user} />
             default: return 'Select a page on the left.'
         }
     };
@@ -110,21 +112,26 @@ const Dashboard = props => {
             >
                 <div className={classes.drawerHeader}>
                     <img src={VIcon} alt="" className={classes.vIcon} />
-                    <Typography variant="caption" component="span" className={classes.vTitle}>
-                        VOLUNTIME
-                    </Typography>
+                    <Hidden mdDown>
+                        <Typography variant="caption" component="span" className={classes.vTitle}>
+                            VOLUNTIME
+                        </Typography>
+                    </Hidden>
                 </div>
                 <Divider />
                 <List>
                     <NavButton view="account" icon={<AccountIcon />} />
                     <NavButton view="overview" icon={<OverviewIcon />} />
                     <NavButton view="orgs" icon={<OrgIcon />} />
+                    <NavButton view="events" icon={<EventIcon />} />
                     <NavButton view="hours" icon={<HoursIcon />} />
-                    <NavButton view="logout" icon={<LogoutIcon />} />
+                    <br />
+                    <Divider />
+                    <NavButton view="contact" icon={<ContactIcon />} />
                 </List>
             </Drawer>
             <div className={classes.content}>
-                <Typography variant="h3" component="h1" className={classes.title}>
+                <Typography variant="h3" component="h1">
                     {viewNames[view]}
                 </Typography><br />
                 <div className={classes.view}>

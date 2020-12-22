@@ -8,15 +8,16 @@ import { loginToken } from './services';
 const Dashboard = lazy(() => import('./components/dashboard/Dashboard'));
 
 const App = () => {
-
     const location = useLocation();
     const history = useHistory();
 
     const [user, setUserState] = useState({ loggedIn: false, });
+    const setUser = u => {
+        //alphabetically sort orgs
+        u.orgs = u.orgs.sort((a, b) => a.name.localeCompare(b.name));
 
-    const setUser = newUser => {
-        setUserState(newUser);
-        localStorage.setItem('user', JSON.stringify(newUser));
+        setUserState(u);
+        localStorage.setItem('user', JSON.stringify(u));
     };
 
     useEffect(() => {
@@ -63,7 +64,7 @@ const App = () => {
                     <Landing user={{ id: user.id, email: user.email }} setUser={setUser} />
                 </Route>
                 <Route path={['/dashboard:id', '/dashboard']}>
-                    {user.loggedIn === false ? <LoadingIndicator /> : <Dashboard user={{ firstName: user.firstName }} />}
+                    {user.loggedIn === false ? <LoadingIndicator /> : <Dashboard user={user} />}
                 </Route>
                 <Route path={['/verify-email/:id', '/verify-email']}>
                     <VerifyEmail setUser={setUser} />
