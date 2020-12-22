@@ -24,7 +24,7 @@ const Orgs = props => {
             <Grid container spacing={2}>
                 {
                     orgs.map(org => (
-                        <Grid item className={classes.orgCard} xs={4} lg={3}>
+                        <Grid item className={classes.orgCard} xs={4} lg={3} key={org.id}>
                             <OrgCard org={org} />
                         </Grid>
                     ))

@@ -10,6 +10,9 @@ const useStyles = makeStyles(theme => ({
         cursor: 'pointer',
         '&:hover': {
             boxShadow: '0 2px 5px rgba(0,0,0,0.45)',
+            '& $name': {
+                textDecoration: 'underline'
+            }
         }
     },
     grid: {
@@ -33,10 +36,7 @@ const useStyles = makeStyles(theme => ({
         textOverflow: 'ellipsis',
         display: 'box',
         lineClamp: 1,
-        boxOrient: 'vertical',
-        '&:hover': {
-            textDecoration: 'underline'
-        }
+        boxOrient: 'vertical'
     },
     description: {
         color: '#636363',
