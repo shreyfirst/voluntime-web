@@ -1,7 +1,7 @@
 import { memo, useState } from 'react';
 import { Divider, Drawer, List, Typography, ListItem, ListItemText, Hidden } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import { AccountCircle as AccountIcon, DashboardOutlined as OverviewIcon, Group as OrgIcon, Event as EventIcon, ListAlt as HoursIcon, ContactSupportOutlined as ContactIcon } from '@material-ui/icons';
+import { AccountCircle as AccountIcon, DashboardOutlined as OverviewIcon, Group as OrgIcon, Event as EventsIcon, ListAlt as HoursIcon, ContactSupportOutlined as ContactIcon } from '@material-ui/icons';
 import Account from './Account';
 import Overview from './Overview';
 import Orgs from './orgs/Orgs';
@@ -123,7 +123,7 @@ const Dashboard = props => {
                     <NavButton view="account" icon={<AccountIcon />} />
                     <NavButton view="overview" icon={<OverviewIcon />} />
                     <NavButton view="orgs" icon={<OrgIcon />} />
-                    <NavButton view="events" icon={<EventIcon />} />
+                    <NavButton view="events" icon={<EventsIcon />} />
                     <NavButton view="hours" icon={<HoursIcon />} />
                     <br />
                     <Divider />

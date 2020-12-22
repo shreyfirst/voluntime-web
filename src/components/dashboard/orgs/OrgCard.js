@@ -1,6 +1,7 @@
 
 import { Card, Grid, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
+import { PlaylistAdd as AddLogIcon, ListAlt as LogsIcon, Event as EventsIcon } from '@material-ui/icons';
 
 const useStyles = makeStyles(theme => ({
     container: {
@@ -9,7 +10,7 @@ const useStyles = makeStyles(theme => ({
         boxShadow: '0 2px 4px rgba(0,0,0,0.25)',
         cursor: 'pointer',
         '&:hover': {
-            boxShadow: '0 2px 5px rgba(0,0,0,0.45)',
+            boxShadow: '0 4px 7px rgba(0,0,0,0.45)',
             '& $name': {
                 textDecoration: 'underline'
             }
@@ -49,7 +50,15 @@ const useStyles = makeStyles(theme => ({
     quickButtons: {
         position: 'absolute',
         bottom: 5,
-    }
+    },
+    quickButton: {
+        fontSize: '30px',
+        color: '#000',
+        transition: 'color 0.15s',
+        '&:hover': {
+            color: theme.palette.secondary.main
+        }
+    },
 }));
 
 const OrgCard = props => {
@@ -65,8 +74,10 @@ const OrgCard = props => {
                     <Typography variant="body2" className={classes.description}>
                         {props.org.description}
                     </Typography>
-                    <Grid container className={classes.quickButtons} justify='center'>
-                        quick
+                    <Grid container className={classes.quickButtons} justify='space-around'>
+                        <AddLogIcon color='primary' classes={{ colorPrimary: classes.quickButton }} />
+                        <LogsIcon color='primary' classes={{ colorPrimary: classes.quickButton }} />
+                        <EventsIcon color='primary' classes={{ colorPrimary: classes.quickButton }} />
                     </Grid>
                 </Grid>
             </Grid>
