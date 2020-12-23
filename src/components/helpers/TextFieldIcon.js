@@ -28,7 +28,7 @@ const TextFieldIcon = props => {
     return (
         <div className={classes.container}>
             <span className={classes.iconContainer}>{props.icon}</span>
-            <TextField {...props} style={{position: 'relative'}} inputProps={{ className: classes.textFieldInput }} InputLabelProps={{ classes: { root: classes.textFieldLabel, shrink: classes.noPadding } }} />
+            <TextField {...props} style={{ position: 'relative' }} inputProps={{ className: classes.textFieldInput }} InputLabelProps={{ classes: { root: classes.textFieldLabel, shrink: classes.noPadding } }} />
         </div>
     )
 };
