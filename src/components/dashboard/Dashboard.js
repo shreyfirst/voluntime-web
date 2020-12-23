@@ -1,5 +1,5 @@
 import { memo, useState } from 'react';
-import { Divider, Drawer, List, Typography, ListItem, ListItemText, Hidden } from '@material-ui/core';
+import { Divider, Drawer, List, Typography, ListItem, ListItemText } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { AccountCircle as AccountIcon, DashboardOutlined as OverviewIcon, Group as OrgIcon, Event as EventsIcon, ListAlt as HoursIcon, ContactSupportOutlined as ContactIcon } from '@material-ui/icons';
 import Account from './Account';
@@ -25,7 +25,7 @@ const useStyles = makeStyles(theme => ({
         marginLeft: '16%',
         width: '84%',
         boxSizing: 'border-box',
-        paddingLeft: '3%',
+        paddingLeft: '2.5%',
         paddingRight: '1%',
         paddingTop: '1%',
     },
@@ -75,6 +75,11 @@ const useStyles = makeStyles(theme => ({
         verticalAlign: 'middle',
         marginLeft: '0.5em',
         fontSize: '3ex',
+    },
+    dashboardLabel: {
+        fontWeight: 'bold',
+        fontSize: '1.2em',
+        paddingTop: '1%',
     }
 }));
 
@@ -84,7 +89,7 @@ const Dashboard = props => {
     const [view, setView] = useState('orgs');
 
     const NavButton = props => (
-        <ListItem button key={props.view} onClick={() => setView(props.view)} className={view === props.view ? classes.activeNavButton : classes.navButton}>
+        <ListItem button onClick={() => setView(props.view)} className={view === props.view ? classes.activeNavButton : classes.navButton}>
             <ListItemText primary={<>{props.icon} <span className={classes.viewName}>{viewNames[props.view]}</span></>} primaryTypographyProps={{ className: `${classes.navButtonText} ${view === props.view && classes.activeNavButtonText}` }} />
         </ListItem>
     );
@@ -93,7 +98,7 @@ const Dashboard = props => {
         switch (view) {
             case 'account': return <Account user={props.user} />
             case 'overview': return <Overview user={props.user} />
-            case 'orgs': return <Orgs user={props.user} />
+            case 'orgs': return <Orgs user={props.user} setUser={props.setUser} />
             case 'events': return <Events user={props.user} />
             case 'hours': return <Hours user={props.user} />
             case 'contact': return <Contact user={props.user} />
@@ -111,12 +116,8 @@ const Dashboard = props => {
                 }}
             >
                 <div className={classes.drawerHeader}>
-                    <img src={VIcon} alt="" className={classes.vIcon} />
-                    <Hidden mdDown>
-                        <Typography variant="caption" component="span" className={classes.vTitle}>
-                            VOLUNTIME
-                        </Typography>
-                    </Hidden>
+                    <img src={VIcon} alt="" className={classes.vIcon} /><br />
+                    <Typography className={classes.dashboardLabel}>Dashboard</Typography>
                 </div>
                 <Divider />
                 <List>

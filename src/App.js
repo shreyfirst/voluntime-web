@@ -16,7 +16,6 @@ const App = () => {
     const setUser = u => {
         //alphabetically sort orgs
         u.orgs = u.orgs.sort((a, b) => a.name.localeCompare(b.name));
-
         setUserState(u);
         localStorage.setItem('user', JSON.stringify(u));
     };
@@ -65,7 +64,7 @@ const App = () => {
                     <Landing user={{ id: user.id, email: user.email }} setUser={setUser} />
                 </Route>
                 <Route path='/dashboard/:orgId'>
-                    {user.loggedIn === false ? <LoadingIndicator /> : <Org user={user} setUser={user} />}
+                    {user.loggedIn === false ? <LoadingIndicator /> : <Org user={user} setUser={setUser} />}
                 </Route>
                 <Route path='/dashboard'>
                     {user.loggedIn === false ? <LoadingIndicator /> : <Dashboard user={user} setUser={setUser} />}

@@ -20,10 +20,14 @@ const useStyles = makeStyles(theme => ({
         width: '100%',
         height: '100%'
     },
-    image: {
-        backgroundColor: theme.palette.primary.main,
+    image: props => ({
+        backgroundColor: props.role === 'owner'
+            ? theme.palette.primary.main
+            : props.role === 'admin'
+                ? theme.palette.secondary.main
+                : theme.palette.success.main,
         height: '50%',
-    },
+    }),
     info: {
         paddingLeft: '4%',
         paddingRight: '4%',
@@ -54,7 +58,7 @@ const useStyles = makeStyles(theme => ({
     quickButton: {
         fontSize: '30px',
         color: '#000',
-        transition: 'color 0.15s',
+        transition: 'color 0.18s',
         '&:hover': {
             color: theme.palette.secondary.main
         }
@@ -62,7 +66,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const OrgCard = props => {
-    const classes = useStyles();
+    const classes = useStyles({ role: props.org.role });
     return (
         <Card className={classes.container}>
             <Grid container className={classes.grid}>
