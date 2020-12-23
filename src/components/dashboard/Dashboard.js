@@ -2,7 +2,7 @@ import { memo, useState } from 'react';
 import { Divider, Drawer, List, Typography, ListItem, ListItemText } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { AccountCircle as AccountIcon, DashboardOutlined as OverviewIcon, Group as OrgIcon, Event as EventsIcon, ListAlt as HoursIcon, ContactSupportOutlined as ContactIcon } from '@material-ui/icons';
-import Account from './Account';
+import Account from './account/Account';
 import Overview from './Overview';
 import Orgs from './orgs/Orgs';
 import Events from './Events';
@@ -28,6 +28,7 @@ const useStyles = makeStyles(theme => ({
         paddingLeft: '2.5%',
         paddingRight: '1%',
         paddingTop: '1%',
+        paddingBottom: 30,
     },
     drawerHeader: {
         paddingTop: '8%',
