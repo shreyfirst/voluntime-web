@@ -1,4 +1,4 @@
-import { useEffect, useState, lazy, Suspense } from 'react';
+import { useEffect, useState, useCallback, lazy, Suspense } from 'react';
 import Landing from './components/landing/Landing';
 import VerifyEmail from './components/verifyEmail/VerifyEmail';
 import ResetPassword from './components/resetPassword/ResetPassword';
@@ -13,12 +13,13 @@ const App = () => {
     const history = useHistory();
 
     const [user, setUserState] = useState({ loggedIn: false, });
-    const setUser = u => {
+    const setUser = useCallback(u => {
+        if (u.orgs === undefined) { u.orgs = []; }
         //alphabetically sort orgs
         u.orgs = u.orgs.sort((a, b) => a.name.localeCompare(b.name));
         setUserState(u);
         localStorage.setItem('user', JSON.stringify(u));
-    };
+    }, []);
 
     useEffect(() => {
         if (user.loggedIn !== false) { return; }

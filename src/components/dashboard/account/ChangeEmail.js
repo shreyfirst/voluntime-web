@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { TextField, Button, Dialog, DialogActions, DialogContent, DialogTitle, DialogContentText, Tabs, Tab } from '@material-ui/core';
+import { TextField, Button, Dialog, DialogActions, DialogContent, DialogTitle, DialogContentText, Tabs, Tab, CircularProgress } from '@material-ui/core';
 import { Alert } from '@material-ui/lab';
 import { makeStyles } from '@material-ui/core/styles';
 import GoogleLogin from 'react-google-login';
@@ -20,6 +20,12 @@ const useStyles = makeStyles({
         backgroundColor: '#FFF',
         minWidth: '50%'
     },
+    blackText: {
+        color: '#000'
+    },
+    submitButton: {
+        minWidth: '9em'
+    }
 });
 
 const ChangeEmail = props => {
@@ -27,13 +33,13 @@ const ChangeEmail = props => {
     const [tab, setTab] = useState(0);
     const [googleInfo, setGoogleInfo] = useState(false);
     const [email, setEmail] = useState('');
+    const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
 
     const closeDialog = () => props.setOpen(false);
 
     const responseGoogle = response => {
         if (response.error === undefined) {
-            console.log(JSON.stringify(response, null, 2))
             setGoogleInfo({ email: response.profileObj.email, token: response.tokenObj.id_token });
         } else {
             if (response.error === 'idpiframe_initialization_failed') {
@@ -44,14 +50,24 @@ const ChangeEmail = props => {
         }
     };
 
+    const handleSubmit = () => {
+        setLoading(true);
+        if (tab === 0) { //google
+
+        } else {
+
+        }
+    };
+
     const classes = useStyles();
     return (
-        <Dialog open={props.open} onClose={closeDialog}>
+        <Dialog open={props.open} onClose={closeDialog} fullWidth>
             <DialogTitle>Change Email</DialogTitle>
             <DialogContent>
                 <DialogContentText>
                     This is your private email address and will not be shown to other users.<br />
-                    You will need to verify that you own your new email address before it changes, either through Google or a verification email.<br />
+                    You will need to verify that you own your new email address before it changes, either through Google or a verification email.<br /><br />
+                    <div className={classes.blackText}>Your current email: {props.user.email}</div>
                 </DialogContentText>
                 <Tabs
                     value={tab}
@@ -87,8 +103,12 @@ const ChangeEmail = props => {
                 <Button variant='text' onClick={closeDialog} color="primary">
                     Cancel
                 </Button>
-                <Button variant='contained' onClick={closeDialog} color="primary">
-                    Change Email
+                <Button variant='contained' onClick={handleSubmit} color="primary" disabled={loading} className={classes.submitButton}>
+                    {
+                        loading
+                            ? <CircularProgress size={24} color='secondary' />
+                            : 'Change Email'
+                    }
                 </Button>
             </DialogActions>
             {

@@ -53,14 +53,11 @@ const Account = props => {
                 This is private information and will not be shown to other users.
             </Typography><br />
             Email Address:{' '}
-            <div style={{ display: 'inline-block', position: 'relative', top: 8 }}>
-                {props.user.email}<br />
-                <Button variant='outlined' onClick={() => setEmailOpen(true)} startIcon={<EmailIcon />}>Change Email</Button>
-            </div>
+            <Button variant='outlined' onClick={() => setEmailOpen(true)} startIcon={<EmailIcon />}>Change Email</Button>
             <br /><br /><br />
             Password:{' '}
             {
-                props.user.method === 'normal' //CHANGE TO GOOGLE
+                props.user.method === 'google' //CHANGE TO GOOGLE
                     ? 'Use Sign in with Google instead of a password.'
                     : <Button variant='outlined' onClick={() => setPasswordOpen(true)} startIcon={<LockIcon />}>Change Password</Button>
             }
@@ -71,7 +68,7 @@ const Account = props => {
                 </Button>
             </Grid>
 
-            <ChangeEmail open={emailOpen} setOpen={setEmailOpen} />
+            <ChangeEmail open={emailOpen} setOpen={setEmailOpen} user={props.user} />
             <ChangePassword open={passwordOpen} setOpen={setPasswordOpen} />
         </div>
     );
