@@ -67,7 +67,7 @@ const Orgs = props => {
                         }
                         {
                             sortedOrgs.current.admin.length > 0 &&
-                            orgSection('Admin', sortedOrgs.current.admin)
+                            orgSection('Administrator', sortedOrgs.current.admin)
                         }
                         {
                             sortedOrgs.current.vol.length > 0 &&
