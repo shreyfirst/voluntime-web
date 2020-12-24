@@ -2,7 +2,8 @@ import { useState } from 'react';
 import { Typography, TextField, Grid, Button, } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { MailOutline as EmailIcon, Phone as PhoneIcon, Instagram as InstagramIcon, Lock as LockIcon } from '@material-ui/icons';
-import { TextFieldIcon } from '../../helpers';
+import TextFieldIcon from '../../helpers/TextFieldIcon';
+import ChangeEmail from './ChangeEmail';
 import ChangePassword from './ChangePassword';
 
 const useStyles = makeStyles({
@@ -15,19 +16,22 @@ const useStyles = makeStyles({
     },
     button: {
         minWidth: '12em',
+    },
+    helperText: {
+        color: '#414141'
     }
 });
 
 const Account = props => {
 
+    const [emailOpen, setEmailOpen] = useState(false);
     const [passwordOpen, setPasswordOpen] = useState(false);
 
     const classes = useStyles();
     return (
         <div className={classes.container}>
-            <Typography variant='body2'>
-                View and edit your Voluntime account here.
-            </Typography><br />
+            View and edit your Voluntime account here.
+            <br /><br />
             <Typography variant='h6'>
                 Profile
             </Typography><br />
@@ -35,7 +39,7 @@ const Account = props => {
             <TextField variant='outlined' label='Last Name' required className={classes.textField} /><br /><br />
             <TextField variant='outlined' label='Age' type='number' inputProps={{ min: 1, max: 999 }} className={classes.textField} /><br /><br />
             <Typography variant='body1'>
-                Contact Information (Public)
+                Contact Information (Optional)
             </Typography><br />
             <TextFieldIcon variant='outlined' label='Public Email Address' icon={<EmailIcon />} type="email" className={classes.textField} /><br />
             <TextFieldIcon variant='outlined' label='Public Phone Number' icon={<PhoneIcon />} type="tel" className={classes.textField} /><br />
@@ -44,8 +48,16 @@ const Account = props => {
             <br />
             <Typography variant='h6'>
                 Account
+            </Typography>
+            <Typography variant='body2' className={classes.helperText}>
+                This is private information and will not be shown to other users.
             </Typography><br />
-            <TextField variant='outlined' label='Email Address' type="email" helperText='This is your private email address and will not be shown to other users.' required className={classes.textField} /><br /><br />
+            Email Address:{' '}
+            <div style={{ display: 'inline-block', position: 'relative', top: 8 }}>
+                {props.user.email}<br />
+                <Button variant='outlined' onClick={() => setEmailOpen(true)} startIcon={<EmailIcon />}>Change Email</Button>
+            </div>
+            <br /><br /><br />
             Password:{' '}
             {
                 props.user.method === 'normal' //CHANGE TO GOOGLE
@@ -59,6 +71,7 @@ const Account = props => {
                 </Button>
             </Grid>
 
+            <ChangeEmail open={emailOpen} setOpen={setEmailOpen} />
             <ChangePassword open={passwordOpen} setOpen={setPasswordOpen} />
         </div>
     );

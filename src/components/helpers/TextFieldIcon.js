@@ -27,10 +27,10 @@ const TextFieldIcon = props => {
     const classes = useStyles();
     return (
         <div className={classes.container}>
-            <span className={classes.iconContainer}>{props.icon}</span>
             <TextField {...props} style={{ position: 'relative' }} inputProps={{ className: classes.textFieldInput }} InputLabelProps={{ classes: { root: classes.textFieldLabel, shrink: classes.noPadding } }} />
+            <span className={classes.iconContainer}>{props.icon}</span>
         </div>
     )
 };
 
-export { TextFieldIcon };
+export default TextFieldIcon;

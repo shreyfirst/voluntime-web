@@ -87,7 +87,7 @@ const useStyles = makeStyles(theme => ({
 
 const Dashboard = props => {
     const classes = useStyles();
-    const [view, setView] = useState('orgs');
+    const [view, setView] = useState('account');
 
     const NavButton = props => (
         <ListItem button onClick={() => setView(props.view)} className={view === props.view ? classes.activeNavButton : classes.navButton}>

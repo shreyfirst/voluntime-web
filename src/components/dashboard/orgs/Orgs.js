@@ -8,7 +8,8 @@ import OrgCard from './OrgCard';
 
 const useStyles = makeStyles({
     orgCard: {
-        height: '300px',
+        height: 300,
+        maxWidth: 350
     },
     orgSection: {
         paddingTop: 10,
@@ -58,7 +59,7 @@ const Orgs = props => {
                         <Button variant='outlined' onClick={() => setView('create')} startIcon={<AddIcon />}>Create Organization</Button>
                         {
                             props.user.orgs.length === 0 &&
-                            'You are not part of any organizations yet.'
+                            <Typography><br />You are not part of any organizations yet. Join or create an organization to get started.</Typography>
                         }
                         {
                             sortedOrgs.current.owner.length > 0 &&

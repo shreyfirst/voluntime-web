@@ -7,7 +7,7 @@ import { createUser } from '../../services';
 import { useHistory } from 'react-router-dom';
 import VerifyEmail from './VerifyEmail';
 import GoogleLogin from 'react-google-login';
-import GoogleIcon from './GoogleIcon';
+import GoogleIcon from '../helpers/GoogleIcon';
 
 const useStyles = makeStyles({
     container: {

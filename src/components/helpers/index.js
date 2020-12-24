@@ -1,1 +1,0 @@
-export { TextFieldIcon } from './TextFieldIcon';
