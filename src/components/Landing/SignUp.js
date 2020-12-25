@@ -3,7 +3,7 @@ import { Grid, Typography, TextField, Button, InputAdornment, IconButton, Circul
 import { Alert } from '@material-ui/lab';
 import { makeStyles } from '@material-ui/core/styles';
 import { Visibility, VisibilityOff } from '@material-ui/icons';
-import { createUser } from '../../services';
+import { createUser, createUserGoogle } from '../../services';
 import { useHistory } from 'react-router-dom';
 import VerifyEmail from './VerifyEmail';
 import GoogleLogin from 'react-google-login';
@@ -94,7 +94,7 @@ const SignUp = props => {
     const responseGoogle = response => {
         if (response.error === undefined) {
             setLoading(true);
-            createUser({ token: response.tokenObj.id_token, method: 'google' }, (err, data) => {
+            createUserGoogle(response.tokenObj.id_token, (err, data) => {
                 setLoading(false);
                 if (err) {
                     setError(data.message);
@@ -107,6 +107,8 @@ const SignUp = props => {
         } else {
             if (response.error === 'idpiframe_initialization_failed') {
                 setError('Cookies must be enabled to use Sign up with Google.');
+            } else {
+                setError('Sign in with Google failed. Please try again.');
             }
         }
     };

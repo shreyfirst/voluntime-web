@@ -94,6 +94,8 @@ const Login = props => {
         } else {
             if (response.error === 'idpiframe_initialization_failed') {
                 setError('Cookies must be enabled to use Sign in with Google.');
+            } else {
+                setError('Sign in with Google failed. Please try again.');
             }
         }
     };
