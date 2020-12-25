@@ -3,7 +3,7 @@ import { Grid, Typography, TextField, Button, CircularProgress, Link } from '@ma
 import { Alert } from '@material-ui/lab';
 import { makeStyles } from '@material-ui/core/styles';
 import { login } from '../../services';
-import { loginToken } from '../../services';
+import { loginGoogle } from '../../services';
 import ForgotPassword from './ForgotPassword';
 import { useHistory } from 'react-router-dom';
 import GoogleLogin from 'react-google-login';
@@ -81,7 +81,7 @@ const Login = props => {
     const responseGoogle = response => {
         if (response.error === undefined) {
             setLoading(true);
-            loginToken(response.tokenObj.id_token, 'google', (err, data) => {
+            loginGoogle(response.tokenObj.id_token, (err, data) => {
                 setLoading(false);
                 if (err) {
                     setError(data.message);

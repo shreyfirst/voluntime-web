@@ -44,7 +44,7 @@ const App = () => {
             if (routeMatch === '') {
                 history.replace('/dashboard');
             }
-            loginToken(storedUser.token, 'normal', (err, data) => {
+            loginToken(storedUser.token, (err, data) => {
                 if (!err) {
                     setUser(data);
                 }
