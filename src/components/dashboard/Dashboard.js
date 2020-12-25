@@ -97,7 +97,7 @@ const Dashboard = props => {
 
     const renderView = view => {
         switch (view) {
-            case 'account': return <Account user={props.user} />
+            case 'account': return <Account user={props.user} setUser={props.setUser} />
             case 'overview': return <Overview user={props.user} />
             case 'orgs': return <Orgs user={props.user} setUser={props.setUser} />
             case 'events': return <Events user={props.user} />

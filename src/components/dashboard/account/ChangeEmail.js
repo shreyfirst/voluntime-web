@@ -31,8 +31,10 @@ const useStyles = makeStyles({
 const ChangeEmail = props => {
 
     const [tab, setTab] = useState(0);
+    
     const [googleInfo, setGoogleInfo] = useState(false);
     const [email, setEmail] = useState('');
+
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
 
@@ -67,7 +69,7 @@ const ChangeEmail = props => {
                 <DialogContentText>
                     This is your private email address and will not be shown to other users.<br />
                     You will need to verify that you own your new email address before it changes, either through Google or a verification email.<br /><br />
-                    <div className={classes.blackText}>Your current email: {props.user.email}</div>
+                    <span className={classes.blackText}>Your current email: {props.user.email}</span>
                 </DialogContentText>
                 <Tabs
                     value={tab}

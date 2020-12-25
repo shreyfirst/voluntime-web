@@ -1,8 +1,9 @@
 import { useState } from 'react';
-import { TextField, Button, Dialog, DialogActions, DialogContent, DialogTitle, InputAdornment, IconButton, CircularProgress } from '@material-ui/core';
+import { TextField, Button, Dialog, DialogActions, DialogContent, DialogTitle, InputAdornment, IconButton, CircularProgress, Link } from '@material-ui/core';
 import { Alert } from '@material-ui/lab';
 import { makeStyles } from '@material-ui/core/styles';
 import { Visibility, VisibilityOff } from '@material-ui/icons';
+import { changePassword } from '../../../services/users';
 
 const useStyles = makeStyles({
     textField: {
@@ -23,11 +24,19 @@ const ChangePassword = props => {
     const [showConfirm, setShowConfirm] = useState(false);
 
     const [loading, setLoading] = useState(false);
+    const [success, setSuccess] = useState('');
     const [error, setError] = useState('');
 
-    const closeDialog = () => props.setOpen(false);
+    const closeDialog = () => {
+        setError('');
+        setOldPassword('');
+        setPassword('');
+        setConfirm('');
+        props.setOpen(false);
+    };
 
     const handleSubmit = () => {
+        setSuccess('');
         if (oldPassword.length < 1) {
             setError('You must provide your current password before changing it. If you forgot it, log out and press Forgot Password.');
             return;
@@ -49,6 +58,19 @@ const ChangePassword = props => {
             return;
         }
         setLoading(true);
+        changePassword({
+            token: props.user.token,
+            oldPassword,
+            password,
+        }, (err, data) => {
+            setLoading(false);
+            if (err) {
+                setError(data.message);
+            } else {
+                setError('');
+                setSuccess('Your password has been changed.');
+            }
+        });
     };
 
     const classes = useStyles();
@@ -96,6 +118,10 @@ const ChangePassword = props => {
                     }
                 </Button>
             </DialogActions>
+            {
+                success.length > 0 &&
+                <Alert severity="success">{success} <Link component="button" onClick={closeDialog}>Done</Link></Alert>
+            }
             {
                 error.length > 0 &&
                 <Alert severity="error">{error}</Alert>

@@ -10,4 +10,8 @@ const forgotPassword = (email, callback) => post('/users/forgotPassword', { emai
 
 const resetPassword = (info, callback) => post('/users/resetPassword', info, callback);
 
-export { createUser, resendVerifyEmail, verifyEmail, forgotPassword, resetPassword };
+const editProfile = (info, callback) => post('/users/editProfile', info, callback);
+
+const changePassword = (info, callback) => post('/users/changePassword', info, callback);
+
+export { createUser, resendVerifyEmail, verifyEmail, forgotPassword, resetPassword, editProfile, changePassword };
