@@ -1,4 +1,4 @@
-import { useRef, useCallback, useState, memo } from 'react';
+import { useRef, useCallback, useState, useEffect, memo } from 'react';
 import { Container, Grid, Hidden, Paper } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { useLocation } from 'react-router-dom';
@@ -58,6 +58,8 @@ const Landing = props => {
         }
         document.body.scrollIntoView({ behavior: 'smooth' });
     };
+
+    useEffect(() => window.scrollTo(0, 0), []);
 
     return (
         <Container>
