@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Grid, Typography, TextField, Button, CircularProgress } from '@material-ui/core';
+import { Grid, Typography, TextField, Button, CircularProgress, Link } from '@material-ui/core';
 import { Alert } from '@material-ui/lab';
 import { makeStyles } from '@material-ui/core/styles';
 import { login } from '../../services';
@@ -121,7 +121,7 @@ const Login = props => {
                         <br />
                         {
                             error.length > 0 &&
-                            <Alert severity="error">{error}</Alert>
+                            <Alert severity="error">{error} {error.startsWith('There\'s no account with that email address') && <>{' '}<Link component="button" onClick={() => props.setView('signup')}>Create Account</Link></>}</Alert>
                         }
                         <br />
                         <Button onClick={() => setView('forgotPassword')} variant="text" className={classes.forgotPassword}>Forgot Password?</Button>
