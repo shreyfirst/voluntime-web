@@ -1,10 +1,11 @@
 import { useState } from 'react';
-import { TextField, Button, Dialog, DialogActions, DialogContent, DialogTitle, DialogContentText, Tabs, Tab, CircularProgress } from '@material-ui/core';
+import { TextField, Button, Dialog, DialogActions, DialogContent, DialogTitle, DialogContentText, Tabs, Tab, CircularProgress, Link } from '@material-ui/core';
 import { Alert } from '@material-ui/lab';
 import { makeStyles } from '@material-ui/core/styles';
 import GoogleLogin from 'react-google-login';
 import GoogleIcon from '../../helpers/GoogleIcon';
 import TabPanel from '../../helpers/TabPanel';
+import { changeEmail, changeEmailGoogle } from '../../../services/users';
 
 const useStyles = makeStyles({
     textField: {
@@ -31,12 +32,13 @@ const useStyles = makeStyles({
 const ChangeEmail = props => {
 
     const [tab, setTab] = useState(0);
-    
+
     const [googleInfo, setGoogleInfo] = useState(false);
     const [email, setEmail] = useState('');
 
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
+    const [success, setSuccess] = useState('');
 
     const closeDialog = () => props.setOpen(false);
 
@@ -53,11 +55,44 @@ const ChangeEmail = props => {
     };
 
     const handleSubmit = () => {
-        setLoading(true);
+        setSuccess('');
         if (tab === 0) { //google
-
+            if (!googleInfo) {
+                setError('Please choose an email address to change to.');
+                return;
+            }
+            setLoading(true);
+            changeEmailGoogle({
+                token: props.user.token,
+                googleToken: googleInfo.token,
+            }, (err, data) => {
+                setLoading(false);
+                if (err) {
+                    setError(data.message);
+                } else {
+                    setError('');
+                    setSuccess(`Your email address has been updated to ${data.email}.`);
+                    props.setUser(data);
+                }
+            });
         } else {
-
+            if (email.length < 1 || !/\S+@\S+\.\S+/.test(email)) {
+                setError('Please enter a valid email address.');
+                return;
+            }
+            setLoading(true);
+            changeEmail({
+                token: props.user.token,
+                email,
+            }, (err, data) => {
+                setLoading(false);
+                if (err) {
+                    setError(data.message);
+                } else {
+                    setError('');
+                    setSuccess(`A verification email has been sent to ${email.toLowerCase()}`);
+                }
+            });
         }
     };
 
@@ -113,6 +148,10 @@ const ChangeEmail = props => {
                     }
                 </Button>
             </DialogActions>
+            {
+                success.length > 0 &&
+                <Alert severity="success">{success} <Link component="button" onClick={closeDialog}>Done</Link></Alert>
+            }
             {
                 error.length > 0 &&
                 <Alert severity="error">{error}</Alert>

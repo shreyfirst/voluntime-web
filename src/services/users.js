@@ -16,4 +16,10 @@ const editProfile = (info, callback) => post('/users/editProfile', info, callbac
 
 const changePassword = (info, callback) => post('/users/changePassword', info, callback);
 
-export { createUser, createUserGoogle, resendVerifyEmail, verifyEmail, forgotPassword, resetPassword, editProfile, changePassword };
+const changeEmail = (info, callback) => post('/users/changeEmail', info, callback);
+
+const verifyNewEmail = (id, callback) => post('/users/verifyNewEmail', { id }, callback);
+
+const changeEmailGoogle = (info, callback) => post('/users/changeEmail/google', info, callback);
+
+export { createUser, createUserGoogle, resendVerifyEmail, verifyEmail, forgotPassword, resetPassword, editProfile, changePassword, changeEmail, verifyNewEmail, changeEmailGoogle };

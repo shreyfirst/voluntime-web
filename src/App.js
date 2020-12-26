@@ -2,6 +2,7 @@ import { useEffect, useState, useCallback, lazy, Suspense } from 'react';
 import Landing from './components/landing/Landing';
 import VerifyEmail from './components/verifyEmail/VerifyEmail';
 import ResetPassword from './components/resetPassword/ResetPassword';
+import VerifyNewEmail from './components/verifyNewEmail/VerifyNewEmail';
 import { Switch, Route, useLocation, useHistory } from 'react-router-dom';
 import { loginToken } from './services';
 
@@ -76,7 +77,10 @@ const App = () => {
                 <Route path={['/reset-password/:id', '/reset-password']}>
                     <ResetPassword setUser={setUser} />
                 </Route>
-                <Route path={['/privacy-policy', '/terms-of-service', '/tos']} render={() => { window.location.href = "privacy-policy.html" }} />
+                <Route path={['/verify-new-email/:id', '/verify-new-email']}>
+                    <VerifyNewEmail setUser={setUser} />
+                </Route>
+                <Route path={['/privacy-policy', '/terms-of-service', '/tos']} render={() => { window.location.href = "privacy-policy.html"; }} />
             </Switch>
         </Suspense>
     );
