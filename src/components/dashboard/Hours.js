@@ -1,4 +1,4 @@
-const Hours = props => {
+const Hours = () => {
     return (
         <div>
             hours

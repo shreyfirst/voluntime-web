@@ -1,4 +1,4 @@
-const Events = props => {
+const Events = () => {
     return (
         <div>
             Events of orgs

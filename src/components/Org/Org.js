@@ -1,6 +1,6 @@
 import { useParams } from 'react-router-dom';
 
-const Org = props => {
+const Org = () => {
     const { orgId } = useParams();
 
     return (

@@ -1,4 +1,4 @@
-const Contact = props => {
+const Contact = () => {
     return (
         <div>
             Contact Us

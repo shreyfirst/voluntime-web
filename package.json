@@ -48,6 +48,8 @@
     "@material-ui/codemod": "^4.5.0",
     "babel-plugin-transform-imports": "^2.0.0",
     "customize-cra": "^1.0.0",
+    "eslint": "^7.16.0",
+    "eslint-plugin-react": "^7.21.5",
     "react-app-rewired": "^2.1.6"
   }
 }

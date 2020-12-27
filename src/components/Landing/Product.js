@@ -3,7 +3,7 @@ import { Grid, Typography, Link, Hidden } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import AppStoreBadge from './AppStoreBadge';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles({
     textContainer: {
         minHeight: '40%',
     },
@@ -20,7 +20,7 @@ const useStyles = makeStyles(theme => ({
         cursor: 'pointer',
         display: 'inline'
     },
-}));
+});
 
 const Product = props => {
     const classes = useStyles();

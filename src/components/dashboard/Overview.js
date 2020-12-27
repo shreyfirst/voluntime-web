@@ -1,4 +1,4 @@
-const Overview = props => {
+const Overview = () => {
     return (
         <div>
             Overfview
