@@ -2,6 +2,7 @@
 import { Card, Grid, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { PlaylistAdd as AddLogIcon, ListAlt as LogsIcon, Event as EventsIcon } from '@material-ui/icons';
+import { useHistory, Link } from 'react-router-dom';
 
 const useStyles = makeStyles(theme => ({
     container: {
@@ -41,7 +42,11 @@ const useStyles = makeStyles(theme => ({
         textOverflow: 'ellipsis',
         display: 'box',
         lineClamp: 1,
-        boxOrient: 'vertical'
+        boxOrient: 'vertical',
+    },
+    nameLink: {
+        color: '#000',
+        textDecoration: 'none'
     },
     description: {
         color: '#636363',
@@ -66,14 +71,15 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const OrgCard = props => {
+    const history = useHistory();
     const classes = useStyles({ role: props.org.role });
     return (
-        <Card className={classes.container}>
+        <Card className={classes.container} onClick={() => history.push(`/dashboard/${props.org.id}`)}>
             <Grid container className={classes.grid}>
                 <Grid item xs={12} className={classes.image} />
                 <Grid item xs={12} className={classes.info}>
                     <Typography className={classes.name}>
-                        {props.org.name}
+                        <Link to={`/dashboard/${props.org.id}`} onClick={e => e.stopPropagation()} className={classes.nameLink}>{props.org.name}</Link>
                     </Typography>
                     <Typography variant="body2" className={classes.description}>
                         {props.org.description}

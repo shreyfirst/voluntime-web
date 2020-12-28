@@ -72,11 +72,6 @@ const useStyles = makeStyles(theme => ({
         height: '3em',
         verticalAlign: 'middle'
     },
-    vTitle: {
-        verticalAlign: 'middle',
-        marginLeft: '0.5em',
-        fontSize: '3ex',
-    },
     dashboardLabel: {
         fontWeight: 'bold',
         fontSize: '1.2em',
