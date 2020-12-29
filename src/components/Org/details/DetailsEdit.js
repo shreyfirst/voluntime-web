@@ -53,7 +53,7 @@ const DetailsEdit = props => {
                 setSuccess('Your changes have been saved.');
                 var oldUser = props.user;
                 oldUser.orgs[props.user.orgs.findIndex(o => o.id === props.org.id)] = data;
-                oldUser = {...oldUser, orgs: [...oldUser.orgs]};
+                oldUser = { ...oldUser, orgs: [...oldUser.orgs] };
                 props.setUser(oldUser);
             }
         });
@@ -61,35 +61,33 @@ const DetailsEdit = props => {
 
     const classes = useStyles();
     return (
-        <Grid container className={classes.container}>
-            <Grid item xs={9} sm={8} md={6} lg={5}>
-                View and edit your Voluntime organization here.
+        <>
+            View and edit your Voluntime organization here.
             <br /><br />
-                <Typography variant='h6'>
-                    Public Information
-            </Typography><br />
-                <TextField variant='outlined' label='Name' required onChange={e => setName(e.target.value)} defaultValue={props.org.name} className={classes.textField} /><br /><br />
-                <TextField variant='outlined' label='Description' multiline rows={4} onChange={e => setDescription(e.target.value)} defaultValue={props.org.description} className={classes.textField} /><br /><br />
-                <br />
-                <Grid container justify="flex-end">
-                    <Button variant='contained' color='primary' onClick={handleSubmit} className={classes.submitButton}>
-                        {
-                            loading
-                                ? <CircularProgress size={24} color='secondary' />
-                                : 'Save Changes'
-                        }
-                    </Button>
-                </Grid>
-                {
-                    success.length > 0 &&
-                    <Alert severity="success">{success}</Alert>
-                }
-                {
-                    error.length > 0 &&
-                    <Alert severity="error">{error}</Alert>
-                }
+            <Typography variant='h6'>
+                Public Information
+                </Typography><br />
+            <TextField variant='outlined' label='Name' required onChange={e => setName(e.target.value)} defaultValue={props.org.name} className={classes.textField} /><br /><br />
+            <TextField variant='outlined' label='Description' multiline rows={4} onChange={e => setDescription(e.target.value)} defaultValue={props.org.description} className={classes.textField} /><br /><br />
+            <br />
+            <Grid container justify="flex-end">
+                <Button variant='contained' color='primary' onClick={handleSubmit} className={classes.submitButton}>
+                    {
+                        loading
+                            ? <CircularProgress size={24} color='secondary' />
+                            : 'Save Changes'
+                    }
+                </Button>
             </Grid>
-        </Grid>
+            {
+                success.length > 0 &&
+                <Alert severity="success">{success}</Alert>
+            }
+            {
+                error.length > 0 &&
+                <Alert severity="error">{error}</Alert>
+            }
+        </>
     );
 };
 

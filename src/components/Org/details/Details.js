@@ -1,15 +1,26 @@
+import { Grid } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
 import DetailsEdit from './DetailsEdit';
 import DetailsView from './DetailsView';
 
+const useStyles = makeStyles({
+    container: {
+        width: '100%',
+    },
+});
+
 const Details = props => {
+    const classes = useStyles();
     return (
-        <>
-            {
-                props.org.role === 'owner'
-                    ? <DetailsEdit user={props.user} setUser={props.setUser} orgs={props.orgs} setOrgs={props.setOrgs} org={props.org} />
-                    : <DetailsView org={props.org} />
-            }
-        </>
+        <Grid container className={classes.container}>
+            <Grid item xs={9} sm={8} md={6} lg={5}>
+                {
+                    props.org.role === 'owner'
+                        ? <DetailsEdit user={props.user} setUser={props.setUser} orgs={props.orgs} setOrgs={props.setOrgs} org={props.org} />
+                        : <DetailsView org={props.org} />
+                }
+            </Grid>
+        </Grid>
     );
 };
 
