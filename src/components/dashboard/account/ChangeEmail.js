@@ -65,14 +65,14 @@ const ChangeEmail = props => {
             changeEmailGoogle({
                 token: props.user.token,
                 googleToken: googleInfo.token,
-            }, (err, data) => {
+            }, (err, data) => { //normal
                 setLoading(false);
                 if (err) {
                     setError(data.message);
                 } else {
                     setError('');
                     setSuccess(`Your email address has been updated to ${data.email}.`);
-                    data.orgs = props.orgs;
+                    data.orgs = props.user.orgs;
                     props.setUser(data);
                 }
             });
