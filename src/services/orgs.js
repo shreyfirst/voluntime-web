@@ -4,4 +4,6 @@ const createOrg = (info, callback) => post('/orgs', info, callback);
 
 const editOrg = (info, callback) => post('/orgs/edit', info, callback);
 
-export { createOrg, editOrg };
+const leaveOrg = (info, callback) => post('/orgs/leave', info, callback);
+
+export { createOrg, editOrg, leaveOrg };

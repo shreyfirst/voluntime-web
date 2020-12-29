@@ -53,8 +53,7 @@ const DetailsEdit = props => {
                 setSuccess('Your changes have been saved.');
                 var oldUser = props.user;
                 oldUser.orgs[props.user.orgs.findIndex(o => o.id === props.org.id)] = data;
-                oldUser = { ...oldUser, orgs: [...oldUser.orgs] };
-                props.setUser(oldUser);
+                props.setUser({ ...oldUser, orgs: [...oldUser.orgs] });
             }
         });
     };

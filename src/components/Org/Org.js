@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { Divider, Drawer, List, Typography, ListItem, ListItemText } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { InfoOutlined as DetailsIcon, AssessmentOutlined as MetricsIcon, PeopleAltOutlined as MembersIcon, PlaylistAdd, ListAlt, Event as EventIcon, ArrowBack as BackIcon } from '@material-ui/icons';
-import { useParams, useHistory } from 'react-router-dom';
+import { useParams, useHistory, useLocation } from 'react-router-dom';
 import NotFound from './NotFound';
 import Details from './details/Details';
 import Metrics from './metrics/Metrics';
@@ -90,6 +90,7 @@ const useStyles = makeStyles(theme => ({
 const Org = props => {
     const { orgId } = useParams();
     const history = useHistory();
+    const location = useLocation();
 
     const getOrg = () => {
         for (const o of props.user.orgs) {
@@ -114,7 +115,7 @@ const Org = props => {
 
     const [org, setOrg] = useState(getOrg());
     const [viewNames, setViewNames] = useState(getViewNames(org));
-    const [view, setView] = useState('details');
+    const [view, setView] = useState(location.state === undefined ? 'details' : location.state.view);
 
     useEffect(() => {
         const o = getOrg();

@@ -73,6 +73,12 @@ const useStyles = makeStyles(theme => ({
 const OrgCard = props => {
     const history = useHistory();
     const classes = useStyles({ role: props.org.role });
+
+    const quickButtonClicked = (e, view) => {
+        history.push({ pathname: `/dashboard/${props.org.id}`, state: { view } });
+        e.stopPropagation();
+    };
+
     return (
         <Card className={classes.container} onClick={() => history.push(`/dashboard/${props.org.id}`)}>
             <Grid container className={classes.grid}>
@@ -85,9 +91,9 @@ const OrgCard = props => {
                         {props.org.description}
                     </Typography>
                     <Grid container className={classes.quickButtons} justify='space-around'>
-                        <AddLogIcon color='primary' classes={{ colorPrimary: classes.quickButton }} />
-                        <LogsIcon color='primary' classes={{ colorPrimary: classes.quickButton }} />
-                        <EventsIcon color='primary' classes={{ colorPrimary: classes.quickButton }} />
+                        <AddLogIcon color='primary' onClick={e => quickButtonClicked(e, 'add')} classes={{ colorPrimary: classes.quickButton }} />
+                        <LogsIcon color='primary' onClick={e => quickButtonClicked(e, 'hours')} classes={{ colorPrimary: classes.quickButton }} />
+                        <EventsIcon color='primary' onClick={e => quickButtonClicked(e, 'events')} classes={{ colorPrimary: classes.quickButton }} />
                     </Grid>
                 </Grid>
             </Grid>

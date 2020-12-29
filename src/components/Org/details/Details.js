@@ -16,8 +16,8 @@ const Details = props => {
             <Grid item xs={9} sm={8} md={6} lg={5}>
                 {
                     props.org.role === 'owner'
-                        ? <DetailsEdit user={props.user} setUser={props.setUser} orgs={props.orgs} setOrgs={props.setOrgs} org={props.org} />
-                        : <DetailsView org={props.org} />
+                        ? <DetailsEdit user={props.user} setUser={props.setUser} org={props.org} />
+                        : <DetailsView user={props.user} setUser={props.setUser} org={props.org} />
                 }
             </Grid>
         </Grid>

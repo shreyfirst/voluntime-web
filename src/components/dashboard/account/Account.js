@@ -98,7 +98,7 @@ const Account = props => {
                 <TextField variant='outlined' label='Note (additional info, public)' multiline rows={4} onChange={e => setNote(e.target.value)} defaultValue={props.user.note} className={classes.textField} /><br /><br />
                 <Typography variant='body1'>
                     Contact Information (Optional)
-            </Typography><br />
+                </Typography><br />
                 <TextFieldIcon variant='outlined' label='Public Email Address' icon={<EmailIcon />} type="email" onChange={e => setContactEmail(e.target.value)} defaultValue={props.user.contactInfo.email} className={classes.textField} /><br />
                 <TextFieldIcon variant='outlined' label='Public Phone Number' icon={<PhoneIcon />} type="tel" onChange={e => setContactPhone(e.target.value)} defaultValue={props.user.contactInfo.phone} className={classes.textField} /><br />
                 <TextFieldIcon variant='outlined' label='Public Instagram Handle' icon={<InstagramIcon />} onChange={e => setContactInstagram(e.target.value)} defaultValue={props.user.contactInfo.instagram} className={classes.textField} />
