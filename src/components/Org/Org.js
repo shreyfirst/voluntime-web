@@ -4,6 +4,12 @@ import { makeStyles } from '@material-ui/core/styles';
 import { InfoOutlined as DetailsIcon, AssessmentOutlined as MetricsIcon, PeopleAltOutlined as MembersIcon, PlaylistAdd, ListAlt, Event as EventIcon, ArrowBack as BackIcon } from '@material-ui/icons';
 import { useParams, useHistory } from 'react-router-dom';
 import NotFound from './NotFound';
+import Details from './details/Details';
+import Metrics from './metrics/Metrics';
+import Members from './members/Members';
+import AddHours from './addHours/AddHours';
+import ViewHours from './viewHours/ViewHours';
+import Events from './events/Events';
 import VIcon from '../../images/icon.png';
 
 
@@ -117,8 +123,7 @@ const Org = props => {
     }, [props.user.orgs]);
 
 
-    const render = () => {
-        const classes = useStyles();
+    const render = classes => {
 
         const NavButton = props => (
             <ListItem button onClick={() => props.view === 'back' ? history.push('/dashboard') : setView(props.view)} className={view === props.view ? classes.activeNavButton : classes.navButton}>
@@ -156,16 +161,15 @@ const Org = props => {
         };
 
         const renderView = view => {
-            return <div>view: {view}</div>;
-            /*switch (view) {
-                case 'account': return <Account user={props.user} setUser={props.setUser} />
-                case 'overview': return <Overview user={props.user} />
-                case 'orgs': return <Orgs user={props.user} setUser={props.setUser} />
+            switch (view) {
+                case 'details': return <Details user={props.user} setUser={props.setUser} org={org} />
+                case 'metrics': return <Metrics user={props.user} />
+                case 'members': return <Members user={props.user} />
+                case 'add': return <AddHours user={props.user} />
+                case 'hours': return <ViewHours user={props.user} />
                 case 'events': return <Events user={props.user} />
-                case 'hours': return <Hours user={props.user} />
-                case 'contact': return <Contact user={props.user} />
                 default: return 'Select a page on the left.'
-            }*/
+            }
         };
 
         return (
@@ -201,12 +205,12 @@ const Org = props => {
         );
     };
 
-
+    const classes = useStyles();
     return (
         <>
             {
                 org !== null
-                    ? render()
+                    ? render(classes)
                     : <NotFound />
             }
         </>

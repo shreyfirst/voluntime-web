@@ -72,6 +72,7 @@ const ChangeEmail = props => {
                 } else {
                     setError('');
                     setSuccess(`Your email address has been updated to ${data.email}.`);
+                    data.orgs = props.orgs;
                     props.setUser(data);
                 }
             });

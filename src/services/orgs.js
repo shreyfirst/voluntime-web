@@ -2,4 +2,6 @@ import { post } from './axiosConfig';
 
 const createOrg = (info, callback) => post('/orgs', info, callback);
 
-export { createOrg };
+const editOrg = (info, callback) => post('/orgs/edit', info, callback);
+
+export { createOrg, editOrg };
