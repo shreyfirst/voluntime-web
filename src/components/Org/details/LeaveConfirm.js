@@ -53,7 +53,7 @@ const LeaveConfirm = props => {
             <DialogTitle>Leave Organization</DialogTitle>
             <DialogContent>
                 <DialogContentText>
-                    Are you sure you want to leave <strong>{props.org.name}?</strong> You will need to be invited again to rejoin the organization. Your hour logs will not be lost.
+                    Are you sure you want to leave <strong>{props.org.name}</strong>? You will need to be invited again to rejoin the organization. Your hour logs will not be lost.
                 </DialogContentText>
             </DialogContent>
             <DialogActions>

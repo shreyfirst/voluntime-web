@@ -117,6 +117,8 @@ const Org = props => {
     const [viewNames, setViewNames] = useState(getViewNames(org));
     const [view, setView] = useState(location.state === undefined ? 'details' : location.state.view);
 
+    const [members, setMembers] = useState(null);
+
     useEffect(() => {
         const o = getOrg();
         setOrg(o);
@@ -165,7 +167,7 @@ const Org = props => {
             switch (view) {
                 case 'details': return <Details user={props.user} setUser={props.setUser} org={org} />
                 case 'metrics': return <Metrics user={props.user} />
-                case 'members': return <Members user={props.user} />
+                case 'members': return <Members user={props.user} members={members} setMembers={setMembers} org={org} />
                 case 'add': return <AddHours user={props.user} />
                 case 'hours': return <ViewHours user={props.user} />
                 case 'events': return <Events user={props.user} />

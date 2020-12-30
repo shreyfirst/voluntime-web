@@ -88,10 +88,10 @@ const Account = props => {
         <Grid container className={classes.container}>
             <Grid item xs={9} sm={8} md={6} lg={5}>
                 View and edit your Voluntime account here.
-            <br /><br />
+                <br /><br />
                 <Typography variant='h6'>
                     Profile
-            </Typography><br />
+                </Typography><br />
                 <TextField variant='outlined' label='First Name' required onChange={e => setFirstName(e.target.value)} defaultValue={props.user.firstName} className={classes.textField} /><br /><br />
                 <TextField variant='outlined' label='Last Name' required onChange={e => setLastName(e.target.value)} defaultValue={props.user.lastName} className={classes.textField} /><br /><br />
                 <TextField variant='outlined' label='Note (additional info, public)' multiline rows={4} onChange={e => setNote(e.target.value)} defaultValue={props.user.note} className={classes.textField} /><br /><br />
