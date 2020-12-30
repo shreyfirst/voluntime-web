@@ -73,8 +73,7 @@ const Account = props => {
             } else {
                 setError('');
                 setSuccess('Your changes have been saved.');
-                data = { ...data, orgs: props.user.orgs };
-                props.setUser(data);
+                props.setUser({ ...data, orgs: props.user.orgs });
             }
         });
     };
