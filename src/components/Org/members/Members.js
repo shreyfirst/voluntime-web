@@ -29,6 +29,7 @@ const Members = props => {
     const [loadingRefresh, setLoadingRefresh] = useState(false);
     const [results, setResults] = useState(null);
     const [inviteOpen, setInviteOpen] = useState(false);
+    const [inviteUrl, setInviteUrl] = useState(null);
 
     const refreshMembers = callback => {
         getMembers({
@@ -130,7 +131,8 @@ const Members = props => {
                         </>}
                 </Grid>
             </Grid>
-            <InviteLink open={inviteOpen} setOpen={setInviteOpen} user={props.user} org={props.org} />
+            {inviteOpen &&
+                <InviteLink url={inviteUrl} setUrl={setInviteUrl} open={inviteOpen} setOpen={setInviteOpen} user={props.user} org={props.org} />}
         </>
     );
 };
