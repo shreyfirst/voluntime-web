@@ -41,7 +41,10 @@ const Members = props => {
             } else {
                 setError('');
                 const roles = ['owner', 'admin', 'vol'];
+
+                //data fabrication
                 data = [data[0], { ...data[0], firstName: 'Bobs', role: 'admin' }, data[0], { ...data[0], lastName: 'Smith', role: 'vol' }, { ...data[0], role: 'admin' }, { ...data[0], role: 'vol' }, { ...data[0], role: 'vol' }, { ...data[0], role: 'vol' }, data[0]];
+
                 data = data.sort((a, b) => {
                     var role1 = roles.indexOf(a.role), role2 = roles.indexOf(b.role);
                     if (role1 < role2) {
@@ -71,7 +74,7 @@ const Members = props => {
 
     const handleSearch = () => {
         if (searchValue.length > 0) {
-            setResults(props.members.filter(m => m.firstName.toLowerCase().includes(searchValue.toLowerCase()) || m.lastName.toLowerCase().includes(searchValue.toLowerCase())));
+            setResults(props.members.filter(m => (m.firstName+m.lastName).replace(/\s+/g, '').toLowerCase().includes(searchValue.replace(/\s+/g, '').toLowerCase())));
         }
     };
 

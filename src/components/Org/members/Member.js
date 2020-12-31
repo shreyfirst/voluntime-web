@@ -42,13 +42,10 @@ const Member = props => {
     const classes = useStyles();
 
     const Contact = props => (
-        <>
-            <br />
-            <div className={classes.contact}>
-                {props.icon}
-                <span className={classes.contactValue}>{props.value}</span>
-            </div>
-        </>
+        <div className={classes.contact}>
+            {props.icon}
+            <span className={classes.contactValue}>{props.value}</span>
+        </div>
     );
 
     return (
@@ -58,6 +55,10 @@ const Member = props => {
                 <div className={`${classes.header} ${classes[member.role]}`}>{roleNames[member.role]}</div>
                 <Typography variant='h6'>{member.firstName} {member.lastName}</Typography>
                 <Typography variant='body1' className={classes.note}>{member.note}</Typography>
+                {
+                    (member.contactInfo.email.length > 0 || member.contactInfo.phone.length > 0 || member.contactInfo.instagram.length > 0) &&
+                    <br />
+                }
                 {
                     member.contactInfo.email.length > 0 &&
                     <Contact icon={<EmailIcon />} value={member.contactInfo.email} />
