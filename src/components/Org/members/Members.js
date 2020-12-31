@@ -1,11 +1,12 @@
 import { useState, useEffect } from 'react';
-import { Grid, IconButton, CircularProgress, TextField, InputAdornment } from '@material-ui/core';
-import { Refresh as RefreshIcon, Search as SearchIcon } from '@material-ui/icons';
+import { Grid, IconButton, CircularProgress, TextField, InputAdornment, Button } from '@material-ui/core';
+import { Refresh as RefreshIcon, Search as SearchIcon, GroupAdd as InviteIcon } from '@material-ui/icons';
 import { Alert } from '@material-ui/lab';
 import { makeStyles } from '@material-ui/core/styles';
 import { getMembers } from '../../../services/orgs';
 import Fetching from '../Fetching';
 import Member from './Member';
+import InviteLink from './InviteLink';
 
 const useStyles = makeStyles({
     container: {
@@ -14,11 +15,11 @@ const useStyles = makeStyles({
     refresh: {
         position: 'absolute',
         right: 0,
-        top: -20,
+        top: -18,
     },
-    refreshIcon: {
-        fontSize: 35,
-    }
+    actionIcon: {
+        fontSize: 32,
+    },
 });
 
 const Members = props => {
@@ -27,6 +28,7 @@ const Members = props => {
     const [error, setError] = useState('');
     const [loadingRefresh, setLoadingRefresh] = useState(false);
     const [results, setResults] = useState(null);
+    const [inviteOpen, setInviteOpen] = useState(false);
 
     const refreshMembers = callback => {
         getMembers({
@@ -86,39 +88,49 @@ const Members = props => {
                     </Grid>
                 </Grid>
             }
-            {
-                props.members === null
-                    ? <Fetching />
-                    : <Grid container>
-                        <Grid item xs={12} sm={9} md={7} lg={6} className={classes.container}>
-                            <IconButton onClick={handleRefresh} className={classes.refresh}>
-                                {loadingRefresh
-                                    ? <CircularProgress size={35} color='secondary' />
-                                    : <RefreshIcon className={classes.refreshIcon} />}
-                            </IconButton>
-                            Total Members: {props.members.length}
-                            <br /><br />
-                            <TextField onChange={e => setSearchValue(e.target.value)} variant='outlined' fullWidth InputProps={{
-                                placeholder: 'Search Members...', endAdornment: (
-                                    <InputAdornment position="end">
-                                        <IconButton
-                                            aria-label="search"
-                                            onClick={handleSearch}
-                                        >
-                                            <SearchIcon />
-                                        </IconButton>
-                                    </InputAdornment>
-                                )
-                            }} />
-                            <br /><br />
+            <Grid container>
+                <Grid item xs={12} sm={9} md={7} lg={6} className={classes.container}>
+                    <span className={classes.refresh}>
+                        {props.org.role !== 'vol' &&
+                            <IconButton onClick={() => setInviteOpen(true)}><InviteIcon className={classes.actionIcon} /></IconButton>
+                        }
+                        <IconButton onClick={handleRefresh} disabled={loadingRefresh}>
+                            {loadingRefresh
+                                ? <CircularProgress size={32} color='secondary' />
+                                : <RefreshIcon className={classes.actionIcon} />}
+                        </IconButton>
+                    </span>
+                            Total Members: {props.members === null ? '...' : props.members.length}
+                    <br /><br />
+                    <TextField onChange={e => setSearchValue(e.target.value)} variant='outlined' fullWidth InputProps={{
+                        placeholder: 'Search Members...', endAdornment: (
+                            <InputAdornment position="end">
+                                <IconButton
+                                    aria-label="search"
+                                    onClick={handleSearch}
+                                >
+                                    <SearchIcon />
+                                </IconButton>
+                            </InputAdornment>
+                        )
+                    }} />
+                    <br /><br />
+                    {props.members === null
+                        ? <Fetching />
+                        : <>
                             {searchValue.length < 1 || results === null
                                 ? props.members.map(m => <Member key={m.id} member={m} />)
                                 : results.length < 1
                                     ? 'No Results'
                                     : results.map(m => <Member key={m.id} member={m} />)}
-                        </Grid>
-                    </Grid>
-            }
+                            <br />
+                            <Grid container justify='center'>
+                                <Button variant='contained' color='primary' onClick={() => setInviteOpen(true)} startIcon={<InviteIcon />}>Invite Members</Button>
+                            </Grid>
+                        </>}
+                </Grid>
+            </Grid>
+            <InviteLink open={inviteOpen} setOpen={setInviteOpen} user={props.user} org={props.org} />
         </>
     );
 };

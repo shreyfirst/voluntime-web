@@ -1,5 +1,6 @@
 import { useEffect, useState, useCallback, lazy, Suspense } from 'react';
 import Landing from './components/landing/Landing';
+import JoinOrg from './components/joinOrg/JoinOrg';
 import VerifyEmail from './components/verifyEmail/VerifyEmail';
 import ResetPassword from './components/resetPassword/ResetPassword';
 import VerifyNewEmail from './components/verifyNewEmail/VerifyNewEmail';
@@ -25,7 +26,7 @@ const App = () => {
     useEffect(() => {
         if (user.loggedIn !== false) { return; }
 
-        const loginRoutes = ['dashboard', ''];
+        const loginRoutes = ['dashboard', 'j', ''];
 
         var routeMatch = false;
         const path = location.pathname.split('/')[1];
@@ -70,6 +71,9 @@ const App = () => {
                 </Route>
                 <Route path='/dashboard'>
                     {user.loggedIn === false ? <LoadingIndicator /> : <Dashboard user={user} setUser={setUser} />}
+                </Route>
+                <Route path={['/j/:invite', '/j']}>
+                    {user.loggedIn === false ? <LoadingIndicator /> : <JoinOrg user={user} setUser={setUser} />}
                 </Route>
                 <Route path={['/verify-email/:id', '/verify-email']}>
                     <VerifyEmail setUser={setUser} />

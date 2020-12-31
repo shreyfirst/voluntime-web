@@ -42,20 +42,22 @@ const Member = props => {
     const classes = useStyles();
 
     const Contact = props => (
-        <div className={classes.contact}>
-            {props.icon}
-            <span className={classes.contactValue}>{props.value}</span>
-        </div>
+        <>
+            <br />
+            <div className={classes.contact}>
+                {props.icon}
+                <span className={classes.contactValue}>{props.value}</span>
+            </div>
+        </>
     );
 
     return (
         <Card className={classes.container}>
-            
+
             <CardContent>
-            <div className={`${classes.header} ${classes[member.role]}`}>{roleNames[member.role]}</div>
+                <div className={`${classes.header} ${classes[member.role]}`}>{roleNames[member.role]}</div>
                 <Typography variant='h6'>{member.firstName} {member.lastName}</Typography>
                 <Typography variant='body1' className={classes.note}>{member.note}</Typography>
-                <br />
                 {
                     member.contactInfo.email.length > 0 &&
                     <Contact icon={<EmailIcon />} value={member.contactInfo.email} />

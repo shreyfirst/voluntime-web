@@ -15,7 +15,6 @@ const useStyles = makeStyles({
     },
     textField: {
         width: '100%',
-        //maxWidth: '32em'
     },
     submitButton: {
         minWidth: '10em',
