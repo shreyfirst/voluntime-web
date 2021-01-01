@@ -14,4 +14,6 @@ const joinOrg = (info, callback) => post('/orgs/join', info, callback);
 
 const joinOrgInfo = (invite, callback) => post('/orgs/join/info', { invite }, callback);
 
-export { createOrg, editOrg, leaveOrg, getMembers, createInviteLink, joinOrg, joinOrgInfo };
+const changeRole = (info, callback) => post('/orgs/changeRole', info, callback);
+
+export { createOrg, editOrg, leaveOrg, getMembers, createInviteLink, joinOrg, joinOrgInfo, changeRole };

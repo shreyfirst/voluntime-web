@@ -43,7 +43,7 @@ const Members = props => {
                 const roles = ['owner', 'admin', 'vol'];
 
                 //data fabrication
-                data = [data[0], { ...data[0], firstName: 'Bobs', role: 'admin' }, data[0], { ...data[0], lastName: 'Smith', role: 'vol' }, { ...data[0], role: 'admin' }, { ...data[0], role: 'vol' }, { ...data[0], role: 'vol' }, { ...data[0], role: 'vol' }, data[0]];
+                //data = [data[0], { ...data[0], firstName: 'Bobs', role: 'admin' }, data[0], { ...data[0], lastName: 'Smith', role: 'vol' }, { ...data[0], role: 'admin' }, { ...data[0], role: 'vol' }, { ...data[0], role: 'vol' }, { ...data[0], role: 'vol' }, data[0]];
 
                 data = data.sort((a, b) => {
                     var role1 = roles.indexOf(a.role), role2 = roles.indexOf(b.role);
@@ -123,10 +123,10 @@ const Members = props => {
                         ? <Fetching />
                         : <>
                             {searchValue.length < 1 || results === null
-                                ? props.members.map(m => <Member key={m.id} member={m} />)
+                                ? props.members.map(m => <Member key={m.id} member={m} role={props.org.role} user={props.user} org={props.org} members={props.members} setMembers={props.setMembers} />)
                                 : results.length < 1
                                     ? 'No Results'
-                                    : results.map(m => <Member key={m.id} member={m} />)}
+                                    : results.map(m => <Member key={m.id} member={m} role={props.org.role} user={props.user} org={props.org} members={props.members} setMembers={props.setMembers} />)}
                             <br />
                             <Grid container justify='center'>
                                 <Button variant='contained' color='primary' onClick={() => setInviteOpen(true)} startIcon={<InviteIcon />}>Invite Members</Button>
