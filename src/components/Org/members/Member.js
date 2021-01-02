@@ -3,6 +3,7 @@ import { Card, CardContent, Typography, IconButton, Menu, MenuItem, Button, Circ
 import { Alert } from '@material-ui/lab';
 import { makeStyles } from '@material-ui/core/styles';
 import { MailOutline as EmailIcon, Phone as PhoneIcon, Instagram as InstagramIcon, Edit as EditIcon, RemoveCircleOutline as RemoveIcon, KeyboardArrowDown as OpenMenuIcon } from '@material-ui/icons';
+import ConfirmRemove from './ConfirmRemove';
 import { changeRole } from '../../../services/orgs';
 
 const roleNames = { 'owner': 'Owner', 'admin': 'Administrator', 'vol': 'Volunteer' };
@@ -69,6 +70,7 @@ const Member = props => {
 
     const [edit, setEdit] = useState(false);
     const [error, setError] = useState('');
+    const [removeOpen, setRemoveOpen] = useState(false);
 
     const Contact = props => (
         <div className={classes.contact}>
@@ -159,8 +161,8 @@ const Member = props => {
                 }
                 {
                     props.role !== 'vol' && member.id !== props.user.id &&
-                        (edit
-                        ? <div className={classes.cornerButton}><Button variant='outlined' startIcon={<RemoveIcon />} className={classes.removeButton}>Remove Member</Button><Button onClick={() => { setError(''); setEdit(false); }} variant='outlined'>Cancel</Button></div>
+                    (edit
+                        ? <div className={classes.cornerButton}><Button onClick={() => setRemoveOpen(true)} variant='outlined' startIcon={<RemoveIcon />} className={classes.removeButton}>Remove Member</Button><Button onClick={() => { setError(''); setEdit(false); }} variant='outlined'>Cancel</Button></div>
                         : <IconButton onClick={() => setEdit(true)} className={classes.cornerButton}><EditIcon /></IconButton>)
                 }
                 {
@@ -168,6 +170,7 @@ const Member = props => {
                     <><Alert severity="error">{error}</Alert><br /></>
                 }
             </CardContent>
+            <ConfirmRemove open={removeOpen} setOpen={setRemoveOpen} user={props.user} setUser={props.setUser} org={props.org} member={member} members={props.members} setMembers={props.setMembers} />
         </Card>
     );
 };
