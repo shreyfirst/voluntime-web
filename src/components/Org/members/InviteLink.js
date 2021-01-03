@@ -46,9 +46,12 @@ const InviteLink = props => {
                 <DialogContentText>
                     Send this invite link to your volunteers for them to join this organization. The link expires in 7 days.
                 </DialogContentText>
-                <Link href={props.url} target={`join-${props.org.id}`} className={classes.url}>
-                    {props.url}
-                </Link>
+                {
+                    props.url !== null &&
+                    <Link href={props.url} target={`join-${props.org.id}`} className={classes.url}>
+                        {props.url}
+                    </Link>
+                }
                 {loading &&
                     <CircularProgress color='secondary' size={40} />}
                 {error.length > 0 &&
