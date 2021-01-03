@@ -15,6 +15,9 @@ const useStyles = makeStyles(theme => ({
         boxShadow: '0 2px 2px rgba(0,0,0,0.25)',
         position: 'relative'
     },
+    containerTable: {
+        boxShadow: 'none'
+    },
     header: {
         fontWeight: 'bold',
     },
@@ -133,7 +136,7 @@ const Member = props => {
     };
 
     return (
-        <Card className={classes.container}>
+        <Card className={`${classes.container} ${props.table ? classes.containerTable : ''}`}>
             <CardContent>
                 {
                     edit
