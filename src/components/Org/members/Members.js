@@ -91,8 +91,8 @@ const Members = props => {
     useEffect(handleSearch, [searchValue, props.members]);
 
     const classes = useStyles();
-    const MemberProps = p => <Member member={p.m} role={props.org.role} user={props.user} org={props.org} members={props.members} setMembers={props.setMembers} />;
-    const TableProps = p => <TableView member={p.m} role={props.org.role} user={props.user} org={props.org} setMembers={props.setMembers} members={p.search ? results : props.members} />;
+    const MemberProps = p => <Member member={p.m} user={props.user} org={props.org} members={props.members} setMembers={props.setMembers} />;
+    const TableProps = p => <TableView member={p.m} user={props.user} org={props.org} setMembers={props.setMembers} members={p.search ? results : props.members} />;
     return (
         <>
             {
