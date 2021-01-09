@@ -4,7 +4,9 @@ const createOrg = (info, callback) => post('/orgs', info, callback);
 
 const editOrg = (info, callback) => post('/orgs/edit', info, callback);
 
-const deleteOrg = (info, callback) => post('/orgs/delete', info, callback);
+const archiveOrg = (info, callback) => post('/orgs/archive', info, callback);
+
+const unarchiveOrg = (info, callback) => post('/orgs/unarchive', info, callback);
 
 const leaveOrg = (info, callback) => post('/orgs/leave', info, callback);
 
@@ -20,4 +22,4 @@ const changeRole = (info, callback) => post('/orgs/changeRole', info, callback);
 
 const removeMember = (info, callback) => post('/orgs/removeMember', info, callback);
 
-export { createOrg, editOrg, deleteOrg, leaveOrg, getMembers, createInviteLink, joinOrg, joinOrgInfo, changeRole, removeMember };
+export { createOrg, editOrg, archiveOrg, unarchiveOrg, leaveOrg, getMembers, createInviteLink, joinOrg, joinOrgInfo, changeRole, removeMember };

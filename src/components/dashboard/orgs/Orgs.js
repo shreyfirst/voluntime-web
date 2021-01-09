@@ -5,6 +5,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { Add as AddIcon } from '@material-ui/icons';
 import CreateOrg from './CreateOrg';
 import OrgCard from './OrgCard';
+import Archived from './Archived';
 
 const useStyles = makeStyles({
     orgCard: {
@@ -30,7 +31,7 @@ const Orgs = props => {
             <Grid container spacing={2}>
                 {
                     orgs.map(org => (
-                        <Grid item className={classes.orgCard} xs={4} lg={3} key={org.id}>
+                        <Grid item className={classes.orgCard} xs={6} sm={4} lg={3} key={org.id}>
                             <OrgCard org={org} />
                         </Grid>
                     ))
@@ -40,9 +41,9 @@ const Orgs = props => {
     );
 
     const sortOrgs = orgs => {
-        var sorted = { owner: [], admin: [], vol: [] };
+        var sorted = { owner: [], admin: [], vol: [], archive: [] };
         for (const org of orgs) {
-            sorted[org.role].push(org);
+            sorted[org.active ? org.role : 'archive'].push(org);
         }
         return sorted;
     };
@@ -72,6 +73,10 @@ const Orgs = props => {
                         {
                             sortedOrgs.current.vol.length > 0 &&
                             orgSection('Volunteer', sortedOrgs.current.vol)
+                        }
+                        {
+                            sortedOrgs.current.archive.length > 0 &&
+                            <Archived archives={sortedOrgs.current.archive} user={props.user} setUser={props.setUser} />
                         }
                     </>
             }

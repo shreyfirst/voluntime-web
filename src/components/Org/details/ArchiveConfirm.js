@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, CircularProgress } from '@material-ui/core';
 import { Alert } from '@material-ui/lab';
 import { makeStyles } from '@material-ui/core/styles';
-import { deleteOrg } from '../../../services/orgs';
+import { archiveOrg } from '../../../services/orgs';
 import { useHistory } from 'react-router-dom';
 
 const useStyles = makeStyles({
@@ -16,7 +16,7 @@ const useStyles = makeStyles({
         }
     }
 });
-const DeleteConfirm = props => {
+const ArchiveConfirm = props => {
 
     const history = useHistory();
 
@@ -30,7 +30,7 @@ const DeleteConfirm = props => {
 
     const handleSubmit = () => {
         setLoading(true);
-        deleteOrg({
+        archiveOrg({
             token: props.user.token,
             id: props.org.id,
         }, (err, data) => {
@@ -75,4 +75,4 @@ const DeleteConfirm = props => {
     );
 };
 
-export default DeleteConfirm;
+export default ArchiveConfirm;

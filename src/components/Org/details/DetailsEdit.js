@@ -3,7 +3,7 @@ import { Typography, TextField, Grid, Button, CircularProgress } from '@material
 import { Alert } from '@material-ui/lab';
 import { makeStyles } from '@material-ui/core/styles';
 import { editOrg } from '../../../services/orgs';
-import DeleteConfirm from './DeleteConfirm';
+import ArchiveConfirm from './ArchiveConfirm';
 
 const useStyles = makeStyles({
     container: {
@@ -18,7 +18,7 @@ const useStyles = makeStyles({
     helperText: {
         color: '#414141'
     },
-    deleteButton: {
+    archiveButton: {
         color: '#d73a49',
         fontWeight: 'bold',
         borderColor: '#d73a49',
@@ -100,9 +100,9 @@ const DetailsEdit = props => {
             }
             <br /><br /><br />
             <Grid container justify='center'>
-                <Button variant='outlined' onClick={() => setDelOpen(true)} className={classes.deleteButton}>ARCHIVE ORGANIZATION</Button>
+                <Button variant='outlined' onClick={() => setDelOpen(true)} className={classes.archiveButton}>ARCHIVE ORGANIZATION</Button>
             </Grid>
-            <DeleteConfirm open={delOpen} setOpen={setDelOpen} user={props.user} setUser={props.setUser} org={props.org} />
+            <ArchiveConfirm open={delOpen} setOpen={setDelOpen} user={props.user} setUser={props.setUser} org={props.org} />
         </>
     );
 };
