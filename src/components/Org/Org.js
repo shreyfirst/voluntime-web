@@ -94,7 +94,7 @@ const Org = props => {
 
     const getOrg = () => {
         for (const o of props.user.orgs) {
-            if (o.id === orgId) {
+            if (o.active && o.id === orgId) {
                 return o;
             }
         }
