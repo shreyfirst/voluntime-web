@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Typography, Grid, Button } from '@material-ui/core';
+import { RemoveCircleOutline as LeaveIcon } from '@material-ui/icons';
 import { makeStyles } from '@material-ui/core/styles';
 import LeaveConfirm from './LeaveConfirm';
 
@@ -31,7 +32,7 @@ const DetailsView = props => {
             <Typography variant='h5' className={classes.name}>{props.org.name}</Typography><br />
             <Typography className={classes.description}>{props.org.description}</Typography><br /><br /><br />
             <Grid container justify='center'>
-                <Button variant='outlined' onClick={() => setLeaveOpen(true)} className={classes.leaveButton}>LEAVE ORGANIZATION</Button>
+                <Button variant='outlined' onClick={() => setLeaveOpen(true)} startIcon={<LeaveIcon />} className={classes.leaveButton}>LEAVE ORGANIZATION</Button>
             </Grid>
             <LeaveConfirm open={leaveOpen} setOpen={setLeaveOpen} user={props.user} setUser={props.setUser} org={props.org} />
         </>

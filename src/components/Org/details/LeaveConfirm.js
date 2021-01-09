@@ -1,13 +1,14 @@
 import { useState } from 'react';
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, CircularProgress } from '@material-ui/core';
 import { Alert } from '@material-ui/lab';
+import { RemoveCircleOutline as LeaveIcon } from '@material-ui/icons';
 import { makeStyles } from '@material-ui/core/styles';
 import { leaveOrg } from '../../../services/orgs';
 import { useHistory } from 'react-router-dom';
 
 const useStyles = makeStyles({
     submitButton: {
-        minWidth: '12em',
+        minWidth: '13em',
         color: '#d73a49',
         borderColor: '#d73a49',
         '&:hover': {
@@ -60,7 +61,7 @@ const LeaveConfirm = props => {
                 <Button variant='text' onClick={closeDialog} color="primary">
                     Cancel
                 </Button>
-                <Button variant='outlined' onClick={handleSubmit} disabled={loading} className={classes.submitButton}>
+                <Button variant='outlined' onClick={handleSubmit} disabled={loading} startIcon={!loading && <LeaveIcon />} className={classes.submitButton}>
                     {
                         loading
                             ? <CircularProgress size={24} color='secondary' />

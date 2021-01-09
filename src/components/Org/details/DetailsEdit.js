@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Typography, TextField, Grid, Button, CircularProgress } from '@material-ui/core';
 import { Alert } from '@material-ui/lab';
+import { Archive } from '@material-ui/icons';
 import { makeStyles } from '@material-ui/core/styles';
 import { editOrg } from '../../../services/orgs';
 import ArchiveConfirm from './ArchiveConfirm';
@@ -100,7 +101,7 @@ const DetailsEdit = props => {
             }
             <br /><br /><br />
             <Grid container justify='center'>
-                <Button variant='outlined' onClick={() => setDelOpen(true)} className={classes.archiveButton}>ARCHIVE ORGANIZATION</Button>
+                <Button variant='outlined' onClick={() => setDelOpen(true)} startIcon={<Archive />} className={classes.archiveButton}>ARCHIVE ORGANIZATION</Button>
             </Grid>
             <ArchiveConfirm open={delOpen} setOpen={setDelOpen} user={props.user} setUser={props.setUser} org={props.org} />
         </>
