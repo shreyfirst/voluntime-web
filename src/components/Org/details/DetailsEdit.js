@@ -3,6 +3,7 @@ import { Typography, TextField, Grid, Button, CircularProgress } from '@material
 import { Alert } from '@material-ui/lab';
 import { makeStyles } from '@material-ui/core/styles';
 import { editOrg } from '../../../services/orgs';
+import DeleteConfirm from './DeleteConfirm';
 
 const useStyles = makeStyles({
     container: {
@@ -16,6 +17,15 @@ const useStyles = makeStyles({
     },
     helperText: {
         color: '#414141'
+    },
+    deleteButton: {
+        color: '#d73a49',
+        fontWeight: 'bold',
+        borderColor: '#d73a49',
+        '&:hover': {
+            color: '#FFF',
+            backgroundColor: '#d73a49',
+        }
     }
 });
 
@@ -27,6 +37,8 @@ const DetailsEdit = props => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
+
+    const [delOpen, setDelOpen] = useState(false);
 
     const handleSubmit = () => {
         setSuccess('');
@@ -86,6 +98,11 @@ const DetailsEdit = props => {
                 error.length > 0 &&
                 <Alert severity="error">{error}</Alert>
             }
+            <br /><br /><br />
+            <Grid container justify='center'>
+                <Button variant='outlined' onClick={() => setDelOpen(true)} className={classes.deleteButton}>ARCHIVE ORGANIZATION</Button>
+            </Grid>
+            <DeleteConfirm open={delOpen} setOpen={setDelOpen} user={props.user} setUser={props.setUser} org={props.org} />
         </>
     );
 };
