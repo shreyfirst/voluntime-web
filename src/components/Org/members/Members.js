@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Grid, IconButton, CircularProgress, TextField, InputAdornment, Button } from '@material-ui/core';
+import { Grid, IconButton, CircularProgress, TextField, InputAdornment, Button, Tooltip } from '@material-ui/core';
 import { Refresh as RefreshIcon, Search as SearchIcon, GroupAdd as InviteIcon, List as GridIcon, ViewAgendaOutlined as CardIcon } from '@material-ui/icons';
 import { Alert } from '@material-ui/lab';
 import { makeStyles } from '@material-ui/core/styles';
@@ -107,9 +107,13 @@ const Members = props => {
             <Grid container>
                 <Grid item xs={12} sm={9} md={7} lg={6} className={classes.container}>
                     <span className={classes.refresh}>
-                        <IconButton onClick={() => setTable(!table)}>{table ? <CardIcon className={classes.actionIcon} /> : <GridIcon className={classes.actionIcon} />}</IconButton>
+                        <Tooltip title={table ? 'Card View' : 'Table View'} arrow>
+                            <IconButton onClick={() => setTable(!table)}>{table ? <CardIcon className={classes.actionIcon} /> : <GridIcon className={classes.actionIcon} />}</IconButton>
+                        </Tooltip>
                         {props.org.role !== 'vol' &&
-                            <IconButton onClick={() => setInviteOpen(true)}><InviteIcon className={classes.actionIcon} /></IconButton>
+                            <Tooltip title='Invite' arrow>
+                                <IconButton onClick={() => setInviteOpen(true)}><InviteIcon className={classes.actionIcon} /></IconButton>
+                            </Tooltip>
                         }
                         <IconButton onClick={handleRefresh} disabled={loadingRefresh}>
                             {loadingRefresh
