@@ -145,9 +145,11 @@ const Members = props => {
                                     ? 'No Results'
                                     : table ? <TableProps search /> : results.map(m => <MemberProps key={m.id} m={m} />)}
                             <br />
-                            <Grid container justify='center'>
-                                <Button variant='contained' color='primary' onClick={() => setInviteOpen(true)} startIcon={<InviteIcon />}>Invite Members</Button>
-                            </Grid>
+                            {props.org.role !== 'vol' &&
+                                <Grid container justify='center'>
+                                    <Button variant='contained' color='primary' onClick={() => setInviteOpen(true)} startIcon={<InviteIcon />}>Invite Members</Button>
+                                </Grid>
+                            }
                         </>}
                 </Grid>
             </Grid>
