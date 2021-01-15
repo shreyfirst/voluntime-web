@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Grid, Typography, TextField, Button, CircularProgress, Link } from '@material-ui/core';
 import { Alert } from '@material-ui/lab';
+import { Apple as AppleIcon } from '@material-ui/icons';
 import { makeStyles } from '@material-ui/core/styles';
 import { login } from '../../services';
 import { loginGoogle } from '../../services';
@@ -36,6 +37,16 @@ const useStyles = makeStyles({
         backgroundColor: '#FFF',
         minWidth: '50%'
     },
+    appleLogin: {
+        textTransform: 'none',
+        backgroundColor: '#000',
+        color: '#FFF',
+        minWidth: '50%',
+        "&:hover": {
+            //you want this to be the same as the backgroundColor above
+            backgroundColor: "#000"
+        }
+    }
 });
 
 const Login = props => {
@@ -127,7 +138,7 @@ const Login = props => {
                         }
                         <br />
                         <Button onClick={() => setView('forgotPassword')} variant="text" className={classes.forgotPassword}>Forgot Password?</Button>
-                        <br /><br />
+                        <br /><br /><br />
                         <GoogleLogin
                             clientId="978484937841-gg9qpc12jq2ccdom9mqv5mjbibfgu886.apps.googleusercontent.com"
                             onSuccess={responseGoogle}
@@ -136,7 +147,8 @@ const Login = props => {
                             render={renderProps => (
                                 <Button startIcon={<GoogleIcon />} className={classes.googleLogin} onClick={renderProps.onClick} disabled={renderProps.disabled} variant='contained' autoCapitalize='false'>Sign in with Google</Button>
                             )}
-                        />
+                        /><br /><br />
+                        <Button startIcon={<AppleIcon />} className={classes.appleLogin} onClick={() => setError('Sign in with Apple is not supported yet.')}>Sign in with Apple</Button>
                         <Grid container justify="center" className={classes.toggle}>
                             <Grid item>
                                 Don't have an account? <Button variant="text" color="primary" onClick={() => props.setView('signup')}>Sign Up</Button>

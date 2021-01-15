@@ -2,12 +2,13 @@ import { useState } from 'react';
 import { Grid, Typography, TextField, Button, InputAdornment, IconButton, CircularProgress } from '@material-ui/core';
 import { Alert } from '@material-ui/lab';
 import { makeStyles } from '@material-ui/core/styles';
-import { Visibility, VisibilityOff } from '@material-ui/icons';
+import { Visibility, VisibilityOff, Apple as AppleIcon } from '@material-ui/icons';
 import { createUser, createUserGoogle } from '../../services';
 import { useHistory } from 'react-router-dom';
 import VerifyEmail from './VerifyEmail';
 import GoogleLogin from 'react-google-login';
 import GoogleIcon from '../helpers/GoogleIcon';
+//import AppleLogin from 'react-apple-login';
 
 const useStyles = makeStyles({
     container: {
@@ -34,8 +35,22 @@ const useStyles = makeStyles({
     googleLogin: {
         textTransform: 'none',
         backgroundColor: '#FFF',
-        minWidth: '50%'
+        minWidth: '50%',
+        "&:hover": {
+            //you want this to be the same as the backgroundColor above
+            backgroundColor: "#EFEFEF"
+        }
     },
+    appleLogin: {
+        textTransform: 'none',
+        backgroundColor: '#000',
+        color: '#FFF',
+        minWidth: '50%',
+        "&:hover": {
+            //you want this to be the same as the backgroundColor above
+            backgroundColor: "#000"
+        }
+    }
 });
 
 const SignUp = props => {
@@ -170,7 +185,16 @@ const SignUp = props => {
                             render={renderProps => (
                                 <Button startIcon={<GoogleIcon />} className={classes.googleLogin} onClick={renderProps.onClick} disabled={renderProps.disabled} variant='contained' autoCapitalize='false'>Sign up with Google</Button>
                             )}
-                        />
+                        /><br /><br />
+                        {/*<AppleLogin
+                            clientId='com.mittaldev.voluntime-service'
+                            redirectURI='https://voluntime.mittaldev.com/apple-login'
+                            scope='email name'
+                            responseMode='fragment'
+                            responseType='code id_token'
+                            render={props => <Button startIcon={<AppleIcon />} className={classes.appleLogin} {...props}>Sign up with Apple</Button>}
+                        />*/}
+                        <Button startIcon={<AppleIcon />} className={classes.appleLogin} onClick={() => setError('Sign up with Apple is not supported yet.')}>Sign up with Apple</Button>
                         <Grid container justify="center" className={classes.toggle}>
                             <Grid item>
                                 Have an account? <Button variant="text" color="primary" onClick={() => props.setView('login')}>Login</Button>
