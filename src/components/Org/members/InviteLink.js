@@ -59,7 +59,7 @@ const InviteLink = props => {
             </DialogContent>
             <DialogActions>
                 {navigator.clipboard !== undefined &&
-                    <Button onClick={() => navigator.clipboard.writeText(props.url).then(() => setCopied(true), () => { })} variant='outlined' startIcon={copied ? <DoneIcon /> : <CopyIcon />}>
+                    <Button disabled={loading} onClick={() => navigator.clipboard.writeText(props.url).then(() => setCopied(true))} variant='outlined' startIcon={copied ? <DoneIcon /> : <CopyIcon />}>
                         Copy Link
                     </Button>}
                 <Button variant='contained' color='primary' onClick={closeDialog}>
