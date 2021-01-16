@@ -118,6 +118,7 @@ const Org = props => {
     const [view, setView] = useState(location.state === undefined ? 'details' : location.state.view);
 
     const [members, setMembers] = useState(null);
+    const [logs, setLogs] = useState(null);
 
     useEffect(() => {
         const o = getOrg();
@@ -169,7 +170,7 @@ const Org = props => {
                 case 'metrics': return <Metrics user={props.user} />
                 case 'members': return <Members user={props.user} members={members} setMembers={setMembers} org={org} />
                 case 'add': return <AddHours user={props.user} />
-                case 'hours': return <ViewHours user={props.user} />
+                case 'hours': return <ViewHours user={props.user} members={members} setMembers={setMembers} logs={logs} setLogs={setLogs} org={org} />
                 case 'events': return <Events user={props.user} />
                 default: return 'Select a page on the left.'
             }
