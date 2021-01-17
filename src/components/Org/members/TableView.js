@@ -53,26 +53,24 @@ const Row = props => {
     );
 };
 
-const TableView = props => {
-    return (
-        <TableContainer>
-            <Table size='small'>
-                <TableHead>
-                    <TableRow>
-                        <TableCell />
-                        <TableCell>Role</TableCell>
-                        <TableCell>First Name</TableCell>
-                        <TableCell>Last name</TableCell>
-                    </TableRow>
-                </TableHead>
-                <TableBody>
-                    {props.members.map(m => 
-                        <Row key={m.id} member={m} role={props.org.role} user={props.user} org={props.org} members={props.members} setMembers={props.setMembers} />
-                    )}
-                </TableBody>
-            </Table>
-        </TableContainer>
-    );
-};
+const TableView = props => (
+    <TableContainer>
+        <Table size='small'>
+            <TableHead>
+                <TableRow>
+                    <TableCell />
+                    <TableCell>Role</TableCell>
+                    <TableCell>First Name</TableCell>
+                    <TableCell>Last name</TableCell>
+                </TableRow>
+            </TableHead>
+            <TableBody>
+                {props.members.map(m =>
+                    <Row key={m.id} member={m} role={props.org.role} user={props.user} org={props.org} members={props.members} setMembers={props.setMembers} />
+                )}
+            </TableBody>
+        </Table>
+    </TableContainer>
+);
 
 export default TableView;

@@ -117,7 +117,7 @@ const Members = props => {
                                 : <RefreshIcon className={classes.actionIcon} />}
                         </IconButton>
                     </span>
-                            Total Members: {props.members === null ? '...' : props.members.length}
+                    Total Members: {props.members === null ? '...' : props.members.length}
                     <br /><br />
                     <TextField onChange={e => setSearchValue(e.target.value)} variant='outlined' fullWidth InputProps={{
                         placeholder: 'Search Members...', endAdornment: (

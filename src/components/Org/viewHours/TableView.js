@@ -74,8 +74,8 @@ const Row = props => {
                 <TableCell style={{ paddingBottom: 0, paddingTop: 0, }} colSpan={7}>
                     <Collapse in={open} timeout="auto" unmountOnExit className={classes.collapse}>
                         <strong>Volunteer:</strong> {log.vol.firstName} {log.vol.lastName}<br /><br />
-                        <span className={classes.collapseTimeLabel}>Start Time:</span> <Box fontFamily='Monospace' fontSize={15} letterSpacing={0.8} component='span'>{start.format('ddd, MMM D YYYY [at] h:mm A')}</Box><br />
-                        <span className={classes.collapseTimeLabel}>End Time:</span> <Box fontFamily='Monospace' fontSize={15} letterSpacing={0.8} component='span'>{end.format('ddd, MMM D YYYY [at] h:mm A')}</Box><br /><br />
+                        <span className={classes.collapseTimeLabel}>Start Time:</span> <Box fontFamily='Monospace' fontSize={15} letterSpacing={0.8} component='span'>{start.format('ddd, MMM D YYYY [at] hh:mm A')}</Box><br />
+                        <span className={classes.collapseTimeLabel}>End Time:</span> <Box fontFamily='Monospace' fontSize={15} letterSpacing={0.8} component='span'>{end.format('ddd, MMM D YYYY [at] hh:mm A')}</Box><br /><br />
                         <strong>Hours:</strong> {log.hours}<br /><br />
                         <strong>Activity Description:</strong> <div className={classes.description}>{log.description.length > 0 ? log.description : <em>No description provided</em>}</div>
                     </Collapse>
@@ -86,26 +86,33 @@ const Row = props => {
 };
 
 const TableView = props => (
-    <TableContainer>
-        <Table size='small'>
-            <TableHead>
-                <TableRow>
-                    <TableCell />
-                    <TableCell>Status</TableCell>
-                    <TableCell>Hours</TableCell>
-                    <TableCell>Volunteer</TableCell>
-                    <TableCell>Approver/Denier</TableCell>
-                    <TableCell>Start</TableCell>
-                    <TableCell>End</TableCell>
-                </TableRow>
-            </TableHead>
-            <TableBody>
-                {props.logs.map(log =>
-                    <Row key={log.id} log={log} user={props.user} org={props.org} />
-                )}
-            </TableBody>
-        </Table>
-    </TableContainer>
+    <>
+        {
+            props.logs.length > 0
+                ? <TableContainer>
+                    <Table size='small'>
+                        <TableHead>
+                            <TableRow>
+                                <TableCell />
+                                <TableCell>Status</TableCell>
+                                <TableCell>Hours</TableCell>
+                                <TableCell>Volunteer</TableCell>
+                                <TableCell>Approver/Denier</TableCell>
+                                <TableCell>Start</TableCell>
+                                <TableCell>End</TableCell>
+                            </TableRow>
+                        </TableHead>
+                        <TableBody>
+                            {props.logs.map(log =>
+                                <Row key={log.id} log={log} user={props.user} org={props.org} />
+                            )}
+                        </TableBody>
+                    </Table>
+                </TableContainer>
+                : 'No Results'
+        }
+    </>
+
 );
 
 export default TableView;

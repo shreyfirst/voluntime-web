@@ -1,17 +1,104 @@
 import { useState, useEffect } from 'react';
 import { getMembers } from '../../../services/orgs';
 import { getLogsOrg, getLogsUserOrg } from '../../../services/logs';
-import { Grid, IconButton, CircularProgress, TextField, InputAdornment, Button, Tooltip, Typography } from '@material-ui/core';
-import { Refresh as RefreshIcon } from '@material-ui/icons';
+import { Grid, IconButton, CircularProgress, Button, Tooltip, Typography, Menu, MenuItem } from '@material-ui/core';
+import { Refresh as RefreshIcon, KeyboardArrowDown as OpenMenuIcon, LibraryAddCheckOutlined as AllIcon, Check as ApprovedIcon, Clear as DeniedIcon, Schedule as PendingIcon, AccountCircleOutlined as MemberIcon } from '@material-ui/icons';
+import { makeStyles } from '@material-ui/core/styles';
 import { Alert } from '@material-ui/lab';
 import Fetching from '../Fetching';
 import TableView from './TableView';
 
+const filterStatusNames = { all: 'All Status', approved: 'Approved', pending: 'Pending', denied: 'Denied' };
+
+const useStyles = makeStyles(theme => ({
+    all: {
+        color: theme.palette.primary.main
+    },
+    approved: {
+        color: theme.palette.success.main
+    },
+    pending: {
+        color: theme.palette.warning.main
+    },
+    denied: {
+        color: theme.palette.error.main
+    },
+    owner: {
+        color: theme.palette.primary.main
+    },
+    admin: {
+        color: theme.palette.secondary.main
+    },
+    vol: {
+        color: theme.palette.success.main
+    },
+    filterMenu: {
+        marginLeft: 15,
+    }
+}));
+
+const FilterMenu = props => {
+    const [anchorEl, setAnchorEl] = useState(null);
+
+    const handleClick = event => setAnchorEl(event.currentTarget);
+
+    const close = () => setAnchorEl(null);
+
+    const handleSelectStatus = to => {
+        props.setFilterStatus(to);
+        close();
+    };
+
+    const handleSelectVol = to => {
+        props.setFilterVol(to);
+        close();
+    };
+
+    const classes = useStyles();
+    const filterStatusIcons = { all: <AllIcon className={classes.all} />, approved: <ApprovedIcon className={classes.approved} />, pending: <PendingIcon className={classes.pending} />, denied: <DeniedIcon className={classes.denied} /> };
+
+    if (props.for === 'vol') { var selectedMember = props.filterVol === 'all' ? null : props.members.find(m => m.id === props.filterVol); }
+    return (
+        <>
+            <Button variant='outlined' onClick={handleClick} endIcon={<OpenMenuIcon />} startIcon={props.for === 'status' ? filterStatusIcons[props.filterStatus] : props.filterVol === 'all' ? filterStatusIcons.all : <MemberIcon className={classes[selectedMember.role]} />} className={classes.filterMenu}>
+                {props.for === 'status' ? filterStatusNames[props.filterStatus] : props.filterVol === 'all' ? 'All Members' : `${selectedMember.firstName} ${selectedMember.lastName}`}
+            </Button>
+            {
+                props.for === 'status'
+                    ? <Menu
+                        anchorEl={anchorEl}
+                        keepMounted
+                        open={anchorEl !== null}
+                        onClose={close}
+                    >
+                        {
+                            Object.entries(filterStatusNames).map(([s]) => <MenuItem key={s} onClick={() => handleSelectStatus(s)}>{filterStatusIcons[s]} &nbsp; {filterStatusNames[s]}</MenuItem>)
+                        }
+                    </Menu>
+                    : <Menu
+                        anchorEl={anchorEl}
+                        keepMounted
+                        open={anchorEl !== null}
+                        onClose={close}
+                    >
+                        <MenuItem onClick={() => handleSelectVol('all')}>{filterStatusIcons.all} &nbsp; All Members</MenuItem>
+                        {
+                            props.members.map(m => <MenuItem key={m.id} onClick={() => handleSelectVol(m.id)}><MemberIcon className={classes[m.role]} /> &nbsp; {m.firstName} {m.lastName}</MenuItem>)
+                        }
+                    </Menu>
+            }
+        </>
+    );
+};
 
 const ViewHours = props => {
     const [loadingRefresh, setLoadingRefresh] = useState(false);
     const [error, setError] = useState('');
     const [totalHours, setTotalHours] = useState('...');
+
+    const [filterStatus, setFilterStatus] = useState('all');
+    const [filterVol, setFilterVol] = useState('all');
+    const [filteredLogs, setFilteredLogs] = useState(null);
 
     const refresh = () => {
         setLoadingRefresh(true);
@@ -76,7 +163,15 @@ const ViewHours = props => {
                 }
             });
         }
+    };
 
+    const filterLogs = () => {
+        if (filterStatus !== 'all' || filterVol !== 'all') {
+            setFilteredLogs(props.logs.filter(log => (filterStatus === 'all' || log.status === filterStatus) && (filterVol === 'all' || log.userId === filterVol)));
+        } else {
+            //no filter selected
+            setFilteredLogs(null);
+        }
     };
 
     useEffect(() => {
@@ -93,9 +188,15 @@ const ViewHours = props => {
 
     useEffect(() => {
         if (props.logs !== null) {
-            setTotalHours(props.logs.reduce((sum, log) => sum + log.hours, 0));
+            if (filteredLogs === null) {
+                setTotalHours(props.logs.reduce((sum, log) => sum + log.hours, 0));
+            } else {
+                setTotalHours(filteredLogs.reduce((sum, log) => sum + log.hours, 0));
+            }
         }
-    }, [props.logs]);
+    }, [props.logs, filteredLogs]);
+
+    useEffect(filterLogs, [props.logs, filterStatus, filterVol]);
 
     return (
         <>
@@ -108,18 +209,22 @@ const ViewHours = props => {
                     </Grid>
                 </Grid>
             }
-            <Typography>
-                Total volunteer hours: {totalHours}<br /><br />
-                Filter By: Status Volunteer
-            </Typography>
             {
                 props.logs === null
                     ? <Fetching />
-                    : <Grid container>
-                        <Grid item xs={12} lg={11}>
-                            <TableView logs={props.logs} user={props.user} org={props.org} />
+                    : <>
+                        <Typography>
+                            Total volunteer hours: {totalHours}<br /><br />
+                            Filter By:
+                            <FilterMenu for='status' filterStatus={filterStatus} setFilterStatus={setFilterStatus} />
+                            {props.org.role !== 'vol' && <FilterMenu for='vol' filterVol={filterVol} setFilterVol={setFilterVol} members={props.members} />}
+                        </Typography><br />
+                        <Grid container>
+                            <Grid item xs={12} lg={11}>
+                                <TableView logs={filteredLogs === null ? props.logs : filteredLogs} user={props.user} org={props.org} />
+                            </Grid>
                         </Grid>
-                    </Grid>
+                    </>
             }
         </>
     );
