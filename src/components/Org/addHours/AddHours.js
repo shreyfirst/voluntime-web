@@ -78,11 +78,12 @@ const AddHours = props => {
                 </Typography><br />
                 <MuiPickersUtilsProvider utils={DayjsUtils}>
                     <KeyboardDatePicker
-                        format="dddd, MMM D YYYY"
+                        format="ddd, MMM D YYYY"
                         margin="normal"
                         label="Start date"
                         value={start}
                         onChange={date => setStart(date)}
+                        InputProps={{ readOnly: true }}
                         className={classes.datePicker}
                     />
                     <KeyboardTimePicker
@@ -90,14 +91,16 @@ const AddHours = props => {
                         label="Start time"
                         value={start}
                         onChange={date => setStart(date)}
+                        InputProps={{ readOnly: true }}
                         keyboardIcon={<Alarm />}
                     /><br /><br />
                     <KeyboardDatePicker
-                        format="dddd, MMM D YYYY"
+                        format="ddd, MMM D YYYY"
                         margin="normal"
                         label="End date"
                         value={end}
                         onChange={date => setEnd(date)}
+                        InputProps={{ readOnly: true }}
                         className={classes.datePicker}
                     />
                     <KeyboardTimePicker
@@ -105,6 +108,7 @@ const AddHours = props => {
                         label="End time"
                         value={end}
                         onChange={date => setEnd(date)}
+                        InputProps={{ readOnly: true }}
                         keyboardIcon={<Alarm />}
                     />
                 </MuiPickersUtilsProvider><br /><br />
