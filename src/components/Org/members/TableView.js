@@ -43,7 +43,7 @@ const Row = props => {
                 <TableCell>{member.lastName}</TableCell>
             </TableRow>
             <TableRow>
-                <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
+                <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={4}>
                     <Collapse in={open} timeout="auto" unmountOnExit>
                         <Member table member={member} role={props.org.role} user={props.user} org={props.org} members={props.members} setMembers={props.setMembers} />
                     </Collapse>

@@ -1,16 +1,17 @@
 import { useState, useEffect } from 'react';
 import { getMembers } from '../../../services/orgs';
-import { getLogsOrg } from '../../../services/logs';
-import { Grid, IconButton, CircularProgress, TextField, InputAdornment, Button, Tooltip } from '@material-ui/core';
+import { getLogsOrg, getLogsUserOrg } from '../../../services/logs';
+import { Grid, IconButton, CircularProgress, TextField, InputAdornment, Button, Tooltip, Typography } from '@material-ui/core';
 import { Refresh as RefreshIcon } from '@material-ui/icons';
 import { Alert } from '@material-ui/lab';
-import { makeStyles } from '@material-ui/core/styles';
 import Fetching from '../Fetching';
 import TableView from './TableView';
+
 
 const ViewHours = props => {
     const [loadingRefresh, setLoadingRefresh] = useState(false);
     const [error, setError] = useState('');
+    const [totalHours, setTotalHours] = useState('...');
 
     const refresh = () => {
         setLoadingRefresh(true);
@@ -38,25 +39,44 @@ const ViewHours = props => {
         });
     };
 
+    const handleLogsResponse = data => {
+        setError('');
+        data = data.sort((a, b) => b.start.localeCompare(a.start));
+        //user object for fast lookup
+        let userObj = {};
+        props.members.forEach(m => userObj[m.id] = m);
+        //splice user info
+        data = data.map(log => ({ vol: userObj[log.userId], ...(log.status === 'approved' && { approverInfo: userObj[log.approver] }), ...log }));
+        props.setLogs(data);
+    };
+
     const refreshLogs = () => {
-        getLogsOrg({
-            token: props.user.token,
-            id: props.org.id
-        }, (err, data) => {
-            setLoadingRefresh(false);
-            if (err) {
-                setError(data.message);
-            } else {
-                setError('');
-                data = data.sort((a, b) => a.start.localeCompare(b.start));
-                //user object for fast lookup
-                let userObj = {};
-                props.members.forEach(m => userObj[m.id] = m);
-                //splice user info
-                data = data.map(log => ({ vol: userObj[log.userId], ...(log.status === 'approved' && { approverInfo: userObj[log.approver] }), ...log }));
-                props.setLogs(data);
-            }
-        });
+        if (props.org.role === 'vol') {
+            getLogsUserOrg({
+                token: props.user.token,
+                id: props.org.id
+            }, (err, data) => {
+                setLoadingRefresh(false);
+                if (err) {
+                    setError(data.message);
+                } else {
+                    handleLogsResponse(data);
+                }
+            });
+        } else {
+            getLogsOrg({
+                token: props.user.token,
+                id: props.org.id
+            }, (err, data) => {
+                setLoadingRefresh(false);
+                if (err) {
+                    setError(data.message);
+                } else {
+                    handleLogsResponse(data);
+                }
+            });
+        }
+
     };
 
     useEffect(() => {
@@ -71,6 +91,12 @@ const ViewHours = props => {
         }
     }, [props.members]);
 
+    useEffect(() => {
+        if (props.logs !== null) {
+            setTotalHours(props.logs.reduce((sum, log) => sum + log.hours, 0));
+        }
+    }, [props.logs]);
+
     return (
         <>
             {
@@ -82,6 +108,10 @@ const ViewHours = props => {
                     </Grid>
                 </Grid>
             }
+            <Typography>
+                Total volunteer hours: {totalHours}<br /><br />
+                Filter By: Status Volunteer
+            </Typography>
             {
                 props.logs === null
                     ? <Fetching />

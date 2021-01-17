@@ -78,12 +78,12 @@ const DetailsEdit = props => {
             <br /><br />
             <Typography variant='h6'>
                 Public Information
-                </Typography><br />
+            </Typography><br />
             <TextField variant='outlined' label='Name' required onChange={e => setName(e.target.value)} defaultValue={props.org.name} className={classes.textField} /><br /><br />
             <TextField variant='outlined' label='Description' multiline rows={4} onChange={e => setDescription(e.target.value)} defaultValue={props.org.description} className={classes.textField} /><br /><br />
             <br />
             <Grid container justify="flex-end">
-                <Button variant='contained' color='primary' onClick={handleSubmit} className={classes.submitButton}>
+                <Button variant='contained' color='primary' disabled={loading} onClick={handleSubmit} className={classes.submitButton}>
                     {
                         loading
                             ? <CircularProgress size={24} color='secondary' />

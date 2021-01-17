@@ -169,7 +169,7 @@ const Org = props => {
                 case 'details': return <Details user={props.user} setUser={props.setUser} org={org} />
                 case 'metrics': return <Metrics user={props.user} />
                 case 'members': return <Members user={props.user} members={members} setMembers={setMembers} org={org} />
-                case 'add': return <AddHours user={props.user} />
+                case 'add': return <AddHours user={props.user} org={org} />
                 case 'hours': return <ViewHours user={props.user} members={members} setMembers={setMembers} logs={logs} setLogs={setLogs} org={org} />
                 case 'events': return <Events user={props.user} />
                 default: return 'Select a page on the left.'
