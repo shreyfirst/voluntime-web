@@ -3,6 +3,7 @@ import { Grid, TextField, Button, CircularProgress } from '@material-ui/core';
 import { Alert } from '@material-ui/lab';
 import { makeStyles } from '@material-ui/core/styles';
 import { MuiPickersUtilsProvider, KeyboardDatePicker, KeyboardTimePicker } from '@material-ui/pickers';
+import { Alarm } from '@material-ui/icons';
 import DayjsUtils from '@date-io/dayjs';
 import dayjs from 'dayjs';
 import { Typography } from '@material-ui/core';
@@ -31,6 +32,9 @@ const AddHours = props => {
     const [success, setSuccess] = useState('');
 
     const validate = () => {
+        if (start === null || end === null) {
+            return 'Invalid time selected';
+        }
         if (start.isAfter(end)) {
             return 'The start time must be before the end time.';
         }
@@ -86,6 +90,7 @@ const AddHours = props => {
                         label="Start time"
                         value={start}
                         onChange={date => setStart(date)}
+                        keyboardIcon={<Alarm />}
                     /><br /><br />
                     <KeyboardDatePicker
                         format="dddd, MMM D YYYY"
@@ -100,6 +105,7 @@ const AddHours = props => {
                         label="End time"
                         value={end}
                         onChange={date => setEnd(date)}
+                        keyboardIcon={<Alarm />}
                     />
                 </MuiPickersUtilsProvider><br /><br />
                 Number of hours: <strong>{hours}</strong><br /><br />

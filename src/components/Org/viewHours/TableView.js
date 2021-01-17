@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Box, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, IconButton, Collapse } from '@material-ui/core';
+import { Box, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, IconButton, Collapse, Typography } from '@material-ui/core';
 import { Check as ApprovedIcon, Clear as DeniedIcon, Schedule as PendingIcon, KeyboardArrowDown as DownArrow, KeyboardArrowUp as UpArrow } from '@material-ui/icons';
 import { makeStyles } from '@material-ui/core/styles';
 import dayjs from 'dayjs';
@@ -109,7 +109,9 @@ const TableView = props => (
                         </TableBody>
                     </Table>
                 </TableContainer>
-                : 'No Results'
+                : <Typography variant='h6' style={{ paddingLeft: 25 }}>
+                    <br />No Results
+                </Typography>
         }
     </>
 
