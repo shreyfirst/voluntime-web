@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { getMembers } from '../../../services/orgs';
 import { getLogsOrg, getLogsUserOrg } from '../../../services/logs';
-import { Grid, IconButton, CircularProgress, Button, Tooltip, Typography, Menu, MenuItem } from '@material-ui/core';
+import { Grid, IconButton, CircularProgress, Button, Typography, Menu, MenuItem } from '@material-ui/core';
 import { Refresh as RefreshIcon, KeyboardArrowDown as OpenMenuIcon, LibraryAddCheckOutlined as AllIcon, Check as ApprovedIcon, Clear as DeniedIcon, Schedule as PendingIcon, AccountCircleOutlined as MemberIcon } from '@material-ui/icons';
 import { makeStyles } from '@material-ui/core/styles';
 import { Alert } from '@material-ui/lab';
@@ -34,6 +34,18 @@ const useStyles = makeStyles(theme => ({
     },
     filterMenu: {
         marginLeft: 15,
+    },
+    tableHeader: {
+        position: 'relative',
+        display: 'inline-block'
+    },
+    actionIcon: {
+        fontSize: 32,
+    },
+    actionIconButton: {
+        position: 'absolute',
+        top: -18,
+        right: 0,
     }
 }));
 
@@ -198,6 +210,7 @@ const ViewHours = props => {
 
     useEffect(filterLogs, [props.logs, filterStatus, filterVol]);
 
+    const classes = useStyles();
     return (
         <>
             {
@@ -213,12 +226,20 @@ const ViewHours = props => {
                 props.logs === null
                     ? <Fetching />
                     : <>
-                        <Typography>
-                            Total volunteer hours: {totalHours}<br /><br />
-                            Filter By:
-                            <FilterMenu for='status' filterStatus={filterStatus} setFilterStatus={setFilterStatus} />
-                            {props.org.role !== 'vol' && <FilterMenu for='vol' filterVol={filterVol} setFilterVol={setFilterVol} members={props.members} />}
-                        </Typography><br />
+                        <div className={classes.tableHeader}>
+                            <Typography>
+                                Total volunteer hours: {totalHours}
+                                <br /><br />
+                                Filter By:
+                                <FilterMenu for='status' filterStatus={filterStatus} setFilterStatus={setFilterStatus} />
+                                {props.org.role !== 'vol' && <FilterMenu for='vol' filterVol={filterVol} setFilterVol={setFilterVol} members={props.members} />}
+                            </Typography>
+                            <IconButton onClick={refresh} disabled={loadingRefresh} className={classes.actionIconButton}>
+                                {loadingRefresh
+                                    ? <CircularProgress size={32} color='secondary' />
+                                    : <RefreshIcon className={classes.actionIcon} />}
+                            </IconButton>
+                        </div><br />
                         <Grid container>
                             <Grid item xs={12} lg={11}>
                                 <TableView logs={filteredLogs === null ? props.logs : filteredLogs} user={props.user} org={props.org} />

@@ -103,7 +103,7 @@ const AddHours = props => {
                     />
                 </MuiPickersUtilsProvider><br /><br />
                 Number of hours: <strong>{hours}</strong><br /><br />
-                <TextField variant='outlined' label='Activity description. What did you do for these hours?' multiline rows={4} onChange={e => setDescription(e.target.value)} className={classes.textField} />
+                <TextField variant='outlined' label='Activity description' multiline rows={4} onChange={e => setDescription(e.target.value)} InputProps={{ placeholder: 'What did you do for these hours? This helps administrators approve your hours.' }} className={classes.textField} />
                 <br /><br />
                 <Grid container justify="flex-end">
                     <Button variant='contained' color='primary' disabled={loading || success} onClick={handleSubmit} className={classes.submitButton}>
