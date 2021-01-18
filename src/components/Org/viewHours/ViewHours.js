@@ -43,9 +43,7 @@ const useStyles = makeStyles(theme => ({
         fontSize: 32,
     },
     actionIconButton: {
-        position: 'absolute',
-        top: -18,
-        right: 0,
+        marginLeft: 25,
     }
 }));
 
@@ -106,7 +104,6 @@ const FilterMenu = props => {
 const ViewHours = props => {
     const [loadingRefresh, setLoadingRefresh] = useState(false);
     const [error, setError] = useState('');
-    const [totalHours, setTotalHours] = useState('...');
 
     const [filterStatus, setFilterStatus] = useState('all');
     const [filterVol, setFilterVol] = useState('all');
@@ -198,16 +195,6 @@ const ViewHours = props => {
         }
     }, [props.members]);
 
-    useEffect(() => {
-        if (props.logs !== null) {
-            if (filteredLogs === null) {
-                setTotalHours(props.logs.reduce((sum, log) => sum + (log.status === 'approved' ? log.hours : 0), 0));
-            } else {
-                setTotalHours(filteredLogs.reduce((sum, log) => sum + (log.status === 'approved' ? log.hours : 0), 0));
-            }
-        }
-    }, [props.logs, filteredLogs]);
-
     useEffect(filterLogs, [props.logs, filterStatus, filterVol]);
 
     const classes = useStyles();
@@ -226,20 +213,18 @@ const ViewHours = props => {
                 props.logs === null
                     ? <Fetching />
                     : <>
-                        <div className={classes.tableHeader}>
-                            <Typography>
-                                Total approved hours: {totalHours}
-                                <br /><br />
-                                Filter By:
-                                <FilterMenu for='status' filterStatus={filterStatus} setFilterStatus={setFilterStatus} />
-                                {props.org.role !== 'vol' && <FilterMenu for='vol' filterVol={filterVol} setFilterVol={setFilterVol} members={props.members} />}
-                            </Typography>
-                            <IconButton onClick={refresh} disabled={loadingRefresh} className={classes.actionIconButton}>
-                                {loadingRefresh
-                                    ? <CircularProgress size={32} color='secondary' />
-                                    : <RefreshIcon className={classes.actionIcon} />}
-                            </IconButton>
-                        </div><br />
+                        <Typography component='span'>
+                            Filter By:
+                        </Typography>
+                        <FilterMenu for='status' filterStatus={filterStatus} setFilterStatus={setFilterStatus} />
+                        {props.org.role !== 'vol' && <FilterMenu for='vol' filterVol={filterVol} setFilterVol={setFilterVol} members={props.members} />}
+
+                        <IconButton onClick={refresh} disabled={loadingRefresh} className={classes.actionIconButton}>
+                            {loadingRefresh
+                                ? <CircularProgress size={32} color='secondary' />
+                                : <RefreshIcon className={classes.actionIcon} />}
+                        </IconButton>
+                        <br />
                         <Grid container>
                             <Grid item xs={12} lg={11}>
                                 <TableView allLogs={props.logs} logs={filteredLogs === null ? props.logs : filteredLogs} setLogs={props.setLogs} user={props.user} org={props.org} members={props.members} />

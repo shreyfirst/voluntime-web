@@ -122,7 +122,7 @@ const LogRow = memo(props => {
             </TableRow>
             <TableRow>
                 <TableCell style={{ paddingBottom: 0, paddingTop: 0, }} colSpan={7}>
-                    <Collapse in={open} timeout="auto">
+                    <Collapse in={open} timeout='auto' unmountOnExit>
                         <div className={classes.collapse}>
                             <strong>Volunteer:</strong> {log.vol.firstName} {log.vol.lastName}<br /><br />
                             <span className={classes.collapseTimeLabel}>Start Time:</span> <Box fontFamily='Monospace' fontSize={15} letterSpacing={0.8} component='span'>{start.format('ddd, MMM D YYYY [at] hh:mm A')}</Box><br />
