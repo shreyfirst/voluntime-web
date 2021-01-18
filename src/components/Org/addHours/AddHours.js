@@ -44,13 +44,13 @@ const AddHours = props => {
 
     useEffect(() => {
         const val = validate();
-        if (val !== 'success') { setError(val); }
+        if (val !== 'success') { setSuccess(''); setError(val); }
         setHours(Math.floor(end.diff(start, 'hour', true) * 100) / 100);
     }, [start, end]);
 
     const handleSubmit = () => {
         const val = validate();
-        if (val !== 'success') { setError(val); return; }
+        if (val !== 'success') { setSuccess(''); setError(val); return; }
         setLoading(true);
         addLog({
             token: props.user.token,
@@ -62,8 +62,11 @@ const AddHours = props => {
         }, (err, data) => {
             setLoading(false);
             if (err) {
+                setSuccess('');
                 setError(data.message);
             } else {
+                setError('');
+                setDescription('');
                 setSuccess(`Success! Your hours ${data.status === 'approved' ? 'have been added' : 'are now pending approval'}.`);
             }
         });
@@ -113,10 +116,10 @@ const AddHours = props => {
                     />
                 </MuiPickersUtilsProvider><br /><br />
                 Number of hours: <strong>{hours}</strong><br /><br />
-                <TextField variant='outlined' label='Activity description' multiline rows={4} onChange={e => setDescription(e.target.value)} InputProps={{ placeholder: 'What did you do for these hours? This helps administrators approve your hours.' }} className={classes.textField} />
+                <TextField variant='outlined' label='Activity description' multiline rows={4} value={description} onChange={e => setDescription(e.target.value)} InputProps={{ placeholder: 'What did you do for these hours? This helps administrators approve your hours.' }} className={classes.textField} />
                 <br /><br />
                 <Grid container justify="flex-end">
-                    <Button variant='contained' color='primary' disabled={loading || success} onClick={handleSubmit} className={classes.submitButton}>
+                    <Button variant='contained' color='primary' disabled={loading} onClick={handleSubmit} className={classes.submitButton}>
                         {
                             loading
                                 ? <CircularProgress size={24} color='secondary' />
@@ -124,6 +127,7 @@ const AddHours = props => {
                         }
                     </Button>
                 </Grid>
+                <br />
                 {
                     error.length > 0 &&
                     <Alert severity="error">{error}</Alert>

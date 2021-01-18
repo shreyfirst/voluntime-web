@@ -8,4 +8,6 @@ const getLogsOrg = (info, callback) => post('/logs/getOrg', info, callback);
 
 const getLogsUserOrg = (info, callback) => post('/logs/getUserOrg', info, callback);
 
-export { addLog, getLogsUser, getLogsOrg, getLogsUserOrg };
+const editStatus = (info, callback) => post('/logs/editStatus', info, callback);
+
+export { addLog, getLogsUser, getLogsOrg, getLogsUserOrg, editStatus };

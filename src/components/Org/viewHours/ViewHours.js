@@ -145,7 +145,7 @@ const ViewHours = props => {
         let userObj = {};
         props.members.forEach(m => userObj[m.id] = m);
         //splice user info
-        data = data.map(log => ({ vol: userObj[log.userId], ...(log.status === 'approved' && { approverInfo: userObj[log.approver] }), ...log }));
+        data = data.map(log => ({ vol: userObj[log.userId], ...(log.status !== 'pending' && { approverInfo: userObj[log.approver] }), ...log }));
         props.setLogs(data);
     };
 
@@ -201,9 +201,9 @@ const ViewHours = props => {
     useEffect(() => {
         if (props.logs !== null) {
             if (filteredLogs === null) {
-                setTotalHours(props.logs.reduce((sum, log) => sum + log.hours, 0));
+                setTotalHours(props.logs.reduce((sum, log) => sum + (log.status === 'approved' ? log.hours : 0), 0));
             } else {
-                setTotalHours(filteredLogs.reduce((sum, log) => sum + log.hours, 0));
+                setTotalHours(filteredLogs.reduce((sum, log) => sum + (log.status === 'approved' ? log.hours : 0), 0));
             }
         }
     }, [props.logs, filteredLogs]);
@@ -228,7 +228,7 @@ const ViewHours = props => {
                     : <>
                         <div className={classes.tableHeader}>
                             <Typography>
-                                Total volunteer hours: {totalHours}
+                                Total approved hours: {totalHours}
                                 <br /><br />
                                 Filter By:
                                 <FilterMenu for='status' filterStatus={filterStatus} setFilterStatus={setFilterStatus} />
@@ -242,7 +242,7 @@ const ViewHours = props => {
                         </div><br />
                         <Grid container>
                             <Grid item xs={12} lg={11}>
-                                <TableView logs={filteredLogs === null ? props.logs : filteredLogs} user={props.user} org={props.org} />
+                                <TableView allLogs={props.logs} logs={filteredLogs === null ? props.logs : filteredLogs} setLogs={props.setLogs} user={props.user} org={props.org} members={props.members} />
                             </Grid>
                         </Grid>
                     </>
