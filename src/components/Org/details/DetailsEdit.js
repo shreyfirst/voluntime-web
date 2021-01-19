@@ -185,7 +185,7 @@ const DetailsEdit = props => {
             </Typography><br />
             {
                 encodedImage === null
-                    ? <ImagePreview src={props.org.imageUrl} dropHandler={dropHandler} />
+                    ? <ImagePreview src={props.org.image} dropHandler={dropHandler} />
                     : <ImagePreview src={encodedImage} dropHandler={dropHandler} />
             }
             <br />
@@ -225,7 +225,7 @@ const DetailsEdit = props => {
                 loading && uploadProgress !== null &&
                 <>
                     Uploading:<br />
-                    <LinearProgressWithLabel value={uploadProgress} />
+                    <LinearProgressWithLabel value={uploadProgress === 100 ? 99 : uploadProgress} />
                 </>
             }
             {
