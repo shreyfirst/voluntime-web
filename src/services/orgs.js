@@ -2,7 +2,9 @@ import { post } from './axiosConfig';
 
 const createOrg = (info, callback) => post('/orgs', info, callback);
 
-const editOrg = (info, callback) => post('/orgs/edit', info, callback);
+const editOrg = (info, callback, onProgress) => post('/orgs/edit', info, callback, (typeof onProgress === 'function' && {
+    onUploadProgress: event => onProgress(Math.floor(event.loaded * 100 / event.total))
+}));
 
 const archiveOrg = (info, callback) => post('/orgs/archive', info, callback);
 

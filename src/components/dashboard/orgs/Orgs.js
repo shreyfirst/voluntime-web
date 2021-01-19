@@ -18,20 +18,18 @@ const useStyles = makeStyles({
     },
 });
 
-const Orgs = props => {
+const OrgSection = props => {
     const classes = useStyles();
 
-    const [view, setView] = useState('orgs');
-
-    const orgSection = (name, orgs) => (
+    return (
         <div className={classes.orgSection}>
             <Typography variant="h5">
-                {name}
+                {props.name}
             </Typography>
             <Grid container spacing={2}>
                 {
-                    orgs.map(org => (
-                        <Grid item className={classes.orgCard} xs={6} sm={4} lg={3} key={org.id}>
+                    props.orgs.map(org => (
+                        <Grid item className={classes.orgCard} xs={12} sm={6} md={4} lg={3} key={org.id}>
                             <OrgCard org={org} />
                         </Grid>
                     ))
@@ -39,6 +37,11 @@ const Orgs = props => {
             </Grid>
         </div>
     );
+};
+
+const Orgs = props => {
+
+    const [view, setView] = useState('orgs');
 
     const sortOrgs = orgs => {
         var sorted = { owner: [], admin: [], vol: [], archive: [] };
@@ -64,15 +67,15 @@ const Orgs = props => {
                         }
                         {
                             sortedOrgs.current.owner.length > 0 &&
-                            orgSection('Owner', sortedOrgs.current.owner)
+                            <OrgSection name='Owner' orgs={sortedOrgs.current.owner} />
                         }
                         {
                             sortedOrgs.current.admin.length > 0 &&
-                            orgSection('Administrator', sortedOrgs.current.admin)
+                            <OrgSection name='Administrator' orgs={sortedOrgs.current.admin} />
                         }
                         {
                             sortedOrgs.current.vol.length > 0 &&
-                            orgSection('Volunteer', sortedOrgs.current.vol)
+                            <OrgSection name='Volunteer' orgs={sortedOrgs.current.vol} />
                         }
                         {
                             sortedOrgs.current.archive.length > 0 &&

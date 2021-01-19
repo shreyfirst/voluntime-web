@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Typography, TextField, Grid, Button, CircularProgress } from '@material-ui/core';
 import { Alert } from '@material-ui/lab';
 import { makeStyles } from '@material-ui/core/styles';
-import { MailOutline as EmailIcon, Phone as PhoneIcon, Instagram as InstagramIcon, Lock as LockIcon } from '@material-ui/icons';
+import { MailOutline as EmailIcon, Phone as PhoneIcon, Instagram as InstagramIcon, Lock as LockIcon, Save as SaveIcon } from '@material-ui/icons';
 import TextFieldIcon from '../../helpers/TextFieldIcon';
 import ChangeEmail from './ChangeEmail';
 import ChangePassword from './ChangePassword';
@@ -17,7 +17,7 @@ const useStyles = makeStyles({
         width: '100%',
     },
     submitButton: {
-        minWidth: '10em',
+        minWidth: '11em',
     },
     helperText: {
         color: '#414141'
@@ -102,7 +102,7 @@ const Account = props => {
                 <TextFieldIcon variant='outlined' label='Public Instagram Handle' icon={<InstagramIcon />} onChange={e => setContactInstagram(e.target.value)} defaultValue={props.user.contactInfo.instagram} className={classes.textField} />
                 <br />
                 <Grid container justify="flex-end">
-                    <Button variant='contained' color='primary' onClick={handleSubmit} className={classes.submitButton}>
+                    <Button variant='contained' color='primary' onClick={handleSubmit} startIcon={!loading && <SaveIcon />} className={classes.submitButton}>
                         {
                             loading
                                 ? <CircularProgress size={24} color='secondary' />
