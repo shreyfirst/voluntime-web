@@ -1,7 +1,7 @@
 import { useState, useRef } from 'react';
 import { Typography, TextField, Grid, Button, CircularProgress } from '@material-ui/core';
 import { Alert } from '@material-ui/lab';
-import { Archive, Image as UploadIcon, Save as SaveIcon, PanTool as DropIcon } from '@material-ui/icons';
+import { Archive, Image as UploadIcon, Save as SaveIcon, Add as DropIcon } from '@material-ui/icons';
 import { makeStyles } from '@material-ui/core/styles';
 import { editOrg } from '../../../services/orgs';
 import ArchiveConfirm from './ArchiveConfirm';
@@ -34,7 +34,8 @@ const useStyles = makeStyles({
         width: 350,
         height: 150,
         outline: '2px dashed gray',
-        backgroundColor: '#FAFAFA'
+        backgroundColor: '#FAFAFA',
+        overflow: 'hidden',
     },
     fileHover: {
         outline: '2px dashed black',
@@ -65,7 +66,7 @@ const ImagePreview = props => {
         <Grid container justify='center' alignItems='center' className={`${classes.imagePreviewContainer} ${fileHover && classes.fileHover}`} onDrop={dropHandler} onDragOver={dragHandler} onDragLeave={() => setFileHover(false)}>
             {
                 props.src?.length > 0
-                    ? <img src={props.src} height={150} />
+                    ? <img src={props.src} height={150} alt='' />
                     : <Typography>
                         {
                             fileHover
@@ -73,7 +74,7 @@ const ImagePreview = props => {
                                     display: 'flex',
                                     alignItems: 'center',
                                     flexWrap: 'wrap',
-                                }}><DropIcon /> &nbsp; Drop Image</div>
+                                }}><DropIcon /> Drop Image</div>
                                 : 'No Card Image'
                         }
                     </Typography>

@@ -23,7 +23,7 @@ const useStyles = makeStyles(theme => ({
         width: '100%',
         height: '100%'
     },
-    image: props => ({
+    imageOverlay: props => ({
         backgroundColor: props.archive
             ? '#9e9e9e'
             : props.role === 'owner'
@@ -32,7 +32,12 @@ const useStyles = makeStyles(theme => ({
                     ? theme.palette.secondary.main
                     : theme.palette.success.main,
         height: '50%',
+        textAlign: 'center',
+        overflow: 'hidden'
     }),
+    image: {
+        height: '100%',
+    },
     info: {
         paddingLeft: '4%',
         paddingRight: '4%',
@@ -112,7 +117,12 @@ const OrgCard = props => {
     return (
         <Card className={classes.container} onClick={() => !props.archive && history.push(`/dashboard/${props.org.id}`)}>
             <Grid container className={classes.grid}>
-                <Grid item xs={12} className={classes.image} />
+                <Grid item xs={12} className={classes.imageOverlay}>
+                    {
+                        props.org.image?.length > 0 &&
+                        <img src={props.org.image} className={classes.image} alt='' />
+                    }
+                </Grid>
                 <Grid item xs={12} className={classes.info}>
                     <Typography className={classes.name}>
                         {

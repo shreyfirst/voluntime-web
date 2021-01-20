@@ -186,7 +186,7 @@ const Org = props => {
                     }}
                 >
                     <div className={classes.drawerHeader}>
-                        <img src={VIcon} alt="" className={classes.vIcon} /><br />
+                        <img src={VIcon} alt='' className={classes.vIcon} /><br />
                         <Typography className={classes.dashboardLabel}>{org.name}</Typography>
                     </div>
                     <Divider />

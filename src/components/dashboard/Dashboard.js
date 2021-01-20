@@ -112,7 +112,7 @@ const Dashboard = props => {
                 }}
             >
                 <div className={classes.drawerHeader}>
-                    <img src={VIcon} alt="" className={classes.vIcon} /><br />
+                    <img src={VIcon} alt='' className={classes.vIcon} /><br />
                     <Typography className={classes.dashboardLabel}>Dashboard</Typography>
                 </div>
                 <Divider />
