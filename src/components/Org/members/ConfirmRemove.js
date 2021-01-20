@@ -56,7 +56,7 @@ const ConfirmRemove = props => {
                 </DialogContentText>
             </DialogContent>
             <DialogActions>
-                <Button variant='text' onClick={closeDialog} color="primary">
+                <Button variant='text' onClick={closeDialog} color='primary'>
                     Cancel
                 </Button>
                 <Button variant='outlined' onClick={handleSubmit} disabled={loading} startIcon={!loading && <RemoveIcon />} className={classes.submitButton}>
@@ -69,7 +69,7 @@ const ConfirmRemove = props => {
             </DialogActions>
             {
                 error.length > 0 &&
-                <Alert severity="error">{error}</Alert>
+                <Alert severity='error'>{error}</Alert>
             }
         </Dialog>
     );

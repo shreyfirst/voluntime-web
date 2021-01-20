@@ -11,7 +11,7 @@ const useStyles = makeStyles({
         minHeight: '100vh',
         paddingTop: '4vh',
         paddingBottom: '4vh',
-        boxSizing: "border-box",
+        boxSizing: 'border-box',
         backgroundColor: '#f7f7f7',
     },
     gridContainer: {
@@ -106,27 +106,27 @@ const ResetPassword = props => {
     const classes = useStyles();
     return (
         <Container maxWidth={false} className={classes.container}>
-            <Grid container justify="center" className={classes.gridContainer}>
+            <Grid container justify='center' className={classes.gridContainer}>
                 <Grid item>
-                    <Typography variant="h3" className={classes.bold}>
+                    <Typography variant='h3' className={classes.bold}>
                         Voluntime
                     </Typography><br /><br />
                 </Grid>
-                <Grid container item xs={12} justify="center">
+                <Grid container item xs={12} justify='center'>
                     <Paper className={classes.paper}>
-                        <Typography variant="h5">
+                        <Typography variant='h5'>
                             Reset Password
                         </Typography><br />
-                        <Typography variant="body1">
+                        <Typography variant='body1'>
                             Please fill out the textboxes below to reset the password to your Voluntime account.<br />
                             If you don't want to reset your password, you may simply exit this page.
                         </Typography><br /><br />
-                        <TextField onKeyDown={keyPress} onChange={event => setPassword(event.target.value)} type={showPassword ? "text" : "password"} label="New Password" variant="outlined" fullWidth className={classes.textField}
+                        <TextField onKeyDown={keyPress} onChange={event => setPassword(event.target.value)} type={showPassword ? 'text' : 'password'} label='New Password' variant='outlined' fullWidth className={classes.textField}
                             InputProps={{
                                 endAdornment: (
-                                    <InputAdornment position="end">
+                                    <InputAdornment position='end'>
                                         <IconButton
-                                            aria-label="show password"
+                                            aria-label='show password'
                                             onClick={() => setShowPassword(!showPassword)}
                                         >
                                             {showPassword ? <Visibility /> : <VisibilityOff />}
@@ -134,12 +134,12 @@ const ResetPassword = props => {
                                     </InputAdornment>
                                 )
                             }} /><br /><br />
-                        <TextField onKeyDown={keyPress} onChange={event => setConfirmPassword(event.target.value)} type={showConfirmPassword ? "text" : "password"} label="Confirm Password" variant="outlined" fullWidth className={classes.textField}
+                        <TextField onKeyDown={keyPress} onChange={event => setConfirmPassword(event.target.value)} type={showConfirmPassword ? 'text' : 'password'} label='Confirm Password' variant='outlined' fullWidth className={classes.textField}
                             InputProps={{
                                 endAdornment: (
-                                    <InputAdornment position="end">
+                                    <InputAdornment position='end'>
                                         <IconButton
-                                            aria-label="show password"
+                                            aria-label='show password'
                                             onClick={() => setShowConfirmPassword(!showConfirmPassword)}
                                         >
                                             {showConfirmPassword ? <Visibility /> : <VisibilityOff />}
@@ -147,7 +147,7 @@ const ResetPassword = props => {
                                     </InputAdornment>
                                 )
                             }} />
-                        <Button disabled={loading} onClick={handleSubmit} variant="contained" color="primary" className={classes.button}>
+                        <Button disabled={loading} onClick={handleSubmit} variant='contained' color='primary' className={classes.button}>
                             {
                                 loading
                                     ? <CircularProgress size={24} color='secondary' />
@@ -157,11 +157,11 @@ const ResetPassword = props => {
                         <br />
                         {
                             success.length > 0 &&
-                            <Alert severity="success" className={classes.alert}>{success} {isMobile ? 'You may now log in to Voluntime.' : <Link to='/dashboard'>Continue to Voluntime</Link>}</Alert>
+                            <Alert severity='success' className={classes.alert}>{success} {isMobile ? 'You may now log in to Voluntime.' : <Link to='/dashboard'>Continue to Voluntime</Link>}</Alert>
                         }
                         {
                             error.length > 0 &&
-                            <Alert severity="error" className={classes.alert}>{error}</Alert>
+                            <Alert severity='error' className={classes.alert}>{error}</Alert>
                         }
                     </Paper>
                 </Grid>

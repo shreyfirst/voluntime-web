@@ -10,7 +10,7 @@ const useStyles = makeStyles({
         minHeight: '100vh',
         paddingTop: '4vh',
         paddingBottom: '4vh',
-        boxSizing: "border-box",
+        boxSizing: 'border-box',
         backgroundColor: '#f7f7f7',
     },
     gridContainer: {
@@ -61,15 +61,15 @@ const VerifyEmail = ({ setUser }) => {
     const classes = useStyles();
     return (
         <Container maxWidth={false} className={classes.container}>
-            <Grid container justify="center" className={classes.gridContainer}>
+            <Grid container justify='center' className={classes.gridContainer}>
                 <Grid item>
-                    <Typography variant="h3" className={classes.bold}>
+                    <Typography variant='h3' className={classes.bold}>
                         Voluntime
                     </Typography><br /><br />
                 </Grid>
-                <Grid container item xs={12} justify="center">
+                <Grid container item xs={12} justify='center'>
                     <Paper className={classes.paper}>
-                        <Typography variant="h5">
+                        <Typography variant='h5'>
                             Verify Email
                         </Typography>
                         <br />
@@ -77,16 +77,16 @@ const VerifyEmail = ({ setUser }) => {
                             success.length === 0 && error.length === 0 &&
                             <div className={classes.pleaseWait}>
                                 <CircularProgress size={48} thickness={5} color='primary' />
-                                <Typography variant="body1">Verifying Account...</Typography>
+                                <Typography variant='body1'>Verifying Account...</Typography>
                             </div>
                         }
                         {
                             success.length > 0 &&
-                            <Alert severity="success">{success} {isMobile ? 'You may now log in to Voluntime.' : <Link to='/dashboard'>Continue to Voluntime</Link>}</Alert>
+                            <Alert severity='success'>{success} {isMobile ? 'You may now log in to Voluntime.' : <Link to='/dashboard'>Continue to Voluntime</Link>}</Alert>
                         }
                         {
                             error.length > 0 &&
-                            <Alert severity="error">{error}</Alert>
+                            <Alert severity='error'>{error}</Alert>
                         }
                     </Paper>
                 </Grid>

@@ -28,20 +28,20 @@ const Product = props => {
     return (
         <Grid
             container
-            alignItems="center"
+            alignItems='center'
         >
             <Grid item xs={12} className={classes.textContainer}>
-                <Typography variant="h2" component="h1" className={classes.title}>
+                <Typography variant='h2' component='h1' className={classes.title}>
                     Voluntime
                 </Typography>
-                <Typography variant="body1" component="span" className={classes.description}>
+                <Typography variant='body1' component='span' className={classes.description}>
                     An all-in-one volunteer management suite built for students by students.
                     Voluntime connects organizations and volunteers together to help educate the youth and build the future.
                 </Typography>
                 <Hidden xsDown>{' '}</Hidden>
                 <Hidden smUp><br /></Hidden>
-                <Link onClick={props.scrollToAbout} color="primary" underline="none">
-                    <Typography variant="body1" className={classes.learnMore}>Learn More</Typography>
+                <Link onClick={props.scrollToAbout} color='primary' underline='none'>
+                    <Typography variant='body1' className={classes.learnMore}>Learn More</Typography>
                 </Link>
                 <br /><br />
                 <Hidden smUp><br /></Hidden>

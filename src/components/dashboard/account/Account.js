@@ -97,11 +97,11 @@ const Account = props => {
                 <Typography variant='body1'>
                     Contact Information (Optional)
                 </Typography><br />
-                <TextFieldIcon variant='outlined' label='Public Email Address' icon={<EmailIcon />} type="email" onChange={e => setContactEmail(e.target.value)} defaultValue={props.user.contactInfo.email} className={classes.textField} /><br />
-                <TextFieldIcon variant='outlined' label='Public Phone Number' icon={<PhoneIcon />} type="tel" onChange={e => setContactPhone(e.target.value)} defaultValue={props.user.contactInfo.phone} className={classes.textField} /><br />
+                <TextFieldIcon variant='outlined' label='Public Email Address' icon={<EmailIcon />} type='email' onChange={e => setContactEmail(e.target.value)} defaultValue={props.user.contactInfo.email} className={classes.textField} /><br />
+                <TextFieldIcon variant='outlined' label='Public Phone Number' icon={<PhoneIcon />} type='tel' onChange={e => setContactPhone(e.target.value)} defaultValue={props.user.contactInfo.phone} className={classes.textField} /><br />
                 <TextFieldIcon variant='outlined' label='Public Instagram Handle' icon={<InstagramIcon />} onChange={e => setContactInstagram(e.target.value)} defaultValue={props.user.contactInfo.instagram} className={classes.textField} />
                 <br />
-                <Grid container justify="flex-end">
+                <Grid container justify='flex-end'>
                     <Button variant='contained' color='primary' onClick={handleSubmit} startIcon={!loading && <SaveIcon />} className={classes.submitButton}>
                         {
                             loading
@@ -112,11 +112,11 @@ const Account = props => {
                 </Grid>
                 {
                     success.length > 0 &&
-                    <Alert severity="success">{success}</Alert>
+                    <Alert severity='success'>{success}</Alert>
                 }
                 {
                     error.length > 0 &&
-                    <Alert severity="error">{error}</Alert>
+                    <Alert severity='error'>{error}</Alert>
                 }
 
                 <Typography variant='h6'>

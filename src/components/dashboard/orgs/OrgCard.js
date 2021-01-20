@@ -132,7 +132,7 @@ const OrgCard = props => {
                         }
 
                     </Typography>
-                    <Typography variant="body2" className={classes.description}>
+                    <Typography variant='body2' className={classes.description}>
                         {props.org.description}
                     </Typography>
                     {
@@ -148,7 +148,7 @@ const OrgCard = props => {
                                 </Button>
                                 {
                                     error.length > 0 &&
-                                    <Alert severity="error">{error}</Alert>
+                                    <Alert severity='error'>{error}</Alert>
                                 }
                             </>
                             : <Grid container className={classes.quickButtons} justify='space-around'>

@@ -45,11 +45,11 @@ const Row = props => {
         <>
             <TableRow className={classes.row}>
                 <TableCell>
-                    <IconButton aria-label="expand row" size="small" onClick={() => setOpen(!open)}>
+                    <IconButton aria-label='expand row' size='small' onClick={() => setOpen(!open)}>
                         {open ? <UpArrow /> : <DownArrow />}
                     </IconButton>
                 </TableCell>
-                <TableCell component="th" scope="row" className={classes[props.org.role]}>
+                <TableCell component='th' scope='row' className={classes[props.org.role]}>
                     {roleNames[props.org.role]}
                 </TableCell>
                 <TableCell className={classes.cellText}>{props.org.name}</TableCell>
@@ -57,7 +57,7 @@ const Row = props => {
             </TableRow>
             <TableRow>
                 <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
-                    <Collapse in={open} timeout="auto" unmountOnExit>
+                    <Collapse in={open} timeout='auto' unmountOnExit>
                         <Grid container>
                             <Grid item xs={6} className={classes.orgCard}>
                                 <OrgCard archive org={props.org} user={props.user} setUser={props.setUser} />
@@ -74,7 +74,7 @@ const Archived = props => {
     const classes = useStyles();
     return (
         <div className={classes.container}>
-            <Typography variant="h5">
+            <Typography variant='h5'>
                 Archived
             </Typography>
             <Grid container>

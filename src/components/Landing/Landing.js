@@ -12,7 +12,7 @@ const useStyles = makeStyles({
         minHeight: '100vh',
         paddingTop: '4vh',
         paddingBottom: '4vh',
-        boxSizing: "border-box",
+        boxSizing: 'border-box',
     },
     productContainer: {
         paddingRight: '5%',
@@ -21,7 +21,7 @@ const useStyles = makeStyles({
         backgroundColor: '#F0F0F0',
         textAlign: 'center',
         paddingTop: '10%',
-        boxSizing: "border-box",
+        boxSizing: 'border-box',
         paddingLeft: '5%',
         paddingRight: '5%',
         width: '90%',
@@ -63,13 +63,13 @@ const Landing = props => {
 
     return (
         <Container>
-            <Grid container justify="center" className={classes.landingContainer}>
-                <Grid container item alignItems="stretch" justify="center" className={classes.productContainer} md={6} sm={9} xs={12}>
+            <Grid container justify='center' className={classes.landingContainer}>
+                <Grid container item alignItems='stretch' justify='center' className={classes.productContainer} md={6} sm={9} xs={12}>
                     <Product scrollToAbout={scrollToAbout} />
                 </Grid>
                 <Hidden xsDown>
-                    <Grid container item alignItems="stretch" justify="center" md={6} sm={9}>
-                        <Paper className={classes.loginPaper} variant="outlined">
+                    <Grid container item alignItems='stretch' justify='center' md={6} sm={9}>
+                        <Paper className={classes.loginPaper} variant='outlined'>
                             {
                                 view === 'login'
                                     ? <Login from={location.state === undefined ? undefined : location.state.from} setUser={props.setUser} setView={setView} />
@@ -79,7 +79,7 @@ const Landing = props => {
                     </Grid>
                 </Hidden>
             </Grid>
-            <Grid ref={aboutRef} container className={classes.about} alignItems="center" justify="center">
+            <Grid ref={aboutRef} container className={classes.about} alignItems='center' justify='center'>
                 <About aboutSignUpClicked={aboutSignUpClicked} />
             </Grid>
         </Container>

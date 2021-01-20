@@ -55,7 +55,7 @@ const InviteLink = props => {
                 {loading &&
                     <CircularProgress color='secondary' size={40} />}
                 {error.length > 0 &&
-                    <Alert severity="error">{error}</Alert>}
+                    <Alert severity='error'>{error}</Alert>}
             </DialogContent>
             <DialogActions>
                 {navigator.clipboard !== undefined &&

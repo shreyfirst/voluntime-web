@@ -170,7 +170,7 @@ const Member = props => {
                 }
                 {
                     error.length > 0 &&
-                    <><Alert severity="error">{error}</Alert><br /></>
+                    <><Alert severity='error'>{error}</Alert><br /></>
                 }
             </CardContent>
             <ConfirmRemove open={removeOpen} setOpen={setRemoveOpen} user={props.user} setUser={props.setUser} org={props.org} member={member} members={props.members} setMembers={props.setMembers} />

@@ -37,7 +37,7 @@ const useStyles = makeStyles(theme => ({
         textAlign: 'center'
     },
     navButton: {
-        "&::before": {
+        '&::before': {
             content: '""',
             height: '100%',
             width: 8,
@@ -45,10 +45,10 @@ const useStyles = makeStyles(theme => ({
     },
     activeNavButton: {
         backgroundColor: '#DADADA',
-        "&:hover": {
-            backgroundColor: "#DADADA"
+        '&:hover': {
+            backgroundColor: '#DADADA'
         },
-        "&::before": {
+        '&::before': {
             content: '""',
             height: '100%',
             position: 'absolute',
@@ -138,28 +138,28 @@ const Org = props => {
         const renderList = role => {
             if (role === 'owner') {
                 return (<>
-                    <NavButton icon={<DetailsIcon />} view="details" />
-                    <NavButton icon={<MetricsIcon />} view="metrics" />
-                    <NavButton icon={<MembersIcon />} view="members" />
-                    <NavButton icon={<PlaylistAdd />} view="add" />
-                    <NavButton icon={<ListAlt />} view="hours" />
-                    <NavButton icon={<EventIcon />} view="events" />
+                    <NavButton icon={<DetailsIcon />} view='details' />
+                    <NavButton icon={<MetricsIcon />} view='metrics' />
+                    <NavButton icon={<MembersIcon />} view='members' />
+                    <NavButton icon={<PlaylistAdd />} view='add' />
+                    <NavButton icon={<ListAlt />} view='hours' />
+                    <NavButton icon={<EventIcon />} view='events' />
                 </>);
             } else if (role === 'admin') {
                 return (<>
-                    <NavButton icon={<DetailsIcon />} view="details" />
-                    <NavButton icon={<MembersIcon />} view="members" />
-                    <NavButton icon={<PlaylistAdd />} view="add" />
-                    <NavButton icon={<ListAlt />} view="hours" />
-                    <NavButton icon={<EventIcon />} view="events" />
+                    <NavButton icon={<DetailsIcon />} view='details' />
+                    <NavButton icon={<MembersIcon />} view='members' />
+                    <NavButton icon={<PlaylistAdd />} view='add' />
+                    <NavButton icon={<ListAlt />} view='hours' />
+                    <NavButton icon={<EventIcon />} view='events' />
                 </>);
             } else {
                 return (<>
-                    <NavButton icon={<DetailsIcon />} view="details" />
-                    <NavButton icon={<MembersIcon />} view="members" />
-                    <NavButton icon={<PlaylistAdd />} view="add" />
-                    <NavButton icon={<ListAlt />} view="hours" />
-                    <NavButton icon={<EventIcon />} view="events" />
+                    <NavButton icon={<DetailsIcon />} view='details' />
+                    <NavButton icon={<MembersIcon />} view='members' />
+                    <NavButton icon={<PlaylistAdd />} view='add' />
+                    <NavButton icon={<ListAlt />} view='hours' />
+                    <NavButton icon={<EventIcon />} view='events' />
                 </>);
             }
         };
@@ -179,8 +179,8 @@ const Org = props => {
         return (
             <div className={classes.container}>
                 <Drawer
-                    variant="permanent"
-                    anchor="left"
+                    variant='permanent'
+                    anchor='left'
                     classes={{
                         paper: classes.drawerPaper
                     }}
@@ -198,7 +198,7 @@ const Org = props => {
                     </List>
                 </Drawer>
                 <div className={classes.content}>
-                    <Typography variant="h3" component="h1">
+                    <Typography variant='h3' component='h1'>
                         {viewNames[view]}
                     </Typography><br />
                     <div className={classes.view}>

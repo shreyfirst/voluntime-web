@@ -81,34 +81,34 @@ const AddHours = props => {
                 </Typography><br />
                 <MuiPickersUtilsProvider utils={DayjsUtils}>
                     <KeyboardDatePicker
-                        format="ddd, MMM D YYYY"
-                        margin="normal"
-                        label="Start date"
+                        format='ddd, MMM D YYYY'
+                        margin='normal'
+                        label='Start date'
                         value={start}
                         onChange={date => setStart(date)}
                         InputProps={{ readOnly: true }}
                         className={classes.datePicker}
                     />
                     <KeyboardTimePicker
-                        margin="normal"
-                        label="Start time"
+                        margin='normal'
+                        label='Start time'
                         value={start}
                         onChange={date => setStart(date)}
                         InputProps={{ readOnly: true }}
                         keyboardIcon={<Alarm />}
                     /><br /><br />
                     <KeyboardDatePicker
-                        format="ddd, MMM D YYYY"
-                        margin="normal"
-                        label="End date"
+                        format='ddd, MMM D YYYY'
+                        margin='normal'
+                        label='End date'
                         value={end}
                         onChange={date => setEnd(date)}
                         InputProps={{ readOnly: true }}
                         className={classes.datePicker}
                     />
                     <KeyboardTimePicker
-                        margin="normal"
-                        label="End time"
+                        margin='normal'
+                        label='End time'
                         value={end}
                         onChange={date => setEnd(date)}
                         InputProps={{ readOnly: true }}
@@ -118,7 +118,7 @@ const AddHours = props => {
                 Number of hours: <strong>{hours}</strong><br /><br />
                 <TextField variant='outlined' label='Activity description' multiline rows={4} value={description} onChange={e => setDescription(e.target.value)} InputProps={{ placeholder: 'What did you do for these hours? This helps administrators approve your hours.' }} className={classes.textField} />
                 <br /><br />
-                <Grid container justify="flex-end">
+                <Grid container justify='flex-end'>
                     <Button variant='contained' color='primary' disabled={loading} onClick={handleSubmit} startIcon={!loading && <SubmitIcon />} className={classes.submitButton}>
                         {
                             loading
@@ -130,11 +130,11 @@ const AddHours = props => {
                 <br />
                 {
                     error.length > 0 &&
-                    <Alert severity="error">{error}</Alert>
+                    <Alert severity='error'>{error}</Alert>
                 }
                 {
                     success.length > 0 &&
-                    <Alert severity="success">{success}</Alert>
+                    <Alert severity='success'>{success}</Alert>
                 }
             </Grid>
         </Grid>

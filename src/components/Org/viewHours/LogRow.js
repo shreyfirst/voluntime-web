@@ -100,7 +100,7 @@ const LogRow = memo(props => {
         <>
             <TableRow className={classes.row}>
                 <TableCell>
-                    <IconButton aria-label="expand row" size="small" onClick={() => setOpen(!open)}>
+                    <IconButton aria-label='expand row' size='small' onClick={() => setOpen(!open)}>
                         {open ? <UpArrow /> : <DownArrow />}
                     </IconButton>
                 </TableCell>
@@ -151,7 +151,7 @@ const LogRow = memo(props => {
                             <strong>Activity Description:</strong> <div className={classes.description}>{log.description.length > 0 ? log.description : <em>No description provided</em>}</div><br />
                             {
                                 error.length > 0 &&
-                                <Alert severity="error">{error}</Alert>
+                                <Alert severity='error'>{error}</Alert>
                             }
                         </div>
                     </Collapse>

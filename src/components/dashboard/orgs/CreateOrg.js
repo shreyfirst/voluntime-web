@@ -86,7 +86,7 @@ const CreateOrg = props => {
             <br />
             {
                 error.length > 0 &&
-                <Alert severity="error">{error}</Alert>
+                <Alert severity='error'>{error}</Alert>
             }
         </div>
     );

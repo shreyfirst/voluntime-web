@@ -110,16 +110,16 @@ const ChangeEmail = props => {
                 <Tabs
                     value={tab}
                     onChange={(e, newTab) => setTab(newTab)}
-                    indicatorColor="primary"
-                    textColor="primary"
+                    indicatorColor='primary'
+                    textColor='primary'
                     centered
                 >
-                    <Tab value={0} label="Google" />
-                    <Tab value={1} label="Verification Email" />
+                    <Tab value={0} label='Google' />
+                    <Tab value={1} label='Verification Email' />
                 </Tabs>
                 <TabPanel tabValue={0} tabIndex={tab} className={classes.tabPanel}>
                     <GoogleLogin
-                        clientId="978484937841-gg9qpc12jq2ccdom9mqv5mjbibfgu886.apps.googleusercontent.com"
+                        clientId='978484937841-gg9qpc12jq2ccdom9mqv5mjbibfgu886.apps.googleusercontent.com'
                         onSuccess={responseGoogle}
                         onFailure={responseGoogle}
                         cookiePolicy='single_host_origin'
@@ -138,10 +138,10 @@ const ChangeEmail = props => {
                 </TabPanel>
             </DialogContent>
             <DialogActions>
-                <Button variant='text' onClick={closeDialog} color="primary">
+                <Button variant='text' onClick={closeDialog} color='primary'>
                     Cancel
                 </Button>
-                <Button variant='contained' onClick={handleSubmit} color="primary" disabled={loading} className={classes.submitButton}>
+                <Button variant='contained' onClick={handleSubmit} color='primary' disabled={loading} className={classes.submitButton}>
                     {
                         loading
                             ? <CircularProgress size={24} color='secondary' />
@@ -151,11 +151,11 @@ const ChangeEmail = props => {
             </DialogActions>
             {
                 success.length > 0 &&
-                <Alert severity="success">{success} <Link component="button" onClick={closeDialog}>Done</Link></Alert>
+                <Alert severity='success'>{success} <Link component='button' onClick={closeDialog}>Done</Link></Alert>
             }
             {
                 error.length > 0 &&
-                <Alert severity="error">{error}</Alert>
+                <Alert severity='error'>{error}</Alert>
             }
         </Dialog>
     );

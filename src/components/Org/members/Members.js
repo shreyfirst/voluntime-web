@@ -95,7 +95,7 @@ const Members = props => {
                 error.length > 0 &&
                 <Grid container>
                     <Grid item xs={12} sm={9} md={7} lg={6}>
-                        <Alert severity="error">{error}</Alert>
+                        <Alert severity='error'>{error}</Alert>
                         <br />
                     </Grid>
                 </Grid>
@@ -121,9 +121,9 @@ const Members = props => {
                     <br /><br />
                     <TextField onChange={e => setSearchValue(e.target.value)} variant='outlined' fullWidth InputProps={{
                         placeholder: 'Search Members...', endAdornment: (
-                            <InputAdornment position="end">
+                            <InputAdornment position='end'>
                                 <IconButton
-                                    aria-label="search"
+                                    aria-label='search'
                                     onClick={handleSearch}
                                 >
                                     <SearchIcon />

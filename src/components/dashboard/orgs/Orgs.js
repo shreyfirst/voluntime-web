@@ -23,7 +23,7 @@ const OrgSection = props => {
 
     return (
         <div className={classes.orgSection}>
-            <Typography variant="h5">
+            <Typography variant='h5'>
                 {props.name}
             </Typography>
             <Grid container spacing={2}>

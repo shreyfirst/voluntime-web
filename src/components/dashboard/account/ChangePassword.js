@@ -82,9 +82,9 @@ const ChangePassword = props => {
                 <TextField variant='outlined' type={showPassword ? 'text' : 'password'} label='New Password' onChange={e => setPassword(e.target.value)} className={classes.textField}
                     InputProps={{
                         endAdornment: (
-                            <InputAdornment position="end">
+                            <InputAdornment position='end'>
                                 <IconButton
-                                    aria-label="show password"
+                                    aria-label='show password'
                                     onClick={() => setShowPassword(!showPassword)}
                                 >
                                     {showPassword ? <Visibility /> : <VisibilityOff />}
@@ -95,9 +95,9 @@ const ChangePassword = props => {
                 <TextField variant='outlined' type={showConfirm ? 'text' : 'password'} label='Confirm New Password' onChange={e => setConfirm(e.target.value)} className={classes.textField}
                     InputProps={{
                         endAdornment: (
-                            <InputAdornment position="end">
+                            <InputAdornment position='end'>
                                 <IconButton
-                                    aria-label="show confirm"
+                                    aria-label='show confirm'
                                     onClick={() => setShowConfirm(!showConfirm)}
                                 >
                                     {showConfirm ? <Visibility /> : <VisibilityOff />}
@@ -107,10 +107,10 @@ const ChangePassword = props => {
                     }} />
             </DialogContent>
             <DialogActions>
-                <Button variant='text' onClick={closeDialog} color="primary">
+                <Button variant='text' onClick={closeDialog} color='primary'>
                     Cancel
                 </Button>
-                <Button variant='contained' onClick={handleSubmit} color="primary" disabled={loading} className={classes.submitButton}>
+                <Button variant='contained' onClick={handleSubmit} color='primary' disabled={loading} className={classes.submitButton}>
                     {
                         loading
                             ? <CircularProgress size={24} color='secondary' />
@@ -120,11 +120,11 @@ const ChangePassword = props => {
             </DialogActions>
             {
                 success.length > 0 &&
-                <Alert severity="success">{success} <Link component="button" onClick={closeDialog}>Done</Link></Alert>
+                <Alert severity='success'>{success} <Link component='button' onClick={closeDialog}>Done</Link></Alert>
             }
             {
                 error.length > 0 &&
-                <Alert severity="error">{error}</Alert>
+                <Alert severity='error'>{error}</Alert>
             }
         </Dialog>
     );

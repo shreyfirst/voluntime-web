@@ -10,7 +10,7 @@ const useStyles = makeStyles({
     container: {
         height: '100%',
         position: 'relative',
-        boxSizing: "border-box",
+        boxSizing: 'border-box',
         paddingBottom: '12%',
     },
     fullWidth: {
@@ -72,16 +72,16 @@ const VerifyEmail = props => {
     return (
         <div className={classes.container}>
             <Button className={classes.backButton} variant='text' startIcon={<ArrowBack />} onClick={backButtonClicked}>Back</Button>
-            <Typography variant="h4">
+            <Typography variant='h4'>
                 Verify Email
             </Typography><br /><br />
-            <Typography variant="body1">
+            <Typography variant='body1'>
                 Your account has been created. A verification email has been sent to <strong>{props.user.email}</strong>.
                 <br /><br />
                 Please click the link in the email to verify that email address belongs to you.
             </Typography>
             <br /><br />
-            <Button disabled={resendLoading} onClick={resendClicked} variant="contained" color="primary" fullWidth className={classes.button}>
+            <Button disabled={resendLoading} onClick={resendClicked} variant='contained' color='primary' fullWidth className={classes.button}>
                 {
                     resendLoading
                         ? <CircularProgress size={24} color='secondary' />
@@ -91,13 +91,13 @@ const VerifyEmail = props => {
             <br />
             {
                 resendSuccess.length > 0 &&
-                <Alert severity="success">{resendSuccess}<strong>{props.user.email}</strong>.</Alert>
+                <Alert severity='success'>{resendSuccess}<strong>{props.user.email}</strong>.</Alert>
             }
             {
                 resendError.length > 0 &&
-                <Alert severity="error">{resendError}</Alert>
+                <Alert severity='error'>{resendError}</Alert>
             }
-            <Button disabled={verifyLoading} onClick={verifyClicked} variant="contained" color="primary" fullWidth className={classes.button}>
+            <Button disabled={verifyLoading} onClick={verifyClicked} variant='contained' color='primary' fullWidth className={classes.button}>
                 {
                     verifyLoading
                         ? <CircularProgress size={24} color='secondary' />
@@ -107,7 +107,7 @@ const VerifyEmail = props => {
             <br />
             {
                 verifyError.length > 0 &&
-                <Alert severity="error">{verifyError}</Alert>
+                <Alert severity='error'>{verifyError}</Alert>
             }
         </div>
     );

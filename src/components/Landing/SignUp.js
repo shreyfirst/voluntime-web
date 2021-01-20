@@ -14,7 +14,7 @@ const useStyles = makeStyles({
     container: {
         height: '100%',
         position: 'relative',
-        boxSizing: "border-box",
+        boxSizing: 'border-box',
         paddingBottom: '12%',
     },
     fullWidth: {
@@ -36,9 +36,9 @@ const useStyles = makeStyles({
         textTransform: 'none',
         backgroundColor: '#FFF',
         minWidth: '50%',
-        "&:hover": {
+        '&:hover': {
             //you want this to be the same as the backgroundColor above
-            backgroundColor: "#EFEFEF"
+            backgroundColor: '#EFEFEF'
         }
     },
     appleLogin: {
@@ -46,9 +46,9 @@ const useStyles = makeStyles({
         backgroundColor: '#000',
         color: '#FFF',
         minWidth: '50%',
-        "&:hover": {
+        '&:hover': {
             //you want this to be the same as the backgroundColor above
-            backgroundColor: "#000"
+            backgroundColor: '#000'
         }
     }
 });
@@ -135,28 +135,28 @@ const SignUp = props => {
                 view === 'verify'
                     ? <VerifyEmail user={{ ...props.user, password }} setUser={props.setUser} setView={setView} />
                     : <div className={classes.container}>
-                        <Typography variant="h4">
+                        <Typography variant='h4'>
                             Sign Up
                         </Typography>
-                        <Typography variant="body1">
+                        <Typography variant='body1'>
                             Register a Voluntime account to create and join organizations.
                         </Typography>
                         <br />
                         <Grid container className={classes.fullWidth} spacing={1}>
                             <Grid item lg={6} xs={12}>
-                                <TextField onKeyDown={keyPress} onChange={event => setFirstName(event.target.value)} type="text" label="First Name" variant="outlined" className={classes.textField} fullWidth inputRef={props.fieldRef} />
+                                <TextField onKeyDown={keyPress} onChange={event => setFirstName(event.target.value)} type='text' label='First Name' variant='outlined' className={classes.textField} fullWidth inputRef={props.fieldRef} />
                             </Grid>
                             <Grid item lg={6} xs={12}>
-                                <TextField onKeyDown={keyPress} onChange={event => setLastName(event.target.value)} type="text" label="Last Name" variant="outlined" className={classes.textField} fullWidth />
+                                <TextField onKeyDown={keyPress} onChange={event => setLastName(event.target.value)} type='text' label='Last Name' variant='outlined' className={classes.textField} fullWidth />
                             </Grid>
                         </Grid>
-                        <TextField onKeyDown={keyPress} onChange={event => setEmail(event.target.value)} type="email" label="Email Address" variant="outlined" fullWidth className={classes.textField} /><br />
-                        <TextField onKeyDown={keyPress} onChange={event => setPassword(event.target.value)} type={showPassword ? "text" : "password"} label="Password" variant="outlined" fullWidth className={classes.textField}
+                        <TextField onKeyDown={keyPress} onChange={event => setEmail(event.target.value)} type='email' label='Email Address' variant='outlined' fullWidth className={classes.textField} /><br />
+                        <TextField onKeyDown={keyPress} onChange={event => setPassword(event.target.value)} type={showPassword ? 'text' : 'password'} label='Password' variant='outlined' fullWidth className={classes.textField}
                             InputProps={{
                                 endAdornment: (
-                                    <InputAdornment position="end">
+                                    <InputAdornment position='end'>
                                         <IconButton
-                                            aria-label="show password"
+                                            aria-label='show password'
                                             onClick={() => setShowPassword(!showPassword)}
                                         >
                                             {showPassword ? <Visibility /> : <VisibilityOff />}
@@ -164,7 +164,7 @@ const SignUp = props => {
                                     </InputAdornment>
                                 )
                             }} />
-                        <Button disabled={loading} onClick={handleSubmit} variant="contained" color="primary" fullWidth className={classes.button}>
+                        <Button disabled={loading} onClick={handleSubmit} variant='contained' color='primary' fullWidth className={classes.button}>
                             {
                                 loading
                                     ? <CircularProgress size={24} color='secondary' />
@@ -174,11 +174,11 @@ const SignUp = props => {
                         <br />
                         {
                             error.length > 0 &&
-                            <Alert severity="error">{error}</Alert>
+                            <Alert severity='error'>{error}</Alert>
                         }
                         <br /><br />
                         <GoogleLogin
-                            clientId="978484937841-gg9qpc12jq2ccdom9mqv5mjbibfgu886.apps.googleusercontent.com"
+                            clientId='978484937841-gg9qpc12jq2ccdom9mqv5mjbibfgu886.apps.googleusercontent.com'
                             onSuccess={responseGoogle}
                             onFailure={responseGoogle}
                             cookiePolicy='single_host_origin'
@@ -195,9 +195,9 @@ const SignUp = props => {
                             render={props => <Button startIcon={<AppleIcon />} className={classes.appleLogin} {...props}>Sign up with Apple</Button>}
                         />*/}
                         <Button startIcon={<AppleIcon />} className={classes.appleLogin} onClick={() => setError('Sign up with Apple is not supported yet.')}>Sign up with Apple</Button>
-                        <Grid container justify="center" className={classes.toggle}>
+                        <Grid container justify='center' className={classes.toggle}>
                             <Grid item>
-                                Have an account? <Button variant="text" color="primary" onClick={() => props.setView('login')}>Login</Button>
+                                Have an account? <Button variant='text' color='primary' onClick={() => props.setView('login')}>Login</Button>
                             </Grid>
                         </Grid>
                     </div>

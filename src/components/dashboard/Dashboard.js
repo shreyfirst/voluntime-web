@@ -36,7 +36,7 @@ const useStyles = makeStyles(theme => ({
         textAlign: 'center'
     },
     navButton: {
-        "&::before": {
+        '&::before': {
             content: '""',
             height: '100%',
             width: 8,
@@ -44,10 +44,10 @@ const useStyles = makeStyles(theme => ({
     },
     activeNavButton: {
         backgroundColor: '#DADADA',
-        "&:hover": {
-            backgroundColor: "#DADADA"
+        '&:hover': {
+            backgroundColor: '#DADADA'
         },
-        "&::before": {
+        '&::before': {
             content: '""',
             height: '100%',
             position: 'absolute',
@@ -105,8 +105,8 @@ const Dashboard = props => {
     return (
         <div className={classes.container}>
             <Drawer
-                variant="permanent"
-                anchor="left"
+                variant='permanent'
+                anchor='left'
                 classes={{
                     paper: classes.drawerPaper
                 }}
@@ -117,18 +117,18 @@ const Dashboard = props => {
                 </div>
                 <Divider />
                 <List>
-                    <NavButton view="account" icon={<AccountIcon />} />
-                    <NavButton view="overview" icon={<OverviewIcon />} />
-                    <NavButton view="orgs" icon={<OrgIcon />} />
-                    <NavButton view="events" icon={<EventsIcon />} />
-                    <NavButton view="hours" icon={<HoursIcon />} />
+                    <NavButton view='account' icon={<AccountIcon />} />
+                    <NavButton view='overview' icon={<OverviewIcon />} />
+                    <NavButton view='orgs' icon={<OrgIcon />} />
+                    <NavButton view='events' icon={<EventsIcon />} />
+                    <NavButton view='hours' icon={<HoursIcon />} />
                     <br />
                     <Divider />
-                    <NavButton view="contact" icon={<ContactIcon />} />
+                    <NavButton view='contact' icon={<ContactIcon />} />
                 </List>
             </Drawer>
             <div className={classes.content}>
-                <Typography variant="h3" component="h1">
+                <Typography variant='h3' component='h1'>
                     {viewNames[view]}
                 </Typography><br />
                 <div className={classes.view}>

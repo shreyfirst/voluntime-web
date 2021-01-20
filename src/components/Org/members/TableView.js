@@ -32,11 +32,11 @@ const Row = props => {
         <>
             <TableRow className={classes.row}>
                 <TableCell>
-                    <IconButton aria-label="expand row" size="small" onClick={() => setOpen(!open)}>
+                    <IconButton aria-label='expand row' size='small' onClick={() => setOpen(!open)}>
                         {open ? <UpArrow /> : <DownArrow />}
                     </IconButton>
                 </TableCell>
-                <TableCell component="th" scope="row" className={classes[member.role]}>
+                <TableCell component='th' scope='row' className={classes[member.role]}>
                     {roleNames[member.role]}
                 </TableCell>
                 <TableCell>{member.firstName}</TableCell>
@@ -44,7 +44,7 @@ const Row = props => {
             </TableRow>
             <TableRow>
                 <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={4}>
-                    <Collapse in={open} timeout="auto" unmountOnExit>
+                    <Collapse in={open} timeout='auto' unmountOnExit>
                         <Member table member={member} role={props.org.role} user={props.user} org={props.org} members={props.members} setMembers={props.setMembers} />
                     </Collapse>
                 </TableCell>

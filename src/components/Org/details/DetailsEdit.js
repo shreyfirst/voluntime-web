@@ -213,7 +213,7 @@ const DetailsEdit = props => {
             <TextField variant='outlined' label='Name' required onChange={e => setName(e.target.value)} defaultValue={props.org.name} className={classes.textField} /><br /><br />
             <TextField variant='outlined' label='Description' multiline rows={4} onChange={e => setDescription(e.target.value)} defaultValue={props.org.description} className={classes.textField} /><br /><br />
             <br />
-            <Grid container justify="flex-end">
+            <Grid container justify='flex-end'>
                 <Button variant='contained' color='primary' disabled={loading || compressProgress !== null && compressProgress < 100} onClick={handleSubmit} startIcon={!loading && <SaveIcon />} className={classes.submitButton}>
                     {
                         loading
@@ -231,11 +231,11 @@ const DetailsEdit = props => {
             }
             {
                 success.length > 0 &&
-                <Alert severity="success">{success}</Alert>
+                <Alert severity='success'>{success}</Alert>
             }
             {
                 error.length > 0 &&
-                <Alert severity="error">{error}</Alert>
+                <Alert severity='error'>{error}</Alert>
             }
             <br /><br /><br />
             <Grid container justify='center'>

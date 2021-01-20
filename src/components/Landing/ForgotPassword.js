@@ -9,7 +9,7 @@ const useStyles = makeStyles({
     container: {
         height: '100%',
         position: 'relative',
-        boxSizing: "border-box",
+        boxSizing: 'border-box',
         paddingBottom: '12%',
     },
     textField: {
@@ -66,14 +66,14 @@ const ForgotPassword = props => {
         <div className={classes.container}>
             <Button className={classes.backButton} variant='text' startIcon={<ArrowBack />} onClick={backButtonClicked}>Back</Button>
 
-            <Typography variant="h4">
+            <Typography variant='h4'>
                 Forgot Password
             </Typography><br /><br />
-            <Typography variant="body1">
+            <Typography variant='body1'>
                 Please enter your account's email address. An email will be sent to you with a link to reset your password.
             </Typography><br /><br />
-            <TextField onKeyDown={keyPress} onChange={event => setEmail(event.target.value)} type="email" label="Email Address" variant="outlined" fullWidth className={classes.textField} />
-            <Button onClick={handleSubmit} disabled={loading} variant="contained" color="primary" fullWidth className={classes.button}>
+            <TextField onKeyDown={keyPress} onChange={event => setEmail(event.target.value)} type='email' label='Email Address' variant='outlined' fullWidth className={classes.textField} />
+            <Button onClick={handleSubmit} disabled={loading} variant='contained' color='primary' fullWidth className={classes.button}>
                 {
                     loading
                         ? <CircularProgress size={24} color='secondary' />
@@ -83,11 +83,11 @@ const ForgotPassword = props => {
             <br />
             {
                 success.length > 0 &&
-                <Alert severity="success">{success}</Alert>
+                <Alert severity='success'>{success}</Alert>
             }
             {
                 error.length > 0 &&
-                <Alert severity="error">{error}</Alert>
+                <Alert severity='error'>{error}</Alert>
             }
         </div>
     );

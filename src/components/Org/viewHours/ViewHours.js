@@ -204,7 +204,7 @@ const ViewHours = props => {
                 error.length > 0 &&
                 <Grid container>
                     <Grid item xs={12} sm={9} md={7} lg={6}>
-                        <Alert severity="error">{error}</Alert>
+                        <Alert severity='error'>{error}</Alert>
                         <br />
                     </Grid>
                 </Grid>

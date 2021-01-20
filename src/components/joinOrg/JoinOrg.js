@@ -10,7 +10,7 @@ const useStyles = makeStyles({
         minHeight: '100vh',
         paddingTop: '4vh',
         paddingBottom: '4vh',
-        boxSizing: "border-box",
+        boxSizing: 'border-box',
         backgroundColor: '#f7f7f7',
     },
     gridContainer: {
@@ -107,22 +107,22 @@ const JoinOrg = props => {
     const classes = useStyles();
     return (
         <Container maxWidth={false} className={classes.container}>
-            <Grid container justify="center" className={classes.gridContainer}>
+            <Grid container justify='center' className={classes.gridContainer}>
                 <Grid item>
-                    <Typography variant="h3" className={classes.bold}>
+                    <Typography variant='h3' className={classes.bold}>
                         Voluntime
                     </Typography><br /><br />
                 </Grid>
-                <Grid container item xs={12} justify="center">
+                <Grid container item xs={12} justify='center'>
                     <Paper className={classes.paper}>
-                        <Typography variant="h5">
+                        <Typography variant='h5'>
                             Join Organization
                         </Typography><br />
                         {
                             org === null
                                 ? error.length < 1 && <CircularProgress color='secondary' size={40} />
                                 : <>
-                                    <Typography variant="body1">
+                                    <Typography variant='body1'>
                                         Do you want to join this organization?
                                     </Typography><br /><br />
                                     <Typography variant='h5' className={classes.bold}>{org.name}</Typography><br />
@@ -130,7 +130,7 @@ const JoinOrg = props => {
                                 </>
                         }
                         <br /><br />
-                        <Button disabled={loadingOrg || loading || error.length > 0} onClick={handleSubmit} variant="contained" color="primary" className={classes.button}>
+                        <Button disabled={loadingOrg || loading || error.length > 0} onClick={handleSubmit} variant='contained' color='primary' className={classes.button}>
                             {
                                 loading
                                     ? <CircularProgress size={24} color='secondary' />
@@ -140,11 +140,11 @@ const JoinOrg = props => {
                         <br />
                         {
                             success.length > 0 &&
-                            <Alert severity="success" className={classes.alert}>{success} {isMobile ? 'You may now log in to Voluntime.' : <Link to='/dashboard'>Continue to Dashboard</Link>}</Alert>
+                            <Alert severity='success' className={classes.alert}>{success} {isMobile ? 'You may now log in to Voluntime.' : <Link to='/dashboard'>Continue to Dashboard</Link>}</Alert>
                         }
                         {
                             error.length > 0 &&
-                            <Alert severity="error" className={classes.alert}>{error}</Alert>
+                            <Alert severity='error' className={classes.alert}>{error}</Alert>
                         }
                     </Paper>
                 </Grid>

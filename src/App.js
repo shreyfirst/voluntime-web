@@ -84,7 +84,7 @@ const App = () => {
                 <Route path={['/verify-new-email/:id', '/verify-new-email']}>
                     <VerifyNewEmail setUser={setUser} />
                 </Route>
-                <Route path={['/privacy-policy', '/terms-of-service', '/tos']} render={() => { window.location.href = "privacy-policy.html"; }} />
+                <Route path={['/privacy-policy', '/terms-of-service', '/tos']} render={() => { window.location.href = 'privacy-policy.html'; }} />
             </Switch>
         </Suspense>
     );

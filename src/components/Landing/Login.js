@@ -14,7 +14,7 @@ const useStyles = makeStyles({
     container: {
         height: '100%',
         position: 'relative',
-        boxSizing: "border-box",
+        boxSizing: 'border-box',
         paddingBottom: '12%',
     },
     textField: {
@@ -42,9 +42,9 @@ const useStyles = makeStyles({
         backgroundColor: '#000',
         color: '#FFF',
         minWidth: '50%',
-        "&:hover": {
+        '&:hover': {
             //you want this to be the same as the backgroundColor above
-            backgroundColor: "#000"
+            backgroundColor: '#000'
         }
     }
 });
@@ -118,13 +118,13 @@ const Login = props => {
                 view === 'forgotPassword'
                     ? <ForgotPassword setView={setView} />
                     : <div className={classes.container}>
-                        <Typography variant="h4">
+                        <Typography variant='h4'>
                             Login
                         </Typography>
                         <br />
-                        <TextField onKeyDown={keyPress} onChange={event => setEmail(event.target.value)} type="email" label="Email Address" variant="outlined" fullWidth className={classes.textField} /><br />
-                        <TextField onKeyDown={keyPress} onChange={event => setPassword(event.target.value)} type="password" label="Password" variant="outlined" fullWidth className={classes.textField} />
-                        <Button onClick={handleSubmit} disabled={loading} variant="contained" color="primary" fullWidth className={classes.button}>
+                        <TextField onKeyDown={keyPress} onChange={event => setEmail(event.target.value)} type='email' label='Email Address' variant='outlined' fullWidth className={classes.textField} /><br />
+                        <TextField onKeyDown={keyPress} onChange={event => setPassword(event.target.value)} type='password' label='Password' variant='outlined' fullWidth className={classes.textField} />
+                        <Button onClick={handleSubmit} disabled={loading} variant='contained' color='primary' fullWidth className={classes.button}>
                             {
                                 loading
                                     ? <CircularProgress size={24} color='secondary' />
@@ -134,13 +134,13 @@ const Login = props => {
                         <br />
                         {
                             error.length > 0 &&
-                            <Alert severity="error">{error} {error.startsWith('There\'s no account with that email address') && <>{' '}<Link component="button" onClick={() => props.setView('signup')}>Create Account</Link></>}</Alert>
+                            <Alert severity='error'>{error} {error.startsWith('There\'s no account with that email address') && <>{' '}<Link component='button' onClick={() => props.setView('signup')}>Create Account</Link></>}</Alert>
                         }
                         <br />
-                        <Button onClick={() => setView('forgotPassword')} variant="text" className={classes.forgotPassword}>Forgot Password?</Button>
+                        <Button onClick={() => setView('forgotPassword')} variant='text' className={classes.forgotPassword}>Forgot Password?</Button>
                         <br /><br /><br />
                         <GoogleLogin
-                            clientId="978484937841-gg9qpc12jq2ccdom9mqv5mjbibfgu886.apps.googleusercontent.com"
+                            clientId='978484937841-gg9qpc12jq2ccdom9mqv5mjbibfgu886.apps.googleusercontent.com'
                             onSuccess={responseGoogle}
                             onFailure={responseGoogle}
                             cookiePolicy='single_host_origin'
@@ -149,9 +149,9 @@ const Login = props => {
                             )}
                         /><br /><br />
                         <Button startIcon={<AppleIcon />} className={classes.appleLogin} onClick={() => setError('Sign in with Apple is not supported yet.')}>Sign in with Apple</Button>
-                        <Grid container justify="center" className={classes.toggle}>
+                        <Grid container justify='center' className={classes.toggle}>
                             <Grid item>
-                                Don't have an account? <Button variant="text" color="primary" onClick={() => props.setView('signup')}>Sign Up</Button>
+                                Don't have an account? <Button variant='text' color='primary' onClick={() => props.setView('signup')}>Sign Up</Button>
                             </Grid>
                         </Grid>
                     </div>
