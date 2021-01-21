@@ -51,6 +51,16 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
+const StatusIcon = ({ status, ...props }) => {
+    const classes = useStyles();
+
+    switch (status) {
+        case 'approved': return <ApprovedIcon className={classes[status]} {...props} />
+        case 'pending': return <PendingIcon className={classes[status]} {...props} />
+        case 'denied': return <DeniedIcon className={classes[status]} {...props} />
+    }
+};
+
 const LogRow = memo(props => {
     const log = props.log;
     const [open, setOpen] = useState(false);
@@ -58,15 +68,6 @@ const LogRow = memo(props => {
     const [loadingApprove, setLoadingApprove] = useState(false);
     const [loadingDeny, setLoadingDeny] = useState(false);
     const [error, setError] = useState('');
-
-    const classes = useStyles();
-    const StatusIcon = ({ status, ...props }) => {
-        switch (status) {
-            case 'approved': return <ApprovedIcon className={classes[status]} {...props} />
-            case 'pending': return <PendingIcon className={classes[status]} {...props} />
-            case 'denied': return <DeniedIcon className={classes[status]} {...props} />
-        }
-    };
 
     const changeStatus = to => {
         to === 'approved' ? setLoadingApprove(true) : setLoadingDeny(true);
@@ -88,7 +89,7 @@ const LogRow = memo(props => {
     };
 
     const setHover = to => {
-        if (log.status === 'pending') {
+        if (props.org.role !== 'vol' && log.status === 'pending') {
             setPendingHover(to);
         }
     };
@@ -96,6 +97,7 @@ const LogRow = memo(props => {
     const start = dayjs(log.start);
     const end = dayjs(log.end);
 
+    const classes = useStyles();
     return (
         <>
             <TableRow className={classes.row}>

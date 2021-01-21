@@ -1,7 +1,7 @@
 import { memo, useState } from 'react';
-import { Divider, Drawer, List, Typography, ListItem, ListItemText } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
-import { AccountCircle as AccountIcon, DashboardOutlined as OverviewIcon, Group as OrgIcon, Event as EventsIcon, ListAlt as HoursIcon, ContactSupportOutlined as ContactIcon } from '@material-ui/icons';
+import { Divider, Drawer, List, Typography, ListItem, ListItemText, useMediaQuery } from '@material-ui/core';
+import { makeStyles, useTheme } from '@material-ui/core/styles';
+import { Menu as MenuIcon, ArrowBack as CloseIcon, AccountCircle as AccountIcon, DashboardOutlined as OverviewIcon, Group as OrgIcon, Event as EventsIcon, ListAlt as HoursIcon, ContactSupportOutlined as ContactIcon } from '@material-ui/icons';
 import Account from './account/Account';
 import Overview from './Overview';
 import Orgs from './orgs/Orgs';
@@ -10,7 +10,7 @@ import Hours from './Hours';
 import Contact from './Contact';
 import VIcon from '../../images/icon.png';
 
-const viewNames = { 'overview': 'Overview', 'hours': 'Hours', 'orgs': 'Organizations', 'account': 'Account', 'events': 'Events', 'contact': 'Contact Us' };
+const viewNames = { overview: 'Overview', hours: 'Hours', orgs: 'Organizations', account: 'Account', events: 'Events', contact: 'Contact Us' };
 
 const useStyles = makeStyles(theme => ({
     container: {
@@ -20,6 +20,12 @@ const useStyles = makeStyles(theme => ({
     drawerPaper: {
         width: '16%',
         height: '100%',
+        [theme.breakpoints.down('sm')]: {
+            width: '50%',
+        },
+        [theme.breakpoints.down('xs')]: {
+            width: '70%',
+        },
     },
     content: {
         marginLeft: '16%',
@@ -29,6 +35,11 @@ const useStyles = makeStyles(theme => ({
         paddingRight: '1%',
         paddingTop: '1%',
         paddingBottom: 30,
+        [theme.breakpoints.down('sm')]: {
+            marginLeft: 40,
+            width: '100%',
+            paddingLeft: '1%',
+        },
     },
     drawerHeader: {
         paddingTop: '8%',
@@ -76,40 +87,56 @@ const useStyles = makeStyles(theme => ({
         fontWeight: 'bold',
         fontSize: '1.2em',
         paddingTop: '1%',
+    },
+    menuIcon: {
+        position: 'absolute',
+        left: 15,
+        top: 20,
+        cursor: 'pointer'
     }
 }));
 
+const View = ({ view, user, setUser }) => {
+    switch (view) {
+        case 'account': return <Account user={user} setUser={setUser} />
+        case 'overview': return <Overview user={user} />
+        case 'orgs': return <Orgs user={user} setUser={setUser} />
+        case 'events': return <Events user={user} />
+        case 'hours': return <Hours user={user} />
+        case 'contact': return <Contact user={user} />
+        default: return 'Select a page on the left.'
+    }
+};
 
 const Dashboard = props => {
     const classes = useStyles();
+
+    const theme = useTheme();
+    const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+
     const [view, setView] = useState('orgs');
+    const [open, setOpen] = useState(false);
 
     const NavButton = props => (
-        <ListItem button onClick={() => setView(props.view)} className={view === props.view ? classes.activeNavButton : classes.navButton}>
+        <ListItem button onClick={() => { setView(props.view); props.isMobile && props.setOpen(false); }} className={view === props.view ? classes.activeNavButton : classes.navButton}>
             <ListItemText primary={<>{props.icon} <span className={classes.viewName}>{viewNames[props.view]}</span></>} primaryTypographyProps={{ className: `${classes.navButtonText} ${view === props.view && classes.activeNavButtonText}` }} />
         </ListItem>
     );
 
-    const renderView = view => {
-        switch (view) {
-            case 'account': return <Account user={props.user} setUser={props.setUser} />
-            case 'overview': return <Overview user={props.user} />
-            case 'orgs': return <Orgs user={props.user} setUser={props.setUser} />
-            case 'events': return <Events user={props.user} />
-            case 'hours': return <Hours user={props.user} />
-            case 'contact': return <Contact user={props.user} />
-            default: return 'Select a page on the left.'
-        }
-    };
-
     return (
         <div className={classes.container}>
+            {
+                isMobile &&
+                <MenuIcon onClick={() => setOpen(true)} className={classes.menuIcon} />
+            }
             <Drawer
-                variant='permanent'
+                variant={!isMobile && 'permanent'}
+                open={isMobile && open}
                 anchor='left'
                 classes={{
                     paper: classes.drawerPaper
                 }}
+                ModalProps={isMobile && { onBackdropClick: () => setOpen(false) }}
             >
                 <div className={classes.drawerHeader}>
                     <img src={VIcon} alt='' className={classes.vIcon} /><br />
@@ -117,14 +144,22 @@ const Dashboard = props => {
                 </div>
                 <Divider />
                 <List>
-                    <NavButton view='account' icon={<AccountIcon />} />
-                    <NavButton view='overview' icon={<OverviewIcon />} />
-                    <NavButton view='orgs' icon={<OrgIcon />} />
-                    <NavButton view='events' icon={<EventsIcon />} />
-                    <NavButton view='hours' icon={<HoursIcon />} />
+                    <NavButton view='account' icon={<AccountIcon />} isMobile={isMobile} setOpen={setOpen} />
+                    <NavButton view='overview' icon={<OverviewIcon />} isMobile={isMobile} setOpen={setOpen} />
+                    <NavButton view='orgs' icon={<OrgIcon />} isMobile={isMobile} setOpen={setOpen} />
+                    <NavButton view='events' icon={<EventsIcon />} isMobile={isMobile} setOpen={setOpen} />
+                    <NavButton view='hours' icon={<HoursIcon />} isMobile={isMobile} setOpen={setOpen} />
                     <br />
                     <Divider />
-                    <NavButton view='contact' icon={<ContactIcon />} />
+                    <NavButton view='contact' icon={<ContactIcon />} isMobile={isMobile} setOpen={setOpen} />
+                    <br />
+                    <Divider />
+                    {
+                        isMobile &&
+                        <ListItem button onClick={() => setOpen(false)} className={classes.navButton}>
+                            <ListItemText primary={<>{<CloseIcon />} <span className={classes.viewName}>Close</span></>} primaryTypographyProps={{ className: classes.navButtonText }} />
+                        </ListItem>
+                    }
                 </List>
             </Drawer>
             <div className={classes.content}>
@@ -132,7 +167,7 @@ const Dashboard = props => {
                     {viewNames[view]}
                 </Typography><br />
                 <div className={classes.view}>
-                    {renderView(view)}
+                    {<View view={view} user={props.user} setUser={props.setUser} />}
                 </div>
             </div>
         </div>

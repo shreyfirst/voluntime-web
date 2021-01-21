@@ -87,6 +87,18 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
+const View = ({ view, user, setUser, org, logs, members, setMembers, setLogs }) => {
+    switch (view) {
+        case 'details': return <Details user={user} setUser={setUser} org={org} />
+        case 'metrics': return <Metrics user={user} />
+        case 'members': return <Members user={user} members={members} setMembers={setMembers} org={org} />
+        case 'add': return <AddHours user={user} org={org} />
+        case 'hours': return <ViewHours user={user} members={members} setMembers={setMembers} logs={logs} setLogs={setLogs} org={org} />
+        case 'events': return <Events user={user} />
+        default: return 'Select a page on the left.'
+    }
+};
+
 const Org = props => {
     const { orgId } = useParams();
     const history = useHistory();
@@ -104,11 +116,11 @@ const Org = props => {
     const getViewNames = o => {
         if (o !== null) {
             if (o.role === 'owner') {
-                return { 'details': 'Details', 'metrics': 'Metrics', 'members': 'Members', 'add': 'Add Hours', 'hours': 'View Hours', 'events': 'Events', 'back': 'Dashboard' };
+                return { details: 'Details', metrics: 'Metrics', members: 'Members', add: 'Add Hours', hours: 'View Hours', events: 'Events', back: 'Dashboard' };
             } else if (o.role === 'admin') {
-                return { 'details': 'Details', 'members': 'Members', 'add': 'Add Hours', 'hours': 'View Hours', 'events': 'Events', 'back': 'Dashboard' };
+                return { details: 'Details', members: 'Members', add: 'Add Hours', hours: 'View Hours', events: 'Events', back: 'Dashboard' };
             } else {
-                return { 'details': 'Details', 'members': 'Members', 'add': 'Add Hours', 'hours': 'View Hours', 'events': 'Events', 'back': 'Dashboard' };
+                return { details: 'Details', members: 'Members', add: 'Add Hours', hours: 'View Hours', events: 'Events', back: 'Dashboard' };
             }
         }
     };
@@ -164,18 +176,6 @@ const Org = props => {
             }
         };
 
-        const renderView = view => {
-            switch (view) {
-                case 'details': return <Details user={props.user} setUser={props.setUser} org={org} />
-                case 'metrics': return <Metrics user={props.user} />
-                case 'members': return <Members user={props.user} members={members} setMembers={setMembers} org={org} />
-                case 'add': return <AddHours user={props.user} org={org} />
-                case 'hours': return <ViewHours user={props.user} members={members} setMembers={setMembers} logs={logs} setLogs={setLogs} org={org} />
-                case 'events': return <Events user={props.user} />
-                default: return 'Select a page on the left.'
-            }
-        };
-
         return (
             <div className={classes.container}>
                 <Drawer
@@ -202,7 +202,7 @@ const Org = props => {
                         {viewNames[view]}
                     </Typography><br />
                     <div className={classes.view}>
-                        {renderView(view)}
+                        {<View view={view} user={props.user} setUser={props.setUser} org={org} members={members} logs={logs} setMembers={setMembers} setLogs={setLogs} />}
                     </div>
                 </div>
             </div>
