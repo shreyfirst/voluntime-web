@@ -51,7 +51,7 @@ const useStyles = makeStyles(theme => ({
             content: '""',
             height: '100%',
             width: 8,
-        }
+        },
     },
     activeNavButton: {
         backgroundColor: '#DADADA',
@@ -152,13 +152,15 @@ const Dashboard = props => {
                     <br />
                     <Divider />
                     <NavButton view='contact' icon={<ContactIcon />} isMobile={isMobile} setOpen={setOpen} />
-                    <br />
-                    <Divider />
                     {
                         isMobile &&
-                        <ListItem button onClick={() => setOpen(false)} className={classes.navButton}>
-                            <ListItemText primary={<>{<CloseIcon />} <span className={classes.viewName}>Close</span></>} primaryTypographyProps={{ className: classes.navButtonText }} />
-                        </ListItem>
+                        <>
+                            <br />
+                            <Divider />
+                            <ListItem button onClick={() => setOpen(false)} className={classes.navButton}>
+                                <ListItemText primary={<>{<CloseIcon />} <span className={classes.viewName}>Close</span></>} primaryTypographyProps={{ className: classes.navButtonText }} />
+                            </ListItem>
+                        </>
                     }
                 </List>
             </Drawer>
