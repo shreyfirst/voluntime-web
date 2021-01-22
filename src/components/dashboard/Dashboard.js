@@ -108,6 +108,16 @@ const View = ({ view, user, setUser }) => {
     }
 };
 
+const NavButton = props => {
+    const classes = useStyles();
+
+    return (
+        <ListItem button onClick={() => { props.setView(props.view); props.isMobile && props.setOpen(false); }} className={props.view === props.currentView ? classes.activeNavButton : classes.navButton}>
+            <ListItemText primary={<>{props.icon} <span className={classes.viewName}>{viewNames[props.view]}</span></>} primaryTypographyProps={{ className: `${classes.navButtonText} ${props.view === props.currentView && classes.activeNavButtonText}` }} />
+        </ListItem>
+    );
+};
+
 const Dashboard = props => {
     const classes = useStyles();
 
@@ -116,12 +126,6 @@ const Dashboard = props => {
 
     const [view, setView] = useState('orgs');
     const [open, setOpen] = useState(false);
-
-    const NavButton = props => (
-        <ListItem button onClick={() => { setView(props.view); props.isMobile && props.setOpen(false); }} className={view === props.view ? classes.activeNavButton : classes.navButton}>
-            <ListItemText primary={<>{props.icon} <span className={classes.viewName}>{viewNames[props.view]}</span></>} primaryTypographyProps={{ className: `${classes.navButtonText} ${view === props.view && classes.activeNavButtonText}` }} />
-        </ListItem>
-    );
 
     return (
         <div className={classes.container}>
@@ -144,14 +148,14 @@ const Dashboard = props => {
                 </div>
                 <Divider />
                 <List>
-                    <NavButton view='account' icon={<AccountIcon />} isMobile={isMobile} setOpen={setOpen} />
-                    <NavButton view='overview' icon={<OverviewIcon />} isMobile={isMobile} setOpen={setOpen} />
-                    <NavButton view='orgs' icon={<OrgIcon />} isMobile={isMobile} setOpen={setOpen} />
-                    <NavButton view='events' icon={<EventsIcon />} isMobile={isMobile} setOpen={setOpen} />
-                    <NavButton view='hours' icon={<HoursIcon />} isMobile={isMobile} setOpen={setOpen} />
+                    <NavButton view='account' icon={<AccountIcon />} currentView={view} setView={setView} isMobile={isMobile} setOpen={setOpen} />
+                    <NavButton view='overview' icon={<OverviewIcon />} currentView={view} setView={setView} isMobile={isMobile} setOpen={setOpen} />
+                    <NavButton view='orgs' icon={<OrgIcon />} currentView={view} setView={setView} isMobile={isMobile} setOpen={setOpen} />
+                    <NavButton view='events' icon={<EventsIcon />} currentView={view} setView={setView} isMobile={isMobile} setOpen={setOpen} />
+                    <NavButton view='hours' icon={<HoursIcon />} currentView={view} setView={setView} isMobile={isMobile} setOpen={setOpen} />
                     <br />
                     <Divider />
-                    <NavButton view='contact' icon={<ContactIcon />} isMobile={isMobile} setOpen={setOpen} />
+                    <NavButton view='contact' icon={<ContactIcon />} currentView={view} setView={setView} isMobile={isMobile} setOpen={setOpen} />
                     {
                         isMobile &&
                         <>

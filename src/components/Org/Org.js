@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
-import { Divider, Drawer, List, Typography, ListItem, ListItemText } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
-import { InfoOutlined as DetailsIcon, AssessmentOutlined as MetricsIcon, PeopleAltOutlined as MembersIcon, PlaylistAdd, ListAlt, Event as EventIcon, ArrowBack as BackIcon } from '@material-ui/icons';
+import { Divider, Drawer, List, Typography, ListItem, ListItemText, useMediaQuery } from '@material-ui/core';
+import { makeStyles, useTheme } from '@material-ui/core/styles';
+import { Menu as MenuIcon, CancelOutlined as CloseIcon, InfoOutlined as DetailsIcon, AssessmentOutlined as MetricsIcon, PeopleAltOutlined as MembersIcon, PlaylistAdd, ListAlt, Event as EventIcon, ArrowBack as BackIcon } from '@material-ui/icons';
 import { useParams, useHistory, useLocation } from 'react-router-dom';
 import NotFound from './NotFound';
 import Details from './details/Details';
@@ -12,6 +12,17 @@ import ViewHours from './viewHours/ViewHours';
 import Events from './events/Events';
 import VIcon from '../../images/icon.png';
 
+const getViewNames = o => {
+    if (o !== null) {
+        if (o.role === 'owner') {
+            return { details: 'Details', metrics: 'Metrics', members: 'Members', add: 'Add Hours', hours: 'View Hours', events: 'Events', back: 'Dashboard', close: 'Close' };
+        } else if (o.role === 'admin') {
+            return { details: 'Details', members: 'Members', add: 'Add Hours', hours: 'View Hours', events: 'Events', back: 'Dashboard', close: 'Close' };
+        } else {
+            return { details: 'Details', members: 'Members', add: 'Add Hours', hours: 'View Hours', events: 'Events', back: 'Dashboard', close: 'Close' };
+        }
+    }
+};
 
 const useStyles = makeStyles(theme => ({
     container: {
@@ -21,6 +32,12 @@ const useStyles = makeStyles(theme => ({
     drawerPaper: {
         width: '16%',
         height: '100%',
+        [theme.breakpoints.down('sm')]: {
+            width: '50%',
+        },
+        [theme.breakpoints.down('xs')]: {
+            width: '70%',
+        },
     },
     content: {
         marginLeft: '16%',
@@ -30,6 +47,11 @@ const useStyles = makeStyles(theme => ({
         paddingRight: '1%',
         paddingTop: '1%',
         paddingBottom: 30,
+        [theme.breakpoints.down('sm')]: {
+            marginLeft: 40,
+            width: '100%',
+            paddingLeft: '1%',
+        },
     },
     drawerHeader: {
         paddingTop: '8%',
@@ -84,6 +106,12 @@ const useStyles = makeStyles(theme => ({
         display: 'box',
         lineClamp: 1,
         boxOrient: 'vertical',
+    },
+    menuIcon: {
+        position: 'absolute',
+        left: 15,
+        top: 20,
+        cursor: 'pointer'
     }
 }));
 
@@ -99,10 +127,58 @@ const View = ({ view, user, setUser, org, logs, members, setMembers, setLogs }) 
     }
 };
 
+const NavButton = ({ view, currentView, setView, setOpen, viewNames, isMobile, icon }) => {
+    const history = useHistory();
+    const classes = useStyles();
+
+    const handleClick = () => {
+        switch (view) {
+            case 'back': history.push('/dashboard'); break;
+            case 'close': setOpen(false); break;
+            default: setView(view); isMobile && setOpen(false); break;
+        }
+    };
+
+    return (
+        <ListItem button onClick={handleClick} className={view === currentView ? classes.activeNavButton : classes.navButton}>
+            <ListItemText primary={<>{icon} <span className={classes.viewName}>{viewNames[view]}</span></>} primaryTypographyProps={{ className: `${classes.navButtonText} ${view === currentView && classes.activeNavButtonText}` }} />
+        </ListItem>
+    );
+};
+
+const NavList = ({ role, ...props }) => {
+    switch (role) {
+        case 'owner': return <>
+            <NavButton icon={<DetailsIcon />} view='details' {...props} />
+            <NavButton icon={<MetricsIcon />} view='metrics' {...props} />
+            <NavButton icon={<MembersIcon />} view='members' {...props} />
+            <NavButton icon={<PlaylistAdd />} view='add' {...props} />
+            <NavButton icon={<ListAlt />} view='hours' {...props} />
+            <NavButton icon={<EventIcon />} view='events' {...props} />
+        </>;
+        case 'admin': return <>
+            <NavButton icon={<DetailsIcon />} view='details' {...props} />
+            <NavButton icon={<MembersIcon />} view='members' {...props} />
+            <NavButton icon={<PlaylistAdd />} view='add' {...props} />
+            <NavButton icon={<ListAlt />} view='hours' {...props} />
+            <NavButton icon={<EventIcon />} view='events' {...props} />
+        </>;
+        default: return <>
+            <NavButton icon={<DetailsIcon />} view='details' {...props} />
+            <NavButton icon={<MembersIcon />} view='members' {...props} />
+            <NavButton icon={<PlaylistAdd />} view='add' {...props} />
+            <NavButton icon={<ListAlt />} view='hours' {...props} />
+            <NavButton icon={<EventIcon />} view='events' {...props} />
+        </>;
+    }
+};
+
 const Org = props => {
     const { orgId } = useParams();
-    const history = useHistory();
     const location = useLocation();
+
+    const theme = useTheme();
+    const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
     const getOrg = () => {
         for (const o of props.user.orgs) {
@@ -113,21 +189,10 @@ const Org = props => {
         return null;
     };
 
-    const getViewNames = o => {
-        if (o !== null) {
-            if (o.role === 'owner') {
-                return { details: 'Details', metrics: 'Metrics', members: 'Members', add: 'Add Hours', hours: 'View Hours', events: 'Events', back: 'Dashboard' };
-            } else if (o.role === 'admin') {
-                return { details: 'Details', members: 'Members', add: 'Add Hours', hours: 'View Hours', events: 'Events', back: 'Dashboard' };
-            } else {
-                return { details: 'Details', members: 'Members', add: 'Add Hours', hours: 'View Hours', events: 'Events', back: 'Dashboard' };
-            }
-        }
-    };
-
     const [org, setOrg] = useState(getOrg());
     const [viewNames, setViewNames] = useState(getViewNames(org));
     const [view, setView] = useState(location.state === undefined ? 'details' : location.state.view);
+    const [open, setOpen] = useState(false);
 
     const [members, setMembers] = useState(null);
     const [logs, setLogs] = useState(null);
@@ -140,50 +205,20 @@ const Org = props => {
 
 
     const render = classes => {
-
-        const NavButton = props => (
-            <ListItem button onClick={() => props.view === 'back' ? history.push('/dashboard') : setView(props.view)} className={view === props.view ? classes.activeNavButton : classes.navButton}>
-                <ListItemText primary={<>{props.icon} <span className={classes.viewName}>{viewNames[props.view]}</span></>} primaryTypographyProps={{ className: `${classes.navButtonText} ${view === props.view && classes.activeNavButtonText}` }} />
-            </ListItem>
-        );
-
-        const renderList = role => {
-            if (role === 'owner') {
-                return (<>
-                    <NavButton icon={<DetailsIcon />} view='details' />
-                    <NavButton icon={<MetricsIcon />} view='metrics' />
-                    <NavButton icon={<MembersIcon />} view='members' />
-                    <NavButton icon={<PlaylistAdd />} view='add' />
-                    <NavButton icon={<ListAlt />} view='hours' />
-                    <NavButton icon={<EventIcon />} view='events' />
-                </>);
-            } else if (role === 'admin') {
-                return (<>
-                    <NavButton icon={<DetailsIcon />} view='details' />
-                    <NavButton icon={<MembersIcon />} view='members' />
-                    <NavButton icon={<PlaylistAdd />} view='add' />
-                    <NavButton icon={<ListAlt />} view='hours' />
-                    <NavButton icon={<EventIcon />} view='events' />
-                </>);
-            } else {
-                return (<>
-                    <NavButton icon={<DetailsIcon />} view='details' />
-                    <NavButton icon={<MembersIcon />} view='members' />
-                    <NavButton icon={<PlaylistAdd />} view='add' />
-                    <NavButton icon={<ListAlt />} view='hours' />
-                    <NavButton icon={<EventIcon />} view='events' />
-                </>);
-            }
-        };
-
         return (
             <div className={classes.container}>
+                {
+                    isMobile &&
+                    <MenuIcon onClick={() => setOpen(true)} className={classes.menuIcon} />
+                }
                 <Drawer
-                    variant='permanent'
+                    variant={!isMobile && 'permanent'}
+                    open={isMobile && open}
                     anchor='left'
                     classes={{
                         paper: classes.drawerPaper
                     }}
+                    ModalProps={isMobile && { onBackdropClick: () => setOpen(false) }}
                 >
                     <div className={classes.drawerHeader}>
                         <img src={VIcon} alt='' className={classes.vIcon} /><br />
@@ -191,10 +226,18 @@ const Org = props => {
                     </div>
                     <Divider />
                     <List>
-                        {renderList(org.role)}
+                        <NavList role={org.role} currentView={view} setView={setView} viewNames={viewNames} isMobile={isMobile} setOpen={setOpen} />
                         <br />
                         <Divider />
-                        <NavButton view='back' icon={<BackIcon />} />
+                        <NavButton view='back' icon={<BackIcon />} viewNames={viewNames} isMobile={isMobile} setOpen={setOpen} />
+                        {
+                            isMobile &&
+                            <>
+                                <br />
+                                <Divider />
+                                <NavButton view='close' icon={<CloseIcon />} viewNames={viewNames} isMobile={isMobile} setOpen={setOpen} />
+                            </>
+                        }
                     </List>
                 </Drawer>
                 <div className={classes.content}>
@@ -202,7 +245,7 @@ const Org = props => {
                         {viewNames[view]}
                     </Typography><br />
                     <div className={classes.view}>
-                        {<View view={view} user={props.user} setUser={props.setUser} org={org} members={members} logs={logs} setMembers={setMembers} setLogs={setLogs} />}
+                        <View view={view} user={props.user} setUser={props.setUser} org={org} members={members} logs={logs} setMembers={setMembers} setLogs={setLogs} />
                     </div>
                 </div>
             </div>
@@ -222,26 +265,3 @@ const Org = props => {
 };
 
 export default Org;
-
-/*
-    OWNER:
-        - Organization Details (editable)
-        - Metrics (total hours, graphs, stats)
-        - Members (editable) (+Invite button)
-        - Log Hours
-        - View Hours (editable)
-        - Events (editable)
-        -
-    ADMIN:
-        - Organization Details (view only)
-        - Members (view only)
-        - Log Hours
-        - View Hours (editable)
-        - Events (editable)
-    VOLUNTEER:
-        - Organization Details (view only)
-        - Members (view only)
-        - Log Hours
-        - View Hours (view only)
-        - Events (view only)
-*/
