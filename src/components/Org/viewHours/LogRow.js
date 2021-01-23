@@ -61,7 +61,7 @@ const StatusIcon = ({ status, ...props }) => {
     }
 };
 
-const LogRow = memo(props => {
+const LogRow = props => {
     const log = props.log;
     const [open, setOpen] = useState(false);
     const [pendingHover, setPendingHover] = useState(false);
@@ -161,6 +161,6 @@ const LogRow = memo(props => {
             </TableRow>
         </>
     );
-});
+};
 
-export default LogRow;
+export default memo(LogRow);

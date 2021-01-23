@@ -87,8 +87,6 @@ const Members = props => {
     useEffect(handleSearch, [searchValue, props.members]);
 
     const classes = useStyles();
-    const MemberProps = p => <Member member={p.m} user={props.user} org={props.org} members={props.members} setMembers={props.setMembers} />;
-    const TableProps = p => <TableView member={p.m} user={props.user} org={props.org} setMembers={props.setMembers} members={p.search ? results : props.members} />;
     return (
         <>
             {
@@ -135,13 +133,16 @@ const Members = props => {
                     {props.members === null
                         ? <Fetching />
                         : <>
-                            {searchValue.length < 1 || results === null
-                                ? table ? <TableProps /> : props.members.map(m => <MemberProps key={m.id} m={m} />)
-                                : results.length < 1
-                                    ? 'No Results'
-                                    : table ? <TableProps search /> : results.map(m => <MemberProps key={m.id} m={m} />)}
+                            {
+                                searchValue.length < 1 || results === null
+                                    ? table ? <TableView user={props.user} org={props.org} setMembers={props.setMembers} members={props.members} /> : props.members.map(m => <Member key={m.id} member={m} user={props.user} org={props.org} members={props.members} setMembers={props.setMembers} />)
+                                    : results.length < 1
+                                        ? 'No Results'
+                                        : table ? <TableView user={props.user} org={props.org} setMembers={props.setMembers} members={results} /> : results.map(m => <Member key={m.id} member={m} user={props.user} org={props.org} members={props.members} setMembers={props.setMembers} />)
+                            }
                             <br />
-                            {props.org.role !== 'vol' &&
+                            {
+                                props.org.role !== 'vol' &&
                                 <Grid container justify='center'>
                                     <Button variant='contained' color='primary' onClick={() => setInviteOpen(true)} startIcon={<InviteIcon />}>Invite Members</Button>
                                 </Grid>

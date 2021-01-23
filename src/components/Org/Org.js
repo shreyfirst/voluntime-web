@@ -203,63 +203,56 @@ const Org = props => {
         setViewNames(getViewNames(o));
     }, [props.user.orgs]);
 
-
-    const render = classes => {
-        return (
-            <div className={classes.container}>
-                {
-                    isMobile &&
-                    <IconButton onClick={() => setOpen(true)} className={classes.menuIcon}>
-                        <MenuIcon />
-                    </IconButton>
-                }
-                <Drawer
-                    variant={!isMobile && 'permanent'}
-                    open={isMobile && open}
-                    anchor='left'
-                    classes={{
-                        paper: classes.drawerPaper
-                    }}
-                    ModalProps={isMobile && { onBackdropClick: () => setOpen(false) }}
-                >
-                    <div className={classes.drawerHeader}>
-                        <img src={VIcon} alt='' className={classes.vIcon} /><br />
-                        <Typography className={classes.dashboardLabel}>{org.name}</Typography>
-                    </div>
-                    <Divider />
-                    <List>
-                        <NavList role={org.role} currentView={view} setView={setView} viewNames={viewNames} isMobile={isMobile} setOpen={setOpen} />
-                        <br />
-                        <Divider />
-                        <NavButton view='back' icon={<BackIcon />} viewNames={viewNames} isMobile={isMobile} setOpen={setOpen} />
-                        {
-                            isMobile &&
-                            <>
-                                <br />
-                                <Divider />
-                                <NavButton view='close' icon={<CloseIcon />} viewNames={viewNames} isMobile={isMobile} setOpen={setOpen} />
-                            </>
-                        }
-                    </List>
-                </Drawer>
-                <div className={classes.content}>
-                    <Typography variant='h3' component='h1'>
-                        {viewNames[view]}
-                    </Typography><br />
-                    <div className={classes.view}>
-                        <View view={view} user={props.user} setUser={props.setUser} org={org} members={members} logs={logs} setMembers={setMembers} setLogs={setLogs} />
-                    </div>
-                </div>
-            </div>
-        );
-    };
-
     const classes = useStyles();
     return (
         <>
             {
                 org !== null
-                    ? render(classes)
+                    ? <div className={classes.container}>
+                        {
+                            isMobile &&
+                            <IconButton onClick={() => setOpen(true)} className={classes.menuIcon}>
+                                <MenuIcon />
+                            </IconButton>
+                        }
+                        <Drawer
+                            variant={!isMobile && 'permanent'}
+                            open={isMobile && open}
+                            anchor='left'
+                            classes={{
+                                paper: classes.drawerPaper
+                            }}
+                            ModalProps={isMobile && { onBackdropClick: () => setOpen(false) }}
+                        >
+                            <div className={classes.drawerHeader}>
+                                <img src={VIcon} alt='' className={classes.vIcon} /><br />
+                                <Typography className={classes.dashboardLabel}>{org.name}</Typography>
+                            </div>
+                            <Divider />
+                            <List>
+                                <NavList role={org.role} currentView={view} setView={setView} viewNames={viewNames} isMobile={isMobile} setOpen={setOpen} />
+                                <br />
+                                <Divider />
+                                <NavButton view='back' icon={<BackIcon />} viewNames={viewNames} isMobile={isMobile} setOpen={setOpen} />
+                                {
+                                    isMobile &&
+                                    <>
+                                        <br />
+                                        <Divider />
+                                        <NavButton view='close' icon={<CloseIcon />} viewNames={viewNames} isMobile={isMobile} setOpen={setOpen} />
+                                    </>
+                                }
+                            </List>
+                        </Drawer>
+                        <div className={classes.content}>
+                            <Typography variant='h3' component='h1'>
+                                {viewNames[view]}
+                            </Typography><br />
+                            <div className={classes.view}>
+                                <View view={view} user={props.user} setUser={props.setUser} org={org} members={members} logs={logs} setMembers={setMembers} setLogs={setLogs} />
+                            </div>
+                        </div>
+                    </div>
                     : <NotFound />
             }
         </>
