@@ -147,7 +147,6 @@ const JoinOrg = props => {
                     </Paper>
                 </Grid>
             </Grid>
-
         </Container>
     );
 };

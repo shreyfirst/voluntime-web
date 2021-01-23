@@ -79,7 +79,6 @@ const Archived = props => {
                 Archived
             </Typography>
             <Grid container>
-
                 <Grid item xs={12} md={10} lg={8}>
                     <TableContainer>
                         <Table size='small'>
