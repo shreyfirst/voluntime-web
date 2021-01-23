@@ -163,7 +163,7 @@ const Member = props => {
                     <Contact icon={<InstagramIcon />} value={member.contactInfo.instagram} />
                 }
                 {
-                    props.org.role !== 'vol' && member.id !== props.user.id &&
+                    props.org.role === 'owner' && member.id !== props.user.id &&
                     (edit
                         ? <div className={classes.cornerButton}><Button onClick={() => setRemoveOpen(true)} variant='outlined' startIcon={<RemoveIcon />} className={classes.removeButton}>Remove Member</Button><Button onClick={() => { setError(''); setEdit(false); }} variant='outlined'>Cancel</Button></div>
                         : <IconButton onClick={() => setEdit(true)} className={classes.cornerButton}><EditIcon /></IconButton>)
