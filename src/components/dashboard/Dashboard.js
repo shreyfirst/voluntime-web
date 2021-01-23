@@ -1,7 +1,7 @@
 import { memo, useState } from 'react';
-import { Divider, Drawer, List, Typography, ListItem, ListItemText, useMediaQuery } from '@material-ui/core';
+import { Divider, Drawer, List, Typography, ListItem, ListItemText, useMediaQuery, IconButton } from '@material-ui/core';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
-import { Menu as MenuIcon, ArrowBack as CloseIcon, AccountCircle as AccountIcon, DashboardOutlined as OverviewIcon, Group as OrgIcon, Event as EventsIcon, ListAlt as HoursIcon, ContactSupportOutlined as ContactIcon } from '@material-ui/icons';
+import { Menu as MenuIcon, CancelOutlined as CloseIcon, AccountCircle as AccountIcon, DashboardOutlined as OverviewIcon, Group as OrgIcon, Event as EventsIcon, ListAlt as HoursIcon, ContactSupportOutlined as ContactIcon } from '@material-ui/icons';
 import Account from './account/Account';
 import Overview from './Overview';
 import Orgs from './orgs/Orgs';
@@ -89,9 +89,9 @@ const useStyles = makeStyles(theme => ({
         paddingTop: '1%',
     },
     menuIcon: {
-        position: 'absolute',
-        left: 15,
-        top: 20,
+        position: 'fixed',
+        left: 0,
+        top: 5,
         cursor: 'pointer'
     }
 }));
@@ -131,7 +131,9 @@ const Dashboard = props => {
         <div className={classes.container}>
             {
                 isMobile &&
-                <MenuIcon onClick={() => setOpen(true)} className={classes.menuIcon} />
+                <IconButton onClick={() => setOpen(true)} className={classes.menuIcon}>
+                    <MenuIcon />
+                </IconButton>
             }
             <Drawer
                 variant={!isMobile && 'permanent'}

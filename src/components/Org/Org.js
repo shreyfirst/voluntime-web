@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Divider, Drawer, List, Typography, ListItem, ListItemText, useMediaQuery } from '@material-ui/core';
+import { Divider, Drawer, List, Typography, ListItem, ListItemText, useMediaQuery, IconButton } from '@material-ui/core';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import { Menu as MenuIcon, CancelOutlined as CloseIcon, InfoOutlined as DetailsIcon, AssessmentOutlined as MetricsIcon, PeopleAltOutlined as MembersIcon, PlaylistAdd, ListAlt, Event as EventIcon, ArrowBack as BackIcon } from '@material-ui/icons';
 import { useParams, useHistory, useLocation } from 'react-router-dom';
@@ -108,9 +108,9 @@ const useStyles = makeStyles(theme => ({
         boxOrient: 'vertical',
     },
     menuIcon: {
-        position: 'absolute',
-        left: 15,
-        top: 20,
+        position: 'fixed',
+        left: 0,
+        top: 5,
         cursor: 'pointer'
     }
 }));
@@ -209,7 +209,9 @@ const Org = props => {
             <div className={classes.container}>
                 {
                     isMobile &&
-                    <MenuIcon onClick={() => setOpen(true)} className={classes.menuIcon} />
+                    <IconButton onClick={() => setOpen(true)} className={classes.menuIcon}>
+                        <MenuIcon />
+                    </IconButton>
                 }
                 <Drawer
                     variant={!isMobile && 'permanent'}
