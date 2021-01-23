@@ -1,11 +1,12 @@
 import { useState } from 'react';
-import { Typography, TextField, Grid, Button, CircularProgress } from '@material-ui/core';
+import { Typography, TextField, Grid, Button } from '@material-ui/core';
 import { Alert } from '@material-ui/lab';
 import { makeStyles } from '@material-ui/core/styles';
-import { MailOutline as EmailIcon, Phone as PhoneIcon, Instagram as InstagramIcon, Lock as LockIcon, Save as SaveIcon, ExitToApp as LogoutIcon } from '@material-ui/icons';
+import { MailOutline as EmailIcon, Phone as PhoneIcon, Instagram as InstagramIcon, LockOutlined as LockIcon, Save as SaveIcon, ExitToApp as LogoutIcon } from '@material-ui/icons';
 import TextFieldIcon from '../../helpers/TextFieldIcon';
 import ChangeEmail from './ChangeEmail';
 import ChangePassword from './ChangePassword';
+import CircularProgressButton from '../../helpers/CircularProgressButton';
 import { editProfile } from '../../../services/users';
 import { useHistory } from 'react-router-dom';
 
@@ -15,9 +16,6 @@ const useStyles = makeStyles({
     },
     textField: {
         width: '100%',
-    },
-    submitButton: {
-        minWidth: '11em',
     },
     helperText: {
         color: '#414141'
@@ -44,6 +42,7 @@ const Account = props => {
     const [success, setSuccess] = useState('');
 
     const handleSubmit = () => {
+        console.log('h')
         setSuccess('');
         if (firstName.length < 1) {
             setError('Please enter your first name.');
@@ -102,12 +101,8 @@ const Account = props => {
                 <TextFieldIcon variant='outlined' label='Public Instagram Handle' icon={<InstagramIcon />} onChange={e => setContactInstagram(e.target.value)} defaultValue={props.user.contactInfo.instagram} className={classes.textField} />
                 <br />
                 <Grid container justify='flex-end'>
-                    <Button variant='contained' color='primary' onClick={handleSubmit} startIcon={!loading && <SaveIcon />} className={classes.submitButton}>
-                        {
-                            loading
-                                ? <CircularProgress size={24} color='secondary' />
-                                : 'Save Changes'
-                        }
+                    <Button variant='contained' color='primary' disabled={loading} onClick={handleSubmit} startIcon={loading ? <CircularProgressButton /> : <SaveIcon />}>
+                        Save Changes
                     </Button>
                 </Grid>
                 {

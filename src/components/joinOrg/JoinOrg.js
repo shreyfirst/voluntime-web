@@ -1,9 +1,11 @@
 import { useState, memo, useEffect } from 'react';
 import { Container, Typography, Paper, Grid, Button, CircularProgress, useMediaQuery } from '@material-ui/core';
 import { Alert } from '@material-ui/lab';
+import { PersonAdd as JoinIcon } from '@material-ui/icons';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import { useParams, Link } from 'react-router-dom';
 import { joinOrg, joinOrgInfo } from '../../services/orgs';
+import CircularProgressButton from '../helpers/CircularProgressButton';
 
 const useStyles = makeStyles({
     container: {
@@ -130,12 +132,8 @@ const JoinOrg = props => {
                                 </>
                         }
                         <br /><br />
-                        <Button disabled={loadingOrg || loading || error.length > 0} onClick={handleSubmit} variant='contained' color='primary' className={classes.button}>
-                            {
-                                loading
-                                    ? <CircularProgress size={24} color='secondary' />
-                                    : 'Join Organization'
-                            }
+                        <Button disabled={loadingOrg || loading || error.length > 0} onClick={handleSubmit} startIcon={loading ? <CircularProgressButton /> : <JoinIcon />} variant='contained' color='primary' className={classes.button}>
+                            Join Organization
                         </Button>
                         <br />
                         {
@@ -144,7 +142,7 @@ const JoinOrg = props => {
                         }
                         {
                             error.length > 0 &&
-                            <Alert severity='error' className={classes.alert}>{error}</Alert>
+                            <Alert severity='error' className={classes.alert}>{error} {error.startsWith('You are already a member of ') && <Link to='/dashboard'>Continue to Dashboard</Link>}</Alert>
                         }
                     </Paper>
                 </Grid>

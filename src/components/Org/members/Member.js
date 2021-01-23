@@ -67,6 +67,70 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
+const Contact = props => {
+    const classes = useStyles();
+    return (
+        <div className={classes.contact}>
+            {props.icon}
+            <span className={classes.contactValue}>{props.value}</span>
+        </div>
+    );
+};
+
+const EditMenu = props => {
+    const [anchorEl, setAnchorEl] = useState(null);
+    const [loading, setLoading] = useState(false);
+
+    const handleClick = event => setAnchorEl(event.currentTarget);
+
+    const close = () => setAnchorEl(null);
+
+    const handleSelect = to => {
+        setLoading(true);
+        changeRole({
+            token: props.token,
+            userId: props.member.id,
+            orgId: props.org.id,
+            role: to
+        }, (err, data) => {
+            setLoading(false);
+            if (err) {
+                props.setError(data.message);
+            } else {
+                props.setError('');
+                props.setEdit(false);
+                var newMembers = [...props.members];
+                newMembers[newMembers.findIndex(m => m.id === props.member.id)].role = data.role;
+                props.setMembers(newMembers);
+            }
+        });
+    };
+
+    const classes = useStyles();
+    return (
+        <>
+            {
+                loading &&
+                <CircularProgress color='secondary' size={28} className={classes.loading} />
+            }
+            <Button variant='outlined' onClick={handleClick} endIcon={<OpenMenuIcon />} className={classes[props.member.role]}>
+                {roleNames[props.member.role]}
+            </Button>
+
+            <Menu
+                anchorEl={anchorEl}
+                keepMounted
+                open={anchorEl !== null}
+                onClose={close}
+            >
+                <MenuItem onClick={() => handleSelect('owner')}><div>Owner<Typography className={classes.roleDescription}>All permissions, everywhere</Typography></div></MenuItem>
+                <MenuItem onClick={() => handleSelect('admin')}><div>Administrator<Typography className={classes.roleDescription}>Manage volunteers' hours</Typography></div></MenuItem>
+                <MenuItem onClick={() => handleSelect('vol')}><div>Volunteer<Typography className={classes.roleDescription}>Log hours</Typography></div></MenuItem>
+            </Menu>
+        </>
+    );
+};
+
 const Member = props => {
     const member = props.member;
     const classes = useStyles();
@@ -75,72 +139,12 @@ const Member = props => {
     const [error, setError] = useState('');
     const [removeOpen, setRemoveOpen] = useState(false);
 
-    const Contact = props => (
-        <div className={classes.contact}>
-            {props.icon}
-            <span className={classes.contactValue}>{props.value}</span>
-        </div>
-    );
-
-    const EditMenu = () => {
-        const [anchorEl, setAnchorEl] = useState(null);
-        const [loading, setLoading] = useState(false);
-
-        const handleClick = event => setAnchorEl(event.currentTarget);
-
-        const close = () => setAnchorEl(null);
-
-        const handleSelect = to => {
-            setLoading(true);
-            changeRole({
-                token: props.user.token,
-                userId: props.member.id,
-                orgId: props.org.id,
-                role: to
-            }, (err, data) => {
-                setLoading(false);
-                if (err) {
-                    setError(data.message);
-                } else {
-                    setError('');
-                    setEdit(false);
-                    var newMembers = [...props.members];
-                    newMembers[newMembers.findIndex(m => m.id === member.id)].role = data.role;
-                    props.setMembers(newMembers);
-                }
-            });
-        };
-
-        return (
-            <>
-                {
-                    loading &&
-                    <CircularProgress color='secondary' size={28} className={classes.loading} />
-                }
-                <Button variant='outlined' onClick={handleClick} endIcon={<OpenMenuIcon />} className={classes[props.member.role]}>
-                    {roleNames[props.member.role]}
-                </Button>
-
-                <Menu
-                    anchorEl={anchorEl}
-                    keepMounted
-                    open={anchorEl !== null}
-                    onClose={close}
-                >
-                    <MenuItem onClick={() => handleSelect('owner')}><div>Owner<Typography className={classes.roleDescription}>All permissions, everywhere</Typography></div></MenuItem>
-                    <MenuItem onClick={() => handleSelect('admin')}><div>Administrator<Typography className={classes.roleDescription}>Manage volunteers' hours</Typography></div></MenuItem>
-                    <MenuItem onClick={() => handleSelect('vol')}><div>Volunteer<Typography className={classes.roleDescription}>Log hours</Typography></div></MenuItem>
-                </Menu>
-            </>
-        );
-    };
-
     return (
         <Card className={`${classes.container} ${props.table ? classes.containerTable : ''}`}>
             <CardContent>
                 {
                     edit
-                        ? <EditMenu />
+                        ? <EditMenu token={props.user.token} member={member} org={props.org} members={props.members} setMembers={props.setMembers} setError={setError} setEdit={setEdit} />
                         : <div className={`${classes.header} ${classes[member.role]}`}>{roleNames[member.role]}</div>
                 }
 

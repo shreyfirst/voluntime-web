@@ -1,8 +1,9 @@
 import { useState } from 'react';
-import { Typography, TextField, Button, CircularProgress } from '@material-ui/core';
+import { Typography, TextField, Button } from '@material-ui/core';
 import { Alert } from '@material-ui/lab';
 import { makeStyles } from '@material-ui/core/styles';
 import { ArrowBack, Add as AddIcon } from '@material-ui/icons';
+import CircularProgressButton from '../../helpers/CircularProgressButton';
 import { createOrg } from '../../../services';
 import { useHistory } from 'react-router-dom';
 
@@ -15,9 +16,6 @@ const useStyles = makeStyles({
         width: '100%',
         maxWidth: '32em'
     },
-    button: {
-        minWidth: '13em',
-    }
 });
 
 const CreateOrg = props => {
@@ -35,7 +33,7 @@ const CreateOrg = props => {
             return;
         }
         for (let org of props.user.orgs) {
-            if (org.name.toLowerCase() === name.toLowerCase()) {
+            if (org.role === 'owner' && org.name.toLowerCase() === name.toLowerCase()) {
                 setError('You already have an organization with that name.');
                 return;
             }
@@ -76,12 +74,8 @@ const CreateOrg = props => {
             </Typography><br />
             <TextField onKeyDown={keyPress} onChange={e => setName(e.target.value)} variant='outlined' label='Organization Name' required className={classes.textField} /><br /><br />
             <TextField onKeyDown={keyPress} onChange={e => setDescription(e.target.value)} variant='outlined' label='Description' multiline rows={4} className={classes.textField} /><br /><br />
-            <Button variant='contained' color='primary' disabled={loading} onClick={handleSubmit} startIcon={!loading && <AddIcon />} className={classes.button}>
-                {
-                    loading
-                        ? <CircularProgress size={24} color='secondary' />
-                        : 'Create Organization'
-                }
+            <Button variant='contained' color='primary' disabled={loading} onClick={handleSubmit} startIcon={loading ? <CircularProgressButton /> : <AddIcon />}>
+                Create Organization
             </Button>
             <br />
             {

@@ -1,10 +1,11 @@
 import { useState } from 'react';
-import { Typography, Button, CircularProgress } from '@material-ui/core';
+import { Typography, Button } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { Alert } from '@material-ui/lab';
-import { ArrowBack } from '@material-ui/icons';
+import { ArrowBack, Send as SendIcon, VerifiedUser as VerifyIcon } from '@material-ui/icons';
 import { resendVerifyEmail, login } from '../../services';
 import { useHistory } from 'react-router-dom';
+import CircularProgressButton from '../helpers/CircularProgressButton';
 
 const useStyles = makeStyles({
     container: {
@@ -81,12 +82,8 @@ const VerifyEmail = props => {
                 Please click the link in the email to verify that email address belongs to you.
             </Typography>
             <br /><br />
-            <Button disabled={resendLoading} onClick={resendClicked} variant='contained' color='primary' fullWidth className={classes.button}>
-                {
-                    resendLoading
-                        ? <CircularProgress size={24} color='secondary' />
-                        : 'Resend Email'
-                }
+            <Button disabled={resendLoading} onClick={resendClicked} startIcon={resendLoading ? <CircularProgressButton /> : <SendIcon />} variant='contained' color='primary' fullWidth className={classes.button}>
+                Resend Email
             </Button>
             <br />
             {
@@ -97,12 +94,8 @@ const VerifyEmail = props => {
                 resendError.length > 0 &&
                 <Alert severity='error'>{resendError}</Alert>
             }
-            <Button disabled={verifyLoading} onClick={verifyClicked} variant='contained' color='primary' fullWidth className={classes.button}>
-                {
-                    verifyLoading
-                        ? <CircularProgress size={24} color='secondary' />
-                        : 'Email Verified'
-                }
+            <Button disabled={verifyLoading} onClick={verifyClicked} startIcon={verifyLoading ? <CircularProgressButton /> : <VerifyIcon />} variant='contained' color='primary' fullWidth className={classes.button}>
+                Email Verified
             </Button>
             <br />
             {

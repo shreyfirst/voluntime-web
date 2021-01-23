@@ -33,7 +33,8 @@ const useStyles = makeStyles(theme => ({
     },
     orgCard: {
         height: 300,
-        maxWidth: 350
+        maxWidth: 350,
+        paddingBottom: 10
     },
 }));
 

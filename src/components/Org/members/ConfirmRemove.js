@@ -1,13 +1,13 @@
 import { useState } from 'react';
-import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, CircularProgress } from '@material-ui/core';
+import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@material-ui/core';
 import { RemoveCircleOutline as RemoveIcon } from '@material-ui/icons';
 import { Alert } from '@material-ui/lab';
 import { makeStyles } from '@material-ui/core/styles';
 import { removeMember } from '../../../services/orgs';
+import CircularProgressButton from '../../helpers/CircularProgressButton';
 
 const useStyles = makeStyles({
     submitButton: {
-        minWidth: '12em',
         color: '#d73a49',
         borderColor: '#d73a49',
         '&:hover': {
@@ -59,12 +59,8 @@ const ConfirmRemove = props => {
                 <Button variant='text' onClick={closeDialog} color='primary'>
                     Cancel
                 </Button>
-                <Button variant='outlined' onClick={handleSubmit} disabled={loading} startIcon={!loading && <RemoveIcon />} className={classes.submitButton}>
-                    {
-                        loading
-                            ? <CircularProgress size={24} color='secondary' />
-                            : 'Remove Member'
-                    }
+                <Button variant='outlined' onClick={handleSubmit} disabled={loading} startIcon={loading ? <CircularProgressButton /> : <RemoveIcon />} className={classes.submitButton}>
+                    Remove Member
                 </Button>
             </DialogActions>
             {

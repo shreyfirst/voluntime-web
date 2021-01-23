@@ -1,8 +1,9 @@
 import { useState } from 'react';
-import { Card, CircularProgress, Grid, Typography, Button } from '@material-ui/core';
+import { Card, Grid, Typography, Button } from '@material-ui/core';
 import { Alert } from '@material-ui/lab';
 import { makeStyles } from '@material-ui/core/styles';
 import { PlaylistAdd as AddLogIcon, ListAlt as LogsIcon, Event as EventsIcon, Unarchive } from '@material-ui/icons';
+import CircularProgressButton from '../../helpers/CircularProgressButton';
 import { useHistory, Link } from 'react-router-dom';
 import { unarchiveOrg } from '../../../services/orgs';
 
@@ -13,11 +14,9 @@ const useStyles = makeStyles(theme => ({
         boxShadow: '0 2px 4px rgba(0,0,0,0.25)',
         cursor: props.archive ? 'initial' : 'pointer',
         '&:hover': {
-            boxShadow: '0 4px 7px rgba(0,0,0,0.45)',
-            '& $name': {
-                textDecoration: 'underline'
-            }
-        }
+            boxShadow: '0 4px 7px rgba(0,0,0,0.45)'
+        },
+        ...(props.archive && { paddingBottom: 10 })
     }),
     grid: {
         width: '100%',
@@ -52,6 +51,9 @@ const useStyles = makeStyles(theme => ({
         display: 'box',
         lineClamp: 1,
         boxOrient: 'vertical',
+        '&:hover': {
+            textDecoration: 'underline'
+        }
     },
     nameLink: {
         color: '#000',
@@ -139,12 +141,8 @@ const OrgCard = props => {
                         props.archive
                             ? props.org.role === 'owner' &&
                             <>
-                                <Button variant='outlined' onClick={e => handleUnarchive(e)} startIcon={!loading && <Unarchive />} className={classes.unarchiveButton}>
-                                    {
-                                        loading
-                                            ? <CircularProgress size={24} color='secondary' />
-                                            : 'Unarchive'
-                                    }
+                                <Button variant='outlined' onClick={e => handleUnarchive(e)} startIcon={loading ? <CircularProgressButton /> : <Unarchive />} className={classes.unarchiveButton}>
+                                    Unarchive
                                 </Button>
                                 {
                                     error.length > 0 &&

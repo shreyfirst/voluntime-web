@@ -136,13 +136,13 @@ const Dashboard = props => {
                 </IconButton>
             }
             <Drawer
-                variant={!isMobile && 'permanent'}
+                variant={isMobile ? 'temporary' : 'permanent'}
                 open={isMobile && open}
                 anchor='left'
                 classes={{
                     paper: classes.drawerPaper
                 }}
-                ModalProps={isMobile && { onBackdropClick: () => setOpen(false) }}
+                ModalProps={isMobile ? { onBackdropClick: () => setOpen(false) } : undefined}
             >
                 <div className={classes.drawerHeader}>
                     <img src={VIcon} alt='' className={classes.vIcon} /><br />

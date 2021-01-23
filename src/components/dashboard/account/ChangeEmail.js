@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Button, Dialog, DialogActions, DialogContent, DialogTitle, DialogContentText, Tabs, Tab, CircularProgress, Link } from '@material-ui/core';
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle, DialogContentText, Tabs, Tab, Link } from '@material-ui/core';
 import { Alert } from '@material-ui/lab';
 import { MailOutline as EmailIcon } from '@material-ui/icons';
 import { makeStyles } from '@material-ui/core/styles';
@@ -7,6 +7,7 @@ import GoogleLogin from 'react-google-login';
 import GoogleIcon from '../../helpers/GoogleIcon';
 import TabPanel from '../../helpers/TabPanel';
 import TextFieldIcon from '../../helpers/TextFieldIcon';
+import CircularProgressButton from '../../helpers/CircularProgressButton';
 import { changeEmail, changeEmailGoogle } from '../../../services/users';
 
 const useStyles = makeStyles({
@@ -25,9 +26,6 @@ const useStyles = makeStyles({
     },
     blackText: {
         color: '#000'
-    },
-    submitButton: {
-        minWidth: '9em'
     }
 });
 
@@ -143,12 +141,8 @@ const ChangeEmail = props => {
                 <Button variant='text' onClick={closeDialog} color='primary'>
                     Cancel
                 </Button>
-                <Button variant='contained' onClick={handleSubmit} color='primary' disabled={loading} className={classes.submitButton}>
-                    {
-                        loading
-                            ? <CircularProgress size={24} color='secondary' />
-                            : 'Change Email'
-                    }
+                <Button variant='contained' onClick={handleSubmit} color='primary' startIcon={loading ? <CircularProgressButton /> : <EmailIcon />} disabled={loading}>
+                    Change Email
                 </Button>
             </DialogActions>
             {

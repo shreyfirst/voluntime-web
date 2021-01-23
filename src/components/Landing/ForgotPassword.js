@@ -1,9 +1,11 @@
 import { useState } from 'react';
-import { Typography, TextField, Button, CircularProgress } from '@material-ui/core';
+import { Typography, TextField, Button } from '@material-ui/core';
 import { Alert } from '@material-ui/lab';
+import { Send as SendIcon } from '@material-ui/icons';
 import { makeStyles } from '@material-ui/core/styles';
 import { forgotPassword } from '../../services';
 import { ArrowBack } from '@material-ui/icons';
+import CircularProgressButton from '../helpers/CircularProgressButton';
 
 const useStyles = makeStyles({
     container: {
@@ -38,7 +40,7 @@ const ForgotPassword = props => {
     const backButtonClicked = () => props.setView('signup');
 
     const handleSubmit = () => {
-        if(email.length < 1) {
+        if (email.length < 1) {
             setError('Please enter the email address of your Voluntime account.');
             return;
         }
@@ -73,12 +75,8 @@ const ForgotPassword = props => {
                 Please enter your account's email address. An email will be sent to you with a link to reset your password.
             </Typography><br /><br />
             <TextField onKeyDown={keyPress} onChange={event => setEmail(event.target.value)} type='email' label='Email Address' variant='outlined' fullWidth className={classes.textField} />
-            <Button onClick={handleSubmit} disabled={loading} variant='contained' color='primary' fullWidth className={classes.button}>
-                {
-                    loading
-                        ? <CircularProgress size={24} color='secondary' />
-                        : 'Send Email'
-                }
+            <Button onClick={handleSubmit} disabled={loading} startIcon={loading ? <CircularProgressButton /> : <SendIcon />} variant='contained' color='primary' fullWidth className={classes.button}>
+                Send Email
             </Button>
             <br />
             {

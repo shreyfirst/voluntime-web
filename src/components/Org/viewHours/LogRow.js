@@ -1,10 +1,11 @@
 import { useState, memo } from 'react';
-import { Box, TableCell, TableRow, IconButton, Collapse, Button, CircularProgress } from '@material-ui/core';
+import { Box, TableCell, TableRow, IconButton, Collapse, Button } from '@material-ui/core';
 import { Check as ApprovedIcon, Clear as DeniedIcon, Schedule as PendingIcon, KeyboardArrowDown as DownArrow, KeyboardArrowUp as UpArrow } from '@material-ui/icons';
 import { Alert } from '@material-ui/lab';
 import { makeStyles } from '@material-ui/core/styles';
 import dayjs from 'dayjs';
 import { editStatus } from '../../../services/logs';
+import CircularProgressButton from '../../helpers/CircularProgressButton';
 
 const useStyles = makeStyles(theme => ({
     row: {
@@ -81,7 +82,7 @@ const LogRow = props => {
                 setError(data.message);
             } else {
                 setError('');
-                props.handleResponse();
+                props.handleResponse(data);
             }
         });
     };
@@ -131,19 +132,11 @@ const LogRow = props => {
                             {
                                 props.role !== 'vol' && log.status === 'pending' &&
                                 <>
-                                    <Button variant='outlined' color='primary' disabled={loadingApprove || loadingDeny} onClick={() => changeStatus('approved')} startIcon={<StatusIcon status='approved' />} className={`${classes.button} ${classes.approved}`}>
-                                        {
-                                            loadingApprove
-                                                ? <CircularProgress size={24} color='secondary' />
-                                                : 'Approve'
-                                        }
+                                    <Button variant='outlined' color='primary' disabled={loadingApprove || loadingDeny} onClick={() => changeStatus('approved')} startIcon={loadingApprove ? <CircularProgressButton /> : <StatusIcon status='approved' />} className={`${classes.button} ${classes.approved}`}>
+                                        Approve
                                     </Button>
-                                    <Button variant='outlined' color='primary' disabled={loadingApprove || loadingDeny} onClick={() => changeStatus('denied')} startIcon={<StatusIcon status='denied' />} className={`${classes.button} ${classes.denied}`}>
-                                        {
-                                            loadingDeny
-                                                ? <CircularProgress size={24} color='secondary' />
-                                                : 'Deny'
-                                        }
+                                    <Button variant='outlined' color='primary' disabled={loadingApprove || loadingDeny} onClick={() => changeStatus('denied')} startIcon={loadingDeny ? <CircularProgressButton /> : <StatusIcon status='denied' />} className={`${classes.button} ${classes.denied}`}>
+                                        Deny
                                     </Button>
                                 </>
                             }

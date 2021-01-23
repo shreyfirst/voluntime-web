@@ -1,12 +1,12 @@
 import { useState, useEffect } from 'react';
-import { Grid, TextField, Button, CircularProgress } from '@material-ui/core';
+import { Grid, TextField, Button, Typography } from '@material-ui/core';
 import { Alert } from '@material-ui/lab';
 import { makeStyles } from '@material-ui/core/styles';
 import { MuiPickersUtilsProvider, KeyboardDatePicker, KeyboardTimePicker } from '@material-ui/pickers';
 import { Alarm, PlaylistAdd as SubmitIcon } from '@material-ui/icons';
+import CircularProgressButton from '../../helpers/CircularProgressButton';
 import DayjsUtils from '@date-io/dayjs';
 import dayjs from 'dayjs';
-import { Typography } from '@material-ui/core';
 import { addLog } from '../../../services/logs';
 
 const useStyles = makeStyles({
@@ -15,9 +15,6 @@ const useStyles = makeStyles({
     },
     textField: {
         width: '100%'
-    },
-    submitButton: {
-        minWidth: '11em',
     }
 });
 
@@ -119,12 +116,8 @@ const AddHours = props => {
                 <TextField variant='outlined' label='Activity description' multiline rows={4} value={description} onChange={e => setDescription(e.target.value)} InputProps={{ placeholder: 'What did you do for these hours? This helps administrators approve your hours.' }} className={classes.textField} />
                 <br /><br />
                 <Grid container justify='flex-end'>
-                    <Button variant='contained' color='primary' disabled={loading} onClick={handleSubmit} startIcon={!loading && <SubmitIcon />} className={classes.submitButton}>
-                        {
-                            loading
-                                ? <CircularProgress size={24} color='secondary' />
-                                : 'Submit Hours'
-                        }
+                    <Button variant='contained' color='primary' disabled={loading} onClick={handleSubmit} startIcon={loading ? <CircularProgressButton /> : <SubmitIcon />}>
+                        Submit Hours
                     </Button>
                 </Grid>
                 <br />

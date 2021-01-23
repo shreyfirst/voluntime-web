@@ -1,10 +1,11 @@
 import { useState, useRef } from 'react';
-import { Typography, TextField, Grid, Button, CircularProgress } from '@material-ui/core';
+import { Typography, TextField, Grid, Button } from '@material-ui/core';
 import { Alert } from '@material-ui/lab';
 import { Archive, Image as UploadIcon, Save as SaveIcon, Add as DropIcon } from '@material-ui/icons';
 import { makeStyles } from '@material-ui/core/styles';
 import { editOrg } from '../../../services/orgs';
 import ArchiveConfirm from './ArchiveConfirm';
+import CircularProgressButton from '../../helpers/CircularProgressButton';
 import LinearProgressWithLabel from '../../helpers/LinearProgressWithLabel';
 import imageCompression from 'browser-image-compression';
 
@@ -14,9 +15,6 @@ const useStyles = makeStyles({
     },
     textField: {
         width: '100%',
-    },
-    submitButton: {
-        minWidth: '11em',
     },
     helperText: {
         color: '#414141'
@@ -214,12 +212,8 @@ const DetailsEdit = props => {
             <TextField variant='outlined' label='Description' multiline rows={4} onChange={e => setDescription(e.target.value)} defaultValue={props.org.description} className={classes.textField} /><br /><br />
             <br />
             <Grid container justify='flex-end'>
-                <Button variant='contained' color='primary' disabled={loading || compressProgress !== null && compressProgress < 100} onClick={handleSubmit} startIcon={!loading && <SaveIcon />} className={classes.submitButton}>
-                    {
-                        loading
-                            ? <CircularProgress size={24} color='secondary' />
-                            : 'Save Changes'
-                    }
+                <Button variant='contained' color='primary' disabled={loading || compressProgress !== null && compressProgress < 100} onClick={handleSubmit} startIcon={loading ? <CircularProgressButton /> : <SaveIcon />}>
+                    Save Changes
                 </Button>
             </Grid>
             {

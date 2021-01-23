@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Grid, Typography, TextField, Button, CircularProgress, Link } from '@material-ui/core';
+import { Grid, Typography, TextField, Button, Link } from '@material-ui/core';
 import { Alert } from '@material-ui/lab';
 import { Apple as AppleIcon } from '@material-ui/icons';
 import { makeStyles } from '@material-ui/core/styles';
@@ -9,6 +9,7 @@ import ForgotPassword from './ForgotPassword';
 import { useHistory } from 'react-router-dom';
 import GoogleLogin from 'react-google-login';
 import GoogleIcon from '../helpers/GoogleIcon';
+import CircularProgressButton from '../helpers/CircularProgressButton';
 
 const useStyles = makeStyles({
     container: {
@@ -35,7 +36,10 @@ const useStyles = makeStyles({
     googleLogin: {
         textTransform: 'none',
         backgroundColor: '#FFF',
-        minWidth: '50%'
+        minWidth: '50%',
+        '&:hover': {
+            backgroundColor: '#EFEFEF'
+        }
     },
     appleLogin: {
         textTransform: 'none',
@@ -43,7 +47,6 @@ const useStyles = makeStyles({
         color: '#FFF',
         minWidth: '50%',
         '&:hover': {
-            //you want this to be the same as the backgroundColor above
             backgroundColor: '#000'
         }
     }
@@ -124,12 +127,8 @@ const Login = props => {
                         <br />
                         <TextField onKeyDown={keyPress} onChange={event => setEmail(event.target.value)} type='email' label='Email Address' variant='outlined' fullWidth className={classes.textField} /><br />
                         <TextField onKeyDown={keyPress} onChange={event => setPassword(event.target.value)} type='password' label='Password' variant='outlined' fullWidth className={classes.textField} />
-                        <Button onClick={handleSubmit} disabled={loading} variant='contained' color='primary' fullWidth className={classes.button}>
-                            {
-                                loading
-                                    ? <CircularProgress size={24} color='secondary' />
-                                    : 'LOGIN'
-                            }
+                        <Button onClick={handleSubmit} disabled={loading} startIcon={loading && <CircularProgressButton />} variant='contained' color='primary' fullWidth className={classes.button}>
+                            LOGIN
                         </Button>
                         <br />
                         {

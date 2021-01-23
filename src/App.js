@@ -10,6 +10,10 @@ import { loginToken } from './services';
 const Dashboard = lazy(() => import('./components/dashboard/Dashboard'));
 const Org = lazy(() => import('./components/org/Org'));
 
+const LoadingIndicator = () => (
+    <div>Loading...</div>
+);
+
 const App = () => {
     const location = useLocation();
     const history = useHistory();
@@ -43,7 +47,7 @@ const App = () => {
             history.replace({ pathname: '/', state: location.pathname === '/' ? undefined : { from: location.pathname } });
         } else {
             setUser(storedUser);
-            if (routeMatch === '') {
+            if (routeMatch.length < 1) {
                 history.replace('/dashboard');
             }
             loginToken(storedUser.token, (err, data) => {
@@ -55,10 +59,6 @@ const App = () => {
 
         // eslint-disable-next-line
     }, []);
-
-    const LoadingIndicator = () => (
-        <div>Loading...</div>
-    );
 
     return (
         <Suspense fallback={<LoadingIndicator />}>
@@ -84,7 +84,7 @@ const App = () => {
                 <Route path={['/verify-new-email/:id', '/verify-new-email']}>
                     <VerifyNewEmail setUser={setUser} />
                 </Route>
-                <Route path={['/privacy-policy', '/terms-of-service', '/tos']} render={() => { window.location.href = 'privacy-policy.html'; }} />
+                <Route path={['/privacy-policy', '/terms-of-service', '/tos']} render={() => window.location.href = 'privacy-policy.html'} />
             </Switch>
         </Suspense>
     );

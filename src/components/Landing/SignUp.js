@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Grid, Typography, TextField, Button, InputAdornment, IconButton, CircularProgress } from '@material-ui/core';
+import { Grid, Typography, TextField, Button, InputAdornment, IconButton } from '@material-ui/core';
 import { Alert } from '@material-ui/lab';
 import { makeStyles } from '@material-ui/core/styles';
 import { Visibility, VisibilityOff, Apple as AppleIcon } from '@material-ui/icons';
@@ -8,6 +8,7 @@ import { useHistory } from 'react-router-dom';
 import VerifyEmail from './VerifyEmail';
 import GoogleLogin from 'react-google-login';
 import GoogleIcon from '../helpers/GoogleIcon';
+import CircularProgressButton from '../helpers/CircularProgressButton';
 //import AppleLogin from 'react-apple-login';
 
 const useStyles = makeStyles({
@@ -37,7 +38,6 @@ const useStyles = makeStyles({
         backgroundColor: '#FFF',
         minWidth: '50%',
         '&:hover': {
-            //you want this to be the same as the backgroundColor above
             backgroundColor: '#EFEFEF'
         }
     },
@@ -47,7 +47,6 @@ const useStyles = makeStyles({
         color: '#FFF',
         minWidth: '50%',
         '&:hover': {
-            //you want this to be the same as the backgroundColor above
             backgroundColor: '#000'
         }
     }
@@ -164,12 +163,8 @@ const SignUp = props => {
                                     </InputAdornment>
                                 )
                             }} />
-                        <Button disabled={loading} onClick={handleSubmit} variant='contained' color='primary' fullWidth className={classes.button}>
-                            {
-                                loading
-                                    ? <CircularProgress size={24} color='secondary' />
-                                    : 'SIGN UP'
-                            }
+                        <Button disabled={loading} onClick={handleSubmit} startIcon={loading && <CircularProgressButton />} variant='contained' color='primary' fullWidth className={classes.button}>
+                            SIGN UP
                         </Button>
                         <br />
                         {

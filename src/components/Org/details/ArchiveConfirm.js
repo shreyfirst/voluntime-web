@@ -1,14 +1,14 @@
 import { useState } from 'react';
-import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, CircularProgress } from '@material-ui/core';
+import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@material-ui/core';
 import { Alert } from '@material-ui/lab';
 import { Archive } from '@material-ui/icons';
+import CircularProgressButton from '../../helpers/CircularProgressButton';
 import { makeStyles } from '@material-ui/core/styles';
 import { archiveOrg } from '../../../services/orgs';
 import { useHistory } from 'react-router-dom';
 
 const useStyles = makeStyles({
     submitButton: {
-        minWidth: '14em',
         color: '#d73a49',
         borderColor: '#d73a49',
         '&:hover': {
@@ -61,12 +61,8 @@ const ArchiveConfirm = props => {
                 <Button variant='text' onClick={closeDialog} color='primary'>
                     Cancel
                 </Button>
-                <Button variant='outlined' onClick={handleSubmit} disabled={loading} startIcon={!loading && <Archive />} className={classes.submitButton}>
-                    {
-                        loading
-                            ? <CircularProgress size={24} color='secondary' />
-                            : 'Archive Organization'
-                    }
+                <Button variant='outlined' onClick={handleSubmit} disabled={loading} startIcon={loading ? <CircularProgressButton /> : <Archive />} className={classes.submitButton}>
+                    Archive Organization
                 </Button>
             </DialogActions>
             {

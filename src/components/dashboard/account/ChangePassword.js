@@ -1,16 +1,14 @@
 import { useState } from 'react';
-import { TextField, Button, Dialog, DialogActions, DialogContent, DialogTitle, InputAdornment, IconButton, CircularProgress, Link } from '@material-ui/core';
+import { TextField, Button, Dialog, DialogActions, DialogContent, DialogTitle, InputAdornment, IconButton, Link } from '@material-ui/core';
 import { Alert } from '@material-ui/lab';
 import { makeStyles } from '@material-ui/core/styles';
-import { Visibility, VisibilityOff } from '@material-ui/icons';
+import { Visibility, VisibilityOff, LockOutlined as PasswordIcon } from '@material-ui/icons';
 import { changePassword } from '../../../services/users';
+import CircularProgressButton from '../../helpers/CircularProgressButton';
 
 const useStyles = makeStyles({
     textField: {
         minWidth: '32em'
-    },
-    submitButton: {
-        minWidth: '10em'
     }
 });
 
@@ -110,12 +108,8 @@ const ChangePassword = props => {
                 <Button variant='text' onClick={closeDialog} color='primary'>
                     Cancel
                 </Button>
-                <Button variant='contained' onClick={handleSubmit} color='primary' disabled={loading} className={classes.submitButton}>
-                    {
-                        loading
-                            ? <CircularProgress size={24} color='secondary' />
-                            : 'Change Password'
-                    }
+                <Button variant='contained' onClick={handleSubmit} color='primary' startIcon={loading ? <CircularProgressButton /> : <PasswordIcon />} disabled={loading}>
+                    Change Password
                 </Button>
             </DialogActions>
             {

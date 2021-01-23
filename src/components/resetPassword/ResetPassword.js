@@ -1,10 +1,11 @@
 import { useState, memo } from 'react';
-import { Container, Typography, Paper, Grid, TextField, InputAdornment, IconButton, Button, CircularProgress, useMediaQuery } from '@material-ui/core';
+import { Container, Typography, Paper, Grid, TextField, InputAdornment, IconButton, Button, useMediaQuery } from '@material-ui/core';
 import { Alert } from '@material-ui/lab';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
-import { Visibility, VisibilityOff } from '@material-ui/icons';
+import { Visibility, VisibilityOff, LockOutlined as PasswordIcon } from '@material-ui/icons';
 import { useParams, Link } from 'react-router-dom';
 import { resetPassword } from '../../services';
+import CircularProgressButton from '../helpers/CircularProgressButton';
 
 const useStyles = makeStyles({
     container: {
@@ -98,9 +99,9 @@ const ResetPassword = props => {
     };
 
     const keyPress = event => {
-        if(event.key === 'Enter'){
+        if (event.key === 'Enter') {
             handleSubmit();
-         }
+        }
     };
 
     const classes = useStyles();
@@ -147,12 +148,8 @@ const ResetPassword = props => {
                                     </InputAdornment>
                                 )
                             }} />
-                        <Button disabled={loading} onClick={handleSubmit} variant='contained' color='primary' className={classes.button}>
-                            {
-                                loading
-                                    ? <CircularProgress size={24} color='secondary' />
-                                    : 'Reset Password'
-                            }
+                        <Button disabled={loading} onClick={handleSubmit} startIcon={loading ? <CircularProgressButton /> : <PasswordIcon />} variant='contained' color='primary' className={classes.button}>
+                            Reset Password
                         </Button>
                         <br />
                         {
