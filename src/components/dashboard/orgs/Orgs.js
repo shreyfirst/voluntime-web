@@ -10,7 +10,8 @@ import Archived from './Archived';
 const useStyles = makeStyles({
     orgCard: {
         height: 300,
-        maxWidth: 350
+        maxWidth: 350,
+        minWidth: 350,
     },
     orgSection: {
         paddingTop: 10,
