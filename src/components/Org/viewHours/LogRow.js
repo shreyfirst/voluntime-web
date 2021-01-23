@@ -72,7 +72,7 @@ const LogRow = props => {
     const changeStatus = to => {
         to === 'approved' ? setLoadingApprove(true) : setLoadingDeny(true);
         editStatus({
-            token: props.user.token,
+            token: props.token,
             id: log.id,
             status: to,
         }, (err, data) => {
@@ -81,15 +81,13 @@ const LogRow = props => {
                 setError(data.message);
             } else {
                 setError('');
-                var newLogs = [...props.allLogs];
-                newLogs[newLogs.findIndex(l => l.id === data.id)] = ({ ...data, vol: props.members.find(m => m.id === data.userId), ...(data.status !== 'pending' && { approverInfo: props.members.find(m => m.id === data.approver) }) });
-                props.setLogs(newLogs);
+                props.handleResponse();
             }
         });
     };
 
     const setHover = to => {
-        if (props.org.role !== 'vol' && log.status === 'pending') {
+        if (props.role !== 'vol' && log.status === 'pending') {
             setPendingHover(to);
         }
     };
@@ -108,7 +106,7 @@ const LogRow = props => {
                 </TableCell>
                 <TableCell onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)}>
                     {
-                        props.org.role !== 'vol' && log.status === 'pending' && pendingHover
+                        props.role !== 'vol' && log.status === 'pending' && pendingHover
                             ? <span className={classes.editStatusIcons}>
                                 <IconButton disabled={loadingApprove || loadingDeny} onClick={() => changeStatus('approved')} className={classes.editStatusIcon}><StatusIcon status='approved' /></IconButton>
                                 <IconButton disabled={loadingApprove || loadingDeny} onClick={() => changeStatus('denied')} className={classes.editStatusIcon}><StatusIcon status='denied' /></IconButton>
@@ -131,7 +129,7 @@ const LogRow = props => {
                             <span className={classes.collapseTimeLabel}>End Time:</span> <Box fontFamily='Monospace' fontSize={15} letterSpacing={0.8} component='span'>{end.format('ddd, MMM D YYYY [at] hh:mm A')}</Box><br /><br />
                             <strong>Hours:</strong> {log.hours}
                             {
-                                props.org.role !== 'vol' && log.status === 'pending' &&
+                                props.role !== 'vol' && log.status === 'pending' &&
                                 <>
                                     <Button variant='outlined' color='primary' disabled={loadingApprove || loadingDeny} onClick={() => changeStatus('approved')} startIcon={<StatusIcon status='approved' />} className={`${classes.button} ${classes.approved}`}>
                                         {

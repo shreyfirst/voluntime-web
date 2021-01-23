@@ -1,10 +1,12 @@
 import { useState } from 'react';
-import { TextField, Button, Dialog, DialogActions, DialogContent, DialogTitle, DialogContentText, Tabs, Tab, CircularProgress, Link } from '@material-ui/core';
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle, DialogContentText, Tabs, Tab, CircularProgress, Link } from '@material-ui/core';
 import { Alert } from '@material-ui/lab';
+import { MailOutline as EmailIcon } from '@material-ui/icons';
 import { makeStyles } from '@material-ui/core/styles';
 import GoogleLogin from 'react-google-login';
 import GoogleIcon from '../../helpers/GoogleIcon';
 import TabPanel from '../../helpers/TabPanel';
+import TextFieldIcon from '../../helpers/TextFieldIcon';
 import { changeEmail, changeEmailGoogle } from '../../../services/users';
 
 const useStyles = makeStyles({
@@ -134,7 +136,7 @@ const ChangeEmail = props => {
                     }
                 </TabPanel>
                 <TabPanel tabValue={1} tabIndex={tab} className={classes.tabPanel}>
-                    <TextField variant='outlined' type='email' label='New Email Address' onChange={event => setEmail(event.target.value)} className={classes.textField} /><br /><br />
+                    <TextFieldIcon variant='outlined' type='email' label='New Email Address' icon={<EmailIcon />} onChange={event => setEmail(event.target.value)} className={classes.textField} /><br /><br />
                 </TabPanel>
             </DialogContent>
             <DialogActions>

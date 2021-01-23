@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Typography, TextField, Grid, Button, CircularProgress } from '@material-ui/core';
 import { Alert } from '@material-ui/lab';
 import { makeStyles } from '@material-ui/core/styles';
-import { MailOutline as EmailIcon, Phone as PhoneIcon, Instagram as InstagramIcon, Lock as LockIcon, Save as SaveIcon } from '@material-ui/icons';
+import { MailOutline as EmailIcon, Phone as PhoneIcon, Instagram as InstagramIcon, Lock as LockIcon, Save as SaveIcon, ExitToApp as LogoutIcon } from '@material-ui/icons';
 import TextFieldIcon from '../../helpers/TextFieldIcon';
 import ChangeEmail from './ChangeEmail';
 import ChangePassword from './ChangePassword';
@@ -136,7 +136,7 @@ const Account = props => {
                 }
                 <br /><br /><br />
                 <Grid container justify='center'>
-                    <Button variant='outlined' onClick={logout}>Log Out</Button>
+                    <Button variant='outlined' onClick={logout} startIcon={<LogoutIcon />}>Log Out</Button>
                 </Grid>
                 <ChangeEmail open={emailOpen} setOpen={setEmailOpen} user={props.user} setUser={props.setUser} />
                 <ChangePassword open={passwordOpen} setOpen={setPasswordOpen} user={{ token: props.user.token }} setUser={props.setUser} />
