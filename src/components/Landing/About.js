@@ -1,4 +1,5 @@
 import { Grid, Typography, Button, Hidden } from '@material-ui/core';
+import { PersonAdd as SignUpIcon } from '@material-ui/icons';
 import { makeStyles } from '@material-ui/core/styles';
 import AppStoreBadge from './AppStoreBadge';
 
@@ -26,13 +27,13 @@ const About = props => {
                     Features
                 </Typography><br />
                 <Typography variant='subtitle1'>
-                    Create organizations to manage your volunteers. Have hour logs always on hand in one place instead of dozens of loose spreadsheets.
+                    Create organizations to manage your volunteers. Have hour logs always on hand in one place instead of dozens of loose spreadsheets and texts.
                 </Typography>
             </Grid>
             <Grid container item xs={12} sm={9} justify='center' spacing={3}>
                 <Grid item>
                     <Hidden xsDown>
-                        <Button variant='contained' color='primary' onClick={props.aboutSignUpClicked}>Create an Account</Button>
+                        <Button variant='contained' color='primary' startIcon={<SignUpIcon />} onClick={props.aboutSignUpClicked}>Create an Account</Button>
                     </Hidden>
                     <Hidden smUp>
                         <Grid container spacing={1}>
