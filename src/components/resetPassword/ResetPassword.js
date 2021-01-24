@@ -163,7 +163,6 @@ const ResetPassword = props => {
                     </Paper>
                 </Grid>
             </Grid>
-
         </Container>
     );
 };

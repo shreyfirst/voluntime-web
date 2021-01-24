@@ -1,12 +1,12 @@
 import { useEffect, useState, useCallback, lazy, Suspense } from 'react';
 import Landing from './components/landing/Landing';
-import JoinOrg from './components/joinOrg/JoinOrg';
-import VerifyEmail from './components/verifyEmail/VerifyEmail';
-import ResetPassword from './components/resetPassword/ResetPassword';
-import VerifyNewEmail from './components/verifyNewEmail/VerifyNewEmail';
 import { Switch, Route, useLocation, useHistory } from 'react-router-dom';
 import { loginToken } from './services';
 
+const JoinOrg = lazy(() => import('./components/joinOrg/JoinOrg'));
+const VerifyEmail = lazy(() => import('./components/verifyEmail/VerifyEmail'));
+const ResetPassword = lazy(() => import('./components/resetPassword/ResetPassword'));
+const VerifyNewEmail = lazy(() => import('./components/verifyNewEmail/VerifyNewEmail'));
 const Dashboard = lazy(() => import('./components/dashboard/Dashboard'));
 const Org = lazy(() => import('./components/org/Org'));
 
