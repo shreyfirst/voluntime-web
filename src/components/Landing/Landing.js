@@ -1,5 +1,5 @@
 import { useRef, useCallback, useState, useEffect, memo } from 'react';
-import { Container, Grid, Hidden, Paper } from '@material-ui/core';
+import { Container, Grid, Paper } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { useLocation } from 'react-router-dom';
 import Login from './Login';
@@ -7,7 +7,7 @@ import SignUp from './SignUp';
 import Product from './Product';
 import About from './About';
 
-const useStyles = makeStyles({
+const useStyles = makeStyles(theme => ({
     landingContainer: {
         minHeight: '100vh',
         paddingTop: '4vh',
@@ -25,6 +25,9 @@ const useStyles = makeStyles({
         paddingLeft: '5%',
         paddingRight: '5%',
         width: '90%',
+        [theme.breakpoints.down('sm')]: {
+            width: '100%',
+        },
     },
     about: {
         height: '100vh',
@@ -33,7 +36,7 @@ const useStyles = makeStyles({
     bold: {
         fontWeight: 'bold'
     }
-});
+}));
 
 const Landing = props => {
     const location = useLocation();
@@ -61,23 +64,22 @@ const Landing = props => {
 
     useEffect(() => window.scrollTo(0, 0), []);
 
+    //when app is ready, wrap login/signup grid in <Hidden xsDown></Hidden>
     return (
         <Container>
             <Grid container justify='center' className={classes.landingContainer}>
                 <Grid container item alignItems='stretch' justify='center' className={classes.productContainer} md={6} sm={9} xs={12}>
                     <Product scrollToAbout={scrollToAbout} />
                 </Grid>
-                <Hidden xsDown>
-                    <Grid container item alignItems='stretch' justify='center' md={6} sm={9}>
-                        <Paper className={classes.loginPaper} variant='outlined'>
-                            {
-                                view === 'login'
-                                    ? <Login from={location.state === undefined ? undefined : location.state.from} setUser={props.setUser} setView={setView} />
-                                    : <SignUp from={location.state === undefined ? undefined : location.state.from} user={props.user} setUser={props.setUser} fieldRef={signUpFieldRef} setView={setView} />
-                            }
-                        </Paper>
-                    </Grid>
-                </Hidden>
+                <Grid container item alignItems='stretch' justify='center' md={6} sm={9} xs={12}>
+                    <Paper className={classes.loginPaper} variant='outlined'>
+                        {
+                            view === 'login'
+                                ? <Login from={location.state === undefined ? undefined : location.state.from} setUser={props.setUser} setView={setView} />
+                                : <SignUp from={location.state === undefined ? undefined : location.state.from} user={props.user} setUser={props.setUser} fieldRef={signUpFieldRef} setView={setView} />
+                        }
+                    </Paper>
+                </Grid>
             </Grid>
             <Grid ref={aboutRef} container className={classes.about} alignItems='center' justify='center'>
                 <About aboutSignUpClicked={aboutSignUpClicked} />
