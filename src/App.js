@@ -56,8 +56,6 @@ const App = () => {
                 }
             });
         }
-
-        // eslint-disable-next-line
     }, []);
 
     return (
