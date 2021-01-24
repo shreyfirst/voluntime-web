@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { getMembers } from '../../../services/orgs';
 import { getLogsOrg, getLogsUserOrg } from '../../../services/logs';
 import { Grid, IconButton, CircularProgress, Button, Typography, Menu, MenuItem } from '@material-ui/core';
@@ -109,7 +109,7 @@ const ViewHours = props => {
     const [filterVol, setFilterVol] = useState('all');
     const [filteredLogs, setFilteredLogs] = useState(null);
 
-    const refresh = () => {
+    const refresh = useCallback(() => {
         setLoadingRefresh(true);
         getMembers({
             token: props.user.token,
@@ -133,7 +133,7 @@ const ViewHours = props => {
                 props.setMembers(data);
             }
         });
-    };
+    });
 
     const handleLogsResponse = data => {
         setError('');
@@ -227,7 +227,7 @@ const ViewHours = props => {
                         <br />
                         <Grid container>
                             <Grid item xs={12} lg={11}>
-                                <TableView allLogs={props.logs} logs={filteredLogs === null ? props.logs : filteredLogs} setLogs={props.setLogs} user={props.user} org={props.org} members={props.members} />
+                                <TableView allLogs={props.logs} logs={filteredLogs === null ? props.logs : filteredLogs} setLogs={props.setLogs} user={props.user} org={props.org} members={props.members} refresh={refresh} />
                             </Grid>
                         </Grid>
                     </>

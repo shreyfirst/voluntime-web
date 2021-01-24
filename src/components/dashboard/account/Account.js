@@ -42,7 +42,6 @@ const Account = props => {
     const [success, setSuccess] = useState('');
 
     const handleSubmit = () => {
-        console.log('h')
         setSuccess('');
         if (firstName.length < 1) {
             setError('Please enter your first name.');

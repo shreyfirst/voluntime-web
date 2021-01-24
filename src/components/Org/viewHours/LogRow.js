@@ -1,4 +1,4 @@
-import { useState, memo } from 'react';
+import { useState, useEffect, memo } from 'react';
 import { Box, TableCell, TableRow, IconButton, Collapse, Button } from '@material-ui/core';
 import { Check as ApprovedIcon, Clear as DeniedIcon, Schedule as PendingIcon, KeyboardArrowDown as DownArrow, KeyboardArrowUp as UpArrow } from '@material-ui/icons';
 import { Alert } from '@material-ui/lab';
@@ -92,6 +92,13 @@ const LogRow = props => {
             setPendingHover(to);
         }
     };
+
+    useEffect(() => {
+        if (log.vol === undefined) {
+            props.refresh();
+            log.vol = { firstName: 'REMOVED USER', lastName: 'REMOVED USER' };
+        }
+    }, [log.vol]);
 
     const start = dayjs(log.start);
     const end = dayjs(log.end);

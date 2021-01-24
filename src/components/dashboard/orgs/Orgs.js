@@ -19,6 +19,16 @@ const useStyles = makeStyles({
     },
 });
 
+const sortOrgs = orgs => {
+    var sorted = { owner: [], admin: [], vol: [], archive: [] };
+    for (const org of orgs) {
+        if (org.roleActive) {
+            sorted[org.active ? org.role : 'archive'].push(org);
+        }
+    }
+    return sorted;
+};
+
 const OrgSection = props => {
     const classes = useStyles();
 
@@ -44,14 +54,6 @@ const Orgs = props => {
 
     const [view, setView] = useState('orgs');
 
-    const sortOrgs = orgs => {
-        var sorted = { owner: [], admin: [], vol: [], archive: [] };
-        for (const org of orgs) {
-            sorted[org.active ? org.role : 'archive'].push(org);
-        }
-        return sorted;
-    };
-
     const sortedOrgs = useRef(sortOrgs(props.user.orgs));
     sortedOrgs.current = sortOrgs(props.user.orgs);
 
@@ -63,7 +65,7 @@ const Orgs = props => {
                     : <>
                         <Button variant='outlined' onClick={() => setView('create')} startIcon={<AddIcon />}>Create Organization</Button>
                         {
-                            props.user.orgs.length === 0 &&
+                            sortedOrgs.current.owner.length < 1 && sortedOrgs.current.admin.length < 1 && sortedOrgs.current.vol.length < 1 && sortedOrgs.current.archive.length < 1 &&
                             <Typography><br />You are not part of any organizations yet. Join or create an organization to get started.</Typography>
                         }
                         {

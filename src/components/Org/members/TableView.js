@@ -66,7 +66,7 @@ const TableView = props => (
             </TableHead>
             <TableBody>
                 {props.members.map(m =>
-                    <Row key={m.id} member={m} user={props.user} org={props.org} members={props.members} setMembers={props.setMembers} />
+                    m.roleActive && <Row key={m.id} member={m} user={props.user} org={props.org} members={props.members} setMembers={props.setMembers} />
                 )}
             </TableBody>
         </Table>

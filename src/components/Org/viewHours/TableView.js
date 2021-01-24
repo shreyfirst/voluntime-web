@@ -27,7 +27,7 @@ const TableView = props => {
                     </TableHead>
                     <TableBody>
                         {props.logs.map(log =>
-                            <LogRow key={log.id} log={log} token={props.user.token} role={props.org.role} handleResponse={updateLogs} />
+                            <LogRow key={log.id} log={log} token={props.user.token} role={props.org.role} handleResponse={updateLogs} refresh={props.refresh} />
                         )}
                     </TableBody>
                 </Table>

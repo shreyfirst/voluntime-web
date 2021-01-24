@@ -135,10 +135,10 @@ const Members = props => {
                         : <>
                             {
                                 searchValue.length < 1 || results === null
-                                    ? table ? <TableView user={props.user} org={props.org} setMembers={props.setMembers} members={props.members} /> : props.members.map(m => <Member key={m.id} member={m} user={props.user} org={props.org} members={props.members} setMembers={props.setMembers} />)
+                                    ? table ? <TableView user={props.user} org={props.org} setMembers={props.setMembers} members={props.members} /> : props.members.map(m => m.roleActive && <Member key={m.id} member={m} user={props.user} org={props.org} members={props.members} setMembers={props.setMembers} />)
                                     : results.length < 1
                                         ? 'No Results'
-                                        : table ? <TableView user={props.user} org={props.org} setMembers={props.setMembers} members={results} /> : results.map(m => <Member key={m.id} member={m} user={props.user} org={props.org} members={props.members} setMembers={props.setMembers} />)
+                                        : table ? <TableView user={props.user} org={props.org} setMembers={props.setMembers} members={results} /> : results.map(m => m.roleActive && <Member key={m.id} member={m} user={props.user} org={props.org} members={props.members} setMembers={props.setMembers} />)
                             }
                             <br />
                             {
