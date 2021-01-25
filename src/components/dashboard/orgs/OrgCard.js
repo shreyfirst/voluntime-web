@@ -31,8 +31,6 @@ const useStyles = makeStyles(theme => ({
                     ? theme.palette.secondary.main
                     : theme.palette.success.main,
         height: '50%',
-        textAlign: 'center',
-        overflow: 'hidden'
     }),
     image: {
         height: '100%',
@@ -119,7 +117,7 @@ const OrgCard = props => {
     return (
         <Card className={classes.container} onClick={() => !props.archive && history.push(`/dashboard/${props.org.id}`)}>
             <Grid container className={classes.grid}>
-                <Grid item xs={12} className={classes.imageOverlay}>
+                <Grid container justify='center' alignItems='center' className={classes.imageOverlay}>
                     {
                         props.org.image?.length > 0 &&
                         <img src={props.org.image} className={classes.image} alt='' />

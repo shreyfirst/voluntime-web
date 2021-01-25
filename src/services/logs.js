@@ -1,6 +1,8 @@
 import { post } from './axiosConfig';
 
-const addLog = (info, callback) => post('/logs', info, callback);
+const addLog = (info, callback, onProgress) => post('/logs', info, callback, (typeof onProgress === 'function' && {
+    onUploadProgress: event => onProgress(Math.floor(event.loaded * 100 / event.total))
+}));
 
 const getLogsUser = (info, callback) => post('/logs/getUser', info, callback);
 

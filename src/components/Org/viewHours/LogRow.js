@@ -49,6 +49,9 @@ const useStyles = makeStyles(theme => ({
     },
     editStatusIcon: {
         padding: 0,
+    },
+    imageContainer: {
+        height: 150,
     }
 }));
 
@@ -149,6 +152,15 @@ const LogRow = props => {
                             }
                             <br /><br />
                             <strong>Activity Description:</strong> <div className={classes.description}>{log.description.length > 0 ? log.description : <em>No description provided</em>}</div><br />
+                            {
+                                log.image?.length > 0 &&
+                                <>
+                                    <div className={classes.imageContainer}>
+                                        <img src={log.image} height={150} alt='Image submitted by volunteer' />
+                                    </div>
+                                    <br />
+                                </>
+                            }
                             {
                                 error.length > 0 &&
                                 <Alert severity='error'>{error}</Alert>

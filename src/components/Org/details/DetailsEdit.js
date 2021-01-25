@@ -1,13 +1,13 @@
 import { useState, useRef } from 'react';
 import { Typography, TextField, Grid, Button } from '@material-ui/core';
 import { Alert } from '@material-ui/lab';
-import { Archive, Image as UploadIcon, Save as SaveIcon, Add as DropIcon } from '@material-ui/icons';
+import { Archive, Save as SaveIcon } from '@material-ui/icons';
 import { makeStyles } from '@material-ui/core/styles';
 import { editOrg } from '../../../services/orgs';
 import ArchiveConfirm from './ArchiveConfirm';
 import CircularProgressButton from '../../helpers/CircularProgressButton';
 import LinearProgressWithLabel from '../../helpers/LinearProgressWithLabel';
-import imageCompression from 'browser-image-compression';
+import ImagePreview from '../../helpers/ImagePreview';
 
 const useStyles = makeStyles({
     container: {
@@ -27,58 +27,12 @@ const useStyles = makeStyles({
             color: '#FFF',
             backgroundColor: '#d73a49',
         }
-    },
-    imagePreviewContainer: {
-        width: 350,
-        height: 150,
-        outline: '2px dashed gray',
-        backgroundColor: '#FAFAFA',
-        overflow: 'hidden',
-    },
-    fileHover: {
-        outline: '2px dashed black',
     }
 });
 
 const cancelEvent = event => {
     event.stopPropagation();
     event.preventDefault();
-};
-
-const ImagePreview = props => {
-
-    const [fileHover, setFileHover] = useState(false);
-
-    const dragHandler = event => {
-        setFileHover(true);
-        cancelEvent(event);
-    };
-
-    const dropHandler = event => {
-        setFileHover(false);
-        props.dropHandler(event);
-    };
-
-    const classes = useStyles();
-    return (
-        <Grid container justify='center' alignItems='center' className={`${classes.imagePreviewContainer} ${fileHover && classes.fileHover}`} onDrop={dropHandler} onDragOver={dragHandler} onDragLeave={() => setFileHover(false)}>
-            {
-                props.src?.length > 0
-                    ? <img src={props.src} height={150} alt='' />
-                    : <Typography>
-                        {
-                            fileHover
-                                ? <div style={{
-                                    display: 'flex',
-                                    alignItems: 'center',
-                                    flexWrap: 'wrap',
-                                }}><DropIcon /> Drop Image</div>
-                                : 'No Card Image'
-                        }
-                    </Typography>
-            }
-        </Grid>
-    );
 };
 
 const DetailsEdit = props => {
@@ -99,45 +53,6 @@ const DetailsEdit = props => {
 
     const [delOpen, setDelOpen] = useState(false);
 
-    const handleImageUpload = files => {
-        if (files.length < 1) { return; }
-
-        const file = files[0];
-
-        if (file.type !== 'image/png' && file.type !== 'image/jpg' && file.type !== 'image/jpeg') {
-            setSuccess('');
-            setError('Please choose a PNG or JPEG file.');
-            return;
-        }
-
-        setFileName(file.name);
-
-        imageCompression(file, {
-            maxSizeMB: 0.1,
-            useWebWorker: true,
-            onProgress: setCompressProgress,
-        })
-            .then(compressedFile =>
-                imageCompression.getDataUrlFromFile(compressedFile)
-                    .then(setEncodedImage)
-                    .catch(err => { console.error(err); setSuccess(''); setError('An error occurred while encoding the image. Please try again or choose a different image.'); })
-            )
-            .catch(err => { console.error(err); setSuccess(''); setError('An error occurred while compressing the image. Please try again or choose a different image.'); });
-    };
-
-    const dropHandler = event => {
-        cancelEvent(event);
-
-        if (event.dataTransfer.items) {
-            // If dropped items aren't files, reject them
-            if (event.dataTransfer.items.length > 0 && event.dataTransfer.items[0].kind === 'file') {
-                handleImageUpload([event.dataTransfer.items[0].getAsFile()]);
-            }
-        } else {
-            handleImageUpload(event.dataTransfer.files);
-        }
-    };
-
     const handleSubmit = () => {
         setSuccess('');
         if (name.length < 1) {
@@ -149,6 +64,7 @@ const DetailsEdit = props => {
             return;
         }
         setLoading(true);
+        setUploadProgress(0);
         editOrg({
             token: props.user.token,
             id: props.org.id,
@@ -182,31 +98,7 @@ const DetailsEdit = props => {
             <Typography variant='h6'>
                 Public Information
             </Typography><br />
-            {
-                encodedImage === null
-                    ? <ImagePreview src={props.org.image} dropHandler={dropHandler} />
-                    : <ImagePreview src={encodedImage} dropHandler={dropHandler} />
-            }
-            <br />
-            <Button variant='outlined' component='label' disabled={compressProgress !== null && compressProgress < 100} startIcon={<UploadIcon />}>
-                Select Image
-                <input
-                    type='file'
-                    hidden
-                    accept='image/png, image/jpeg'
-                    onChange={event => handleImageUpload(event.target.files)}
-                    ref={fileInputRef}
-                />
-            </Button>
-            {fileName !== null && <span style={{ marginLeft: 15 }}>{fileName}</span>}
-            <br /><br />
-            {
-                compressProgress !== null && compressProgress < 100 &&
-                <>
-                    Compressing Image:<br />
-                    <LinearProgressWithLabel value={compressProgress} />
-                </>
-            }
+            <ImagePreview src={encodedImage === null ? props.org.image : encodedImage} width={350} fileInputRef={fileInputRef} setSuccess={setSuccess} setError={setError} fileName={fileName} setFileName={setFileName} progress={compressProgress} onProgress={setCompressProgress} onFinish={setEncodedImage} />
             <br />
             <TextField variant='outlined' label='Name' required onChange={e => setName(e.target.value)} defaultValue={props.org.name} className={classes.textField} /><br /><br />
             <TextField variant='outlined' label='Description' multiline rows={4} onChange={e => setDescription(e.target.value)} defaultValue={props.org.description} className={classes.textField} /><br /><br />
