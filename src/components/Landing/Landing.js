@@ -1,4 +1,4 @@
-import { useRef, useCallback, useState, useEffect, memo } from 'react';
+import { useRef, useState, useEffect, memo } from 'react';
 import { Container, Grid, Paper } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { useLocation } from 'react-router-dom';
@@ -50,7 +50,7 @@ const Landing = props => {
 
     const focusSignUpField = () => signUpFieldRef.current.focus({ preventScroll: true });
 
-    const scrollToAbout = useCallback(() => aboutRef.current.scrollIntoView({ behavior: 'smooth' }), []);
+    const scrollToAbout = () => aboutRef.current.scrollIntoView({ behavior: 'smooth' });
 
     const aboutSignUpClicked = () => {
         if (view !== 'signup') {

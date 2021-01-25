@@ -1,4 +1,3 @@
-import { memo } from 'react';
 import { Grid, Typography, Link, Hidden } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import AppStoreBadge from './AppStoreBadge';
@@ -64,4 +63,4 @@ const Product = props => {
     );
 };
 
-export default memo(Product);
+export default Product;
