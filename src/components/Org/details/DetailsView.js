@@ -3,6 +3,8 @@ import { Typography, Button } from '@material-ui/core';
 import { RemoveCircleOutline as LeaveIcon } from '@material-ui/icons';
 import { makeStyles } from '@material-ui/core/styles';
 import LeaveConfirm from './LeaveConfirm';
+import ReactMarkdown from 'react-markdown';
+import gfm from 'remark-gfm';
 
 const useStyles = makeStyles({
     name: {
@@ -45,7 +47,12 @@ const DetailsView = props => {
             }
             <br />
             <Typography variant='h5' className={classes.name}>{props.org.name}</Typography><br />
-            <Typography className={classes.description}>{props.org.description}</Typography><br /><br /><br />
+            <Typography component='div'>
+                <ReactMarkdown plugins={[gfm]}
+                    renderers={{ link: props => <a href={props.href} target='_blank' rel='noopener noreferrer'>{props.children}</a> }}
+                    className={classes.description}>{props.org.description}</ReactMarkdown>
+            </Typography>
+            <br /><br /><br />
             <Button variant='outlined' onClick={() => setLeaveOpen(true)} startIcon={<LeaveIcon />} className={classes.leaveButton}>LEAVE ORGANIZATION</Button>
             <LeaveConfirm open={leaveOpen} setOpen={setLeaveOpen} user={props.user} setUser={props.setUser} org={props.org} />
         </>

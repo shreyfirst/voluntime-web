@@ -8,6 +8,8 @@ import ArchiveConfirm from './ArchiveConfirm';
 import CircularProgressButton from '../../helpers/CircularProgressButton';
 import LinearProgressWithLabel from '../../helpers/LinearProgressWithLabel';
 import ImagePreview from '../../helpers/ImagePreview';
+import ReactMarkdown from 'react-markdown';
+import gfm from 'remark-gfm';
 
 const useStyles = makeStyles({
     container: {
@@ -18,6 +20,15 @@ const useStyles = makeStyles({
     },
     helperText: {
         color: '#414141'
+    },
+    descriptionPreview: {
+        borderTop: '1px dotted black',
+        borderBottom: '1px dotted black',
+        borderRadius: 5,
+        padding: 5,
+    },
+    description: {
+        color: '#343434'
     },
     archiveButton: {
         color: '#d73a49',
@@ -64,7 +75,9 @@ const DetailsEdit = props => {
             return;
         }
         setLoading(true);
-        setUploadProgress(0);
+        if (encodedImage !== null) {
+            setUploadProgress(0);
+        }
         editOrg({
             token: props.user.token,
             id: props.org.id,
@@ -101,7 +114,14 @@ const DetailsEdit = props => {
             <ImagePreview src={encodedImage === null ? props.org.image : encodedImage} width={350} fileInputRef={fileInputRef} setSuccess={setSuccess} setError={setError} fileName={fileName} setFileName={setFileName} progress={compressProgress} onProgress={setCompressProgress} onFinish={setEncodedImage} />
             <br />
             <TextField variant='outlined' label='Name' required onChange={e => setName(e.target.value)} defaultValue={props.org.name} className={classes.textField} /><br /><br />
-            <TextField variant='outlined' label='Description' multiline rows={4} onChange={e => setDescription(e.target.value)} defaultValue={props.org.description} className={classes.textField} /><br /><br />
+            <TextField variant='outlined' label='Description' multiline rows={6} rowsMax={16} onChange={e => setDescription(e.target.value)} defaultValue={props.org.description} InputProps={{ placeholder: 'This textbox supports markdown! Try **bold** words.' }} className={classes.textField} /><br /><br />
+            {description.length > 0 &&
+                <Typography component='div' className={classes.descriptionPreview}>
+                    <ReactMarkdown plugins={[gfm]}
+                        renderers={{ link: props => <a href={props.href} target='_blank' rel='noopener noreferrer'>{props.children}</a> }}
+                        className={classes.description}>{description}</ReactMarkdown>
+                </Typography>
+            }
             <br />
             <Grid container justify='flex-end'>
                 <Button variant='contained' color='primary' disabled={loading || compressProgress !== null && compressProgress < 100} onClick={handleSubmit} startIcon={loading ? <CircularProgressButton /> : <SaveIcon />}>
