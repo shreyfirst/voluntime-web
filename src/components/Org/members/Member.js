@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Card, CardContent, Typography, IconButton, Menu, MenuItem, Button, CircularProgress } from '@material-ui/core';
+import { Grid, Card, CardContent, Typography, IconButton, Menu, MenuItem, Button, CircularProgress } from '@material-ui/core';
 import { Alert } from '@material-ui/lab';
 import { makeStyles } from '@material-ui/core/styles';
 import { MailOutline as EmailIcon, Phone as PhoneIcon, Instagram as InstagramIcon, Edit as EditIcon, RemoveCircleOutline as RemoveIcon, KeyboardArrowDown as OpenMenuIcon } from '@material-ui/icons';
@@ -44,7 +44,27 @@ const useStyles = makeStyles(theme => ({
         paddingBottom: 5,
     },
     contactValue: {
-        marginLeft: 15
+        marginLeft: 15,
+        '& a': {
+            color: '#000',
+            textDecoration: 'none',
+            '&:visited': {
+                color: '#000',
+                textDecoration: 'none',
+            },
+            '&:active': {
+                color: '#000',
+                textDecoration: 'none',
+            },
+            '&:hover': {
+                color: '#000',
+                textDecoration: 'none',
+            },
+            '&:focus': {
+                color: '#000',
+                textDecoration: 'none',
+            },
+        }
     },
     loading: {
         position: 'absolute',
@@ -63,8 +83,17 @@ const useStyles = makeStyles(theme => ({
         '&:hover': {
             color: '#FFF',
             backgroundColor: '#d73a49',
-        }
+        },
     },
+    image: {
+        borderRadius: '50%',
+        display: 'inline',
+        border: '1px solid gray'
+    },
+    imageText: {
+        paddingLeft: 15,
+        paddingTop: 12,
+    }
 }));
 
 const Contact = props => {
@@ -72,7 +101,7 @@ const Contact = props => {
     return (
         <div className={classes.contact}>
             {props.icon}
-            <span className={classes.contactValue}>{props.value}</span>
+            <span className={classes.contactValue}><a href={props.href} target='_blank' rel='noopener noreferrer'>{props.children}</a></span>
         </div>
     );
 };
@@ -133,22 +162,28 @@ const EditMenu = props => {
 
 const Member = props => {
     const member = props.member;
-    const classes = useStyles();
 
     const [edit, setEdit] = useState(false);
     const [error, setError] = useState('');
     const [removeOpen, setRemoveOpen] = useState(false);
 
+    const classes = useStyles();
     return (
         <Card className={`${classes.container} ${props.table ? classes.containerTable : ''}`}>
             <CardContent>
-                {
-                    edit
-                        ? <EditMenu token={props.user.token} member={member} org={props.org} members={props.members} setMembers={props.setMembers} setError={setError} setEdit={setEdit} />
-                        : <div className={`${classes.header} ${classes[member.role]}`}>{roleNames[member.role]}</div>
-                }
-
-                <Typography variant='h6'>{member.firstName} {member.lastName}</Typography>
+                <Grid container style={{ paddingBottom: 3 }}>
+                    <Grid item>
+                        <img src={member.image?.length > 0 ? member.image : 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNgYAAAAAMAASsJTYQAAAAASUVORK5CYII='} height={75} width={75} alt='' className={classes.image} />
+                    </Grid>
+                    <Grid item className={classes.imageText}>
+                        {
+                            edit
+                                ? <EditMenu token={props.user.token} member={member} org={props.org} members={props.members} setMembers={props.setMembers} setError={setError} setEdit={setEdit} />
+                                : <div className={`${classes.header} ${classes[member.role]}`}>{roleNames[member.role]}</div>
+                        }
+                        <Typography variant='h6'>{member.firstName} {member.lastName}</Typography>
+                    </Grid>
+                </Grid>
                 <Typography variant='body1' className={classes.note}>{member.note}</Typography>
                 {
                     (member.contactInfo.email.length > 0 || member.contactInfo.phone.length > 0 || member.contactInfo.instagram.length > 0) &&
@@ -156,15 +191,15 @@ const Member = props => {
                 }
                 {
                     member.contactInfo.email.length > 0 &&
-                    <Contact icon={<EmailIcon />} value={member.contactInfo.email} />
+                    <Contact icon={<EmailIcon />} href={`mailto:${member.contactInfo.email}`}>{member.contactInfo.email}</Contact>
                 }
                 {
                     member.contactInfo.phone.length > 0 &&
-                    <Contact icon={<PhoneIcon />} value={member.contactInfo.phone} />
+                    <Contact icon={<PhoneIcon />} href={`tel:${member.contactInfo.phone}`}>{member.contactInfo.phone}</Contact>
                 }
                 {
                     member.contactInfo.instagram.length > 0 &&
-                    <Contact icon={<InstagramIcon />} value={member.contactInfo.instagram} />
+                    <Contact icon={<InstagramIcon />} href={`https://instagram.com/${member.contactInfo.instagram.replace('@', '')}`}>{member.contactInfo.instagram}</Contact>
                 }
                 {
                     props.org.role === 'owner' && member.id !== props.user.id &&

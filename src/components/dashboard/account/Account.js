@@ -1,12 +1,14 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { Typography, TextField, Grid, Button } from '@material-ui/core';
 import { Alert } from '@material-ui/lab';
 import { makeStyles } from '@material-ui/core/styles';
 import { MailOutline as EmailIcon, Phone as PhoneIcon, Instagram as InstagramIcon, LockOutlined as LockIcon, Save as SaveIcon, ExitToApp as LogoutIcon } from '@material-ui/icons';
 import TextFieldIcon from '../../helpers/TextFieldIcon';
+import CircularProgressButton from '../../helpers/CircularProgressButton';
+import ImagePreview from '../../helpers/ImagePreview';
+import LinearProgressWithLabel from '../../helpers/LinearProgressWithLabel';
 import ChangeEmail from './ChangeEmail';
 import ChangePassword from './ChangePassword';
-import CircularProgressButton from '../../helpers/CircularProgressButton';
 import { editProfile } from '../../../services/users';
 import { useHistory } from 'react-router-dom';
 
@@ -22,9 +24,20 @@ const useStyles = makeStyles({
     }
 });
 
+const cancelEvent = event => {
+    event.stopPropagation();
+    event.preventDefault();
+};
+
 const Account = props => {
 
     const history = useHistory();
+
+    const [compressProgress, setCompressProgress] = useState(null);
+    const [uploadProgress, setUploadProgress] = useState(null);
+    const [fileName, setFileName] = useState(null);
+
+    const fileInputRef = useRef(null);
 
     const [firstName, setFirstName] = useState(props.user.firstName);
     const [lastName, setLastName] = useState(props.user.lastName);
@@ -33,6 +46,7 @@ const Account = props => {
     const [contactEmail, setContactEmail] = useState(props.user.contactInfo.email);
     const [contactPhone, setContactPhone] = useState(props.user.contactInfo.phone);
     const [contactInstagram, setContactInstagram] = useState(props.user.contactInfo.instagram);
+    const [encodedImage, setEncodedImage] = useState(null);
 
     const [emailOpen, setEmailOpen] = useState(false);
     const [passwordOpen, setPasswordOpen] = useState(false);
@@ -63,16 +77,20 @@ const Account = props => {
                 phone: contactPhone,
                 instagram: contactInstagram
             },
+            image: encodedImage === null ? '' : encodedImage
         }, (err, data) => {
             setLoading(false);
             if (err) {
                 setError(data.message);
             } else {
                 setError('');
+                setCompressProgress(null);
+                setUploadProgress(null);
+                fileInputRef.current.value = '';
                 setSuccess('Your changes have been saved.');
                 props.setUser({ ...data, orgs: props.user.orgs });
             }
-        });
+        }, encodedImage !== null && setUploadProgress);
     };
 
     const logout = () => {
@@ -82,13 +100,15 @@ const Account = props => {
 
     const classes = useStyles();
     return (
-        <Grid container className={classes.container}>
+        <Grid container onDragOver={cancelEvent} onDrop={cancelEvent} className={classes.container}>
             <Grid item xs={9} sm={8} md={6} lg={5}>
                 View and edit your Voluntime account here.
                 <br /><br />
                 <Typography variant='h6'>
                     Profile
                 </Typography><br />
+                <ImagePreview src={encodedImage === null ? props.user.image : encodedImage} maxWidthOrHeight={150} width={75} height={75} placeholder='No Profile Picture' fileInputRef={fileInputRef} setSuccess={setSuccess} setError={setError} fileName={fileName} setFileName={setFileName} progress={compressProgress} onProgress={setCompressProgress} onFinish={setEncodedImage} />
+                <br /><br />
                 <TextField variant='outlined' label='First Name' required onChange={e => setFirstName(e.target.value)} defaultValue={props.user.firstName} className={classes.textField} /><br /><br />
                 <TextField variant='outlined' label='Last Name' required onChange={e => setLastName(e.target.value)} defaultValue={props.user.lastName} className={classes.textField} /><br /><br />
                 <TextField variant='outlined' label='Note (additional info, public)' multiline rows={4} onChange={e => setNote(e.target.value)} defaultValue={props.user.note} className={classes.textField} /><br /><br />
@@ -104,6 +124,14 @@ const Account = props => {
                         Save Changes
                     </Button>
                 </Grid>
+                {
+                    loading && uploadProgress !== null &&
+                    <>
+                        Uploading:<br />
+                        <LinearProgressWithLabel value={uploadProgress === 100 ? 99 : uploadProgress} />
+                    </>
+                }
+                <br />
                 {
                     success.length > 0 &&
                     <Alert severity='success'>{success}</Alert>

@@ -12,7 +12,9 @@ const forgotPassword = (email, callback) => post('/users/forgotPassword', { emai
 
 const resetPassword = (info, callback) => post('/users/resetPassword', info, callback);
 
-const editProfile = (info, callback) => post('/users/editProfile', info, callback);
+const editProfile = (info, callback, onProgress) => post('/users/editProfile', info, callback, (typeof onProgress === 'function' && {
+    onUploadProgress: event => onProgress(Math.floor(event.loaded * 100 / event.total))
+}));
 
 const changePassword = (info, callback) => post('/users/changePassword', info, callback);
 

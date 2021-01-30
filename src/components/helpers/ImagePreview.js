@@ -9,7 +9,7 @@ import imageCompression from 'browser-image-compression';
 const useStyles = makeStyles({
     imagePreviewContainer: props => ({
         width: props.width,
-        height: 150,
+        height: props.height,
         outline: '2px dashed gray',
         backgroundColor: '#FAFAFA',
         overflow: 'hidden',
@@ -42,7 +42,8 @@ const ImagePreview = props => {
         props.setFileName(file.name);
 
         imageCompression(file, {
-            maxSizeMB: 0.1,
+            maxSizeMB: props.maxWidthOrHeight === undefined ? 0.1 : undefined,
+            maxWidthOrHeight: props.maxWidthOrHeight,
             useWebWorker: true,
             onProgress: props.onProgress,
         })
@@ -81,13 +82,13 @@ const ImagePreview = props => {
         }
     };
 
-    const classes = useStyles({ width: props.width });
+    const classes = useStyles({ width: props.width, height: props.height === undefined ? 150 : props.height });
     return (
         <>
             <Grid container justify='center' alignItems='center' className={`${classes.imagePreviewContainer} ${fileHover && classes.fileHover}`} onDrop={dropHandler} onDragOver={dragHandler} onDragLeave={() => setFileHover(false)}>
                 {
                     props.src?.length > 0
-                        ? <img src={props.src} height={150} alt='' />
+                        ? <img src={props.src} height={props.maxWidthOrHeight === undefined ? 150 : 75} width={props.maxWidthOrHeight === undefined ? undefined : 75 } alt='' />
                         : <Typography>
                             {
                                 fileHover
@@ -97,7 +98,7 @@ const ImagePreview = props => {
                                         flexWrap: 'wrap',
                                     }}><DropIcon /> Drop Image</div>
                                     : props.progress === null
-                                        ? 'No Image Selected'
+                                        ? props.placeholder === undefined ? 'No Image Selected' : props.placeholder
                                         : 'Compressing Image...'
                             }
                         </Typography>
