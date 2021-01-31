@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Grid, Typography, TextField, Button, InputAdornment, IconButton } from '@material-ui/core';
 import { Alert } from '@material-ui/lab';
 import { makeStyles } from '@material-ui/core/styles';
-import { Visibility, VisibilityOff, Apple as AppleIcon } from '@material-ui/icons';
+import { Visibility, VisibilityOff, /*Apple as AppleIcon*/ } from '@material-ui/icons';
 import { createUser, createUserGoogle } from '../../services';
 import { useHistory } from 'react-router-dom';
 import VerifyEmail from './VerifyEmail';
@@ -41,7 +41,7 @@ const useStyles = makeStyles({
             backgroundColor: '#EFEFEF'
         }
     },
-    appleLogin: {
+    /*appleLogin: {
         textTransform: 'none',
         backgroundColor: '#000',
         color: '#FFF',
@@ -49,7 +49,7 @@ const useStyles = makeStyles({
         '&:hover': {
             backgroundColor: '#000'
         }
-    }
+    }*/
 });
 
 const SignUp = props => {
@@ -189,7 +189,6 @@ const SignUp = props => {
                             responseType='code id_token'
                             render={props => <Button startIcon={<AppleIcon />} className={classes.appleLogin} {...props}>Sign up with Apple</Button>}
                         />*/}
-                        <Button startIcon={<AppleIcon />} className={classes.appleLogin} onClick={() => setError('Sign up with Apple is not supported yet.')}>Sign up with Apple</Button>
                         <Grid container justify='center' className={classes.toggle}>
                             <Grid item>
                                 Have an account? <Button variant='text' color='primary' onClick={() => props.setView('login')}>Login</Button>

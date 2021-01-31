@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Grid, Typography, TextField, Button, Link } from '@material-ui/core';
 import { Alert } from '@material-ui/lab';
-import { Apple as AppleIcon } from '@material-ui/icons';
+//import { Apple as AppleIcon } from '@material-ui/icons';
 import { makeStyles } from '@material-ui/core/styles';
 import { login } from '../../services';
 import { loginGoogle } from '../../services';
@@ -41,7 +41,7 @@ const useStyles = makeStyles({
             backgroundColor: '#EFEFEF'
         }
     },
-    appleLogin: {
+    /*appleLogin: {
         textTransform: 'none',
         backgroundColor: '#000',
         color: '#FFF',
@@ -49,7 +49,7 @@ const useStyles = makeStyles({
         '&:hover': {
             backgroundColor: '#000'
         }
-    }
+    }*/
 });
 
 const Login = props => {
@@ -147,7 +147,7 @@ const Login = props => {
                                 <Button startIcon={<GoogleIcon />} className={classes.googleLogin} onClick={renderProps.onClick} disabled={renderProps.disabled} variant='contained' autoCapitalize='false'>Sign in with Google</Button>
                             )}
                         /><br /><br />
-                        <Button startIcon={<AppleIcon />} className={classes.appleLogin} onClick={() => setError('Sign in with Apple is not supported yet.')}>Sign in with Apple</Button>
+                        {/*<Button startIcon={<AppleIcon />} className={classes.appleLogin} onClick={() => setError('Sign in with Apple is not supported yet.')}>Sign in with Apple</Button>*/}
                         <Grid container justify='center' className={classes.toggle}>
                             <Grid item>
                                 Don't have an account? <Button variant='text' color='primary' onClick={() => props.setView('signup')}>Sign Up</Button>
