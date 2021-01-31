@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <link rel="icon" href="https://voluntime.mittaldev.com/favicon.ico" />
+    <meta name="viewport" content="minimum-scale=1, initial-scale=1, width=device-width" />
+    <meta name="theme-color" content="#000000" />
+    <meta name="description" content="Markdown guide for organization descriptions!" />
+    <meta name="author" content="Aryan Mittal" />
+    <meta name="keywords" content="Voluntime, Mittaldev, hour tracker, AryanM, volunteer, markdown" />
+    <meta name="language" content="English" />
+    <link rel="apple-touch-icon" href="https://voluntime.mittaldev.com/logo192.png" />
+    <title>Markdown Guide - Voluntime</title>
+    <style>
+        body {
+            margin-left: auto;
+            margin-right: auto;
+            padding: 20px;
+            box-sizing: border-box;
+            font-family: 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            width: 100%;
+            max-width: 1100px;
+        }
+
+        #basic-syntax {
+            text-align: center;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: #FBFBFB;
+        }
+
+        thead {
+            background-color: #e9ecef;
+        }
+
+        th,
+        td {
+            padding: 20px;
+            word-wrap: break-word;
+            border: 1px solid #dee2e6;
+        }
+
+        blockquote {
+            margin: 0;
+            padding-left: 2em;
+            border-left: 0.5em #eee solid;
+        }
+
+        @media only screen and (max-width: 750px) {
+            .elementCol {
+                display: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <p>This Markdown cheat sheet provides a quick overview of the Markdown syntax elements to use in Voluntime
+        organization descriptions.</p>
+
+    <h2 id="basic-syntax">Basic Syntax</h2>
+
+
+    <table>
+        <thead>
+            <tr>
+                <th class='elementCol'>Element</th>
+                <th>Markdown Syntax</th>
+                <th>Output</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td class='elementCol'>Heading</td>
+                <td>
+                    <code>
+                        # Header1<br />
+                        ## Header2<br />
+                        ### Header3
+                    </code>
+                </td>
+                <td>
+                    <h1>Header1</h1>
+                    <h2>Header2</h2>
+                    <h3>Header3</h3>
+                </td>
+            </tr>
+            <tr>
+                <td class='elementCol'>Bold</td>
+                <td><code>**bold text**</code></td>
+                <td><strong>bold text</strong></td>
+            </tr>
+            <tr>
+                <td class='elementCol'>Italic</td>
+                <td><code>*italicized text*</code></td>
+                <td><em>italicized text</em></td>
+            </tr>
+            <tr>
+                <td class='elementCol'>Blockquote</td>
+                <td><code>&gt; blockquote</code></td>
+                <td>
+                    <blockquote><p style='padding-top:3px;padding-bottom:3px'>blockquote</p></blockquote>
+                </td>
+            </tr>
+            <tr>
+                <td class='elementCol'>Numbered List</td>
+                <td>
+                    <code>
+                    1. First item<br />
+                    2. Second item<br />
+                    3. Third item<br />
+                    </code>
+                </td>
+                <td>
+                    <ol>
+                        <li>First item</li>
+                        <li>Second item</li>
+                        <li>Third item</li>
+                    </ol>
+                </td>
+            </tr>
+            <tr>
+                <td class='elementCol'>Bullet Point List</td>
+                <td>
+                    <code>
+                    - First item<br />
+                    - Second item<br />
+                    - Third item<br />
+                </code>
+                <td>
+                    <ul>
+                        <li>First item</li>
+                        <li>Second item</li>
+                        <li>Third item</li>
+                    </ul>
+                </td>
+                </td>
+            </tr>
+            <tr>
+                <td class='elementCol'>Code</td>
+                <td><code>`code`</code></td>
+                <td><code>code</code></td>
+            </tr>
+            <tr>
+                <td class='elementCol'>Horizontal Rule</td>
+                <td><code>---</code></td>
+                <td>
+                    <hr>
+                </td>
+            </tr>
+            <tr>
+                <td class='elementCol'>Link</td>
+                <td><code>[link title](https://example.com)</code></td>
+                <td><a href='https://example.com' target='_blank' rel='noopener noreferrer'>link title</a></td>
+            </tr>
+            <tr>
+                <td class='elementCol'>Image</td>
+                <td><code>![alt text](logo192.png)</code></td>
+                <td><img src='logo192.png' alt='alt text' height='50'></td>
+            </tr>
+            <tr>
+                <td class='elementCol'>Table</a></td>
+                <td>
+                    <code>
+                    | Syntax      | Description |<br />
+                    | ---         | ---         |<br />
+                    | Header      | Title       |<br />
+                    | Paragraph   | Text        |
+                    </code>
+                </td>
+                <td>
+                    <table>
+                        <thead>
+                            <tr>
+                                <td>Syntax</td>
+                                <td>Description</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Header</td>
+                                <td>Title</td>
+                            </tr>
+                            <tr>
+                                <td>Paragraph</td>
+                                <td>Text</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td class='elementCol'>Fenced Code Block</a></td>
+                <td>
+                    <code>```<br />
+                    {<br />
+                    &nbsp;&nbsp;"firstName": "John",<br />
+                    &nbsp;&nbsp;"lastName": "Smith",<br />
+                    &nbsp;&nbsp;"age": 25<br />
+                    }<br />
+                    ```
+                    </code>
+                </td>
+                <td>
+                    <code>
+                    {
+                    <br />
+                    &nbsp;&nbsp;"firstName": "John",<br />
+                    &nbsp;&nbsp;"lastName": "Smith",<br />
+                    &nbsp;&nbsp;"age": 25<br />
+                    }
+                    </code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class='elementCol'>Strikethrough</td>
+                <td><code>~The world is flat.~</code></td>
+                <td><del>The world is flat.</del></td>
+            </tr>
+            <tr>
+                <td class='elementCol'>Task List</td>
+                <td>
+                    <code>
+                    - [x] Write the press release<br />
+                    - [ ] Update the website<br />
+                    - [ ] Contact the media
+                    </code>
+                </td>
+                <td>
+                    <ul>
+                        <li><input type="checkbox" onclick="return false;" checked>Write the press release</li>
+                        <li><input type="checkbox" onclick="return false;">Update the website</li>
+                        <li><input type="checkbox" onclick="return false;">Contact the media</li>
+                    </ul>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+
+</html>

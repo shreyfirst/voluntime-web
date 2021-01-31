@@ -83,6 +83,7 @@ const App = () => {
                     <VerifyNewEmail setUser={setUser} />
                 </Route>
                 <Route path={['/privacy-policy', '/terms-of-service', '/tos']} render={() => window.location.href = 'privacy-policy.html'} />
+                <Route path={['/markdown', '/md']} render={() => window.location.href = 'markdown.html'} />
             </Switch>
         </Suspense>
     );

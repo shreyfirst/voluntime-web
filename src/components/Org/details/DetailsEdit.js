@@ -114,10 +114,13 @@ const DetailsEdit = props => {
             <ImagePreview src={encodedImage === null ? props.org.image : encodedImage} width={350} fileInputRef={fileInputRef} setSuccess={setSuccess} setError={setError} fileName={fileName} setFileName={setFileName} progress={compressProgress} onProgress={setCompressProgress} onFinish={setEncodedImage} />
             <br />
             <TextField variant='outlined' label='Name' required onChange={e => setName(e.target.value)} defaultValue={props.org.name} className={classes.textField} /><br /><br />
+            <Grid container justify='flex-end'>
+                <a href='/markdown.html' target='_blank' rel='noopener noreferrer'>Markdown</a><br />
+            </Grid>
             <TextField variant='outlined' label='Description' multiline rows={6} rowsMax={16} onChange={e => setDescription(e.target.value)} defaultValue={props.org.description} InputProps={{ placeholder: 'This textbox supports markdown! Try **bold** words.' }} className={classes.textField} /><br /><br />
             {description.length > 0 &&
                 <>
-                Preview: <br />
+                    Preview: <br />
                     <Typography component='div' className={classes.descriptionPreview}>
                         <ReactMarkdown plugins={[gfm]}
                             renderers={{ link: props => <a href={props.href} target='_blank' rel='noopener noreferrer'>{props.children}</a> }}
