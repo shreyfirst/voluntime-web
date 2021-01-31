@@ -6,6 +6,8 @@ import { makeStyles, useTheme } from '@material-ui/core/styles';
 import { useParams, Link } from 'react-router-dom';
 import { joinOrg, joinOrgInfo } from '../../services/orgs';
 import CircularProgressButton from '../helpers/CircularProgressButton';
+import ReactMarkdown from 'react-markdown';
+import gfm from 'remark-gfm';
 
 const useStyles = makeStyles({
     container: {
@@ -46,7 +48,25 @@ const useStyles = makeStyles({
         boxSizing: 'border-box'
     },
     description: {
-        color: '#343434'
+        color: '#343434',
+        '& table': {
+            width: '100%',
+            borderCollapse: 'collapse',
+            backgroundColor: '#FBFBFB'
+        },
+        '& thead': {
+            backgroundColor: '#e9ecef',
+        },
+        '& th': {
+            padding: 20,
+            wordWrap: 'break-word',
+            border: '1px solid #dee2e6'
+        },
+        '& td': {
+            padding: 20,
+            wordWrap: 'break-word',
+            border: '1px solid #dee2e6'
+        }
     }
 });
 
@@ -128,7 +148,11 @@ const JoinOrg = props => {
                                         Do you want to join this organization?
                                     </Typography><br /><br />
                                     <Typography variant='h5' className={classes.bold}>{org.name}</Typography><br />
-                                    <Typography className={classes.description}>{org.description}</Typography>
+                                    <Typography component='div'>
+                                        <ReactMarkdown plugins={[gfm]}
+                                            renderers={{ link: props => <a href={props.href} target='_blank' rel='noopener noreferrer'>{props.children}</a> }}
+                                            className={classes.description}>{org.description}</ReactMarkdown>
+                                    </Typography>
                                 </>
                         }
                         <br /><br />

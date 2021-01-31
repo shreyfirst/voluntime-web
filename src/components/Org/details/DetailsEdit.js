@@ -28,7 +28,25 @@ const useStyles = makeStyles({
         padding: 5,
     },
     description: {
-        color: '#343434'
+        color: '#343434',
+        '& table': {
+            width: '100%',
+            borderCollapse: 'collapse',
+            backgroundColor: '#FBFBFB'
+        },
+        '& thead': {
+            backgroundColor: '#e9ecef',
+        },
+        '& th': {
+            padding: 20,
+            wordWrap: 'break-word',
+            border: '1px solid #dee2e6'
+        },
+        '& td': {
+            padding: 20,
+            wordWrap: 'break-word',
+            border: '1px solid #dee2e6'
+        }
     },
     archiveButton: {
         color: '#d73a49',
