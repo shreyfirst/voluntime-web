@@ -6,7 +6,8 @@ import { MailOutline as EmailIcon, Phone as PhoneIcon, Instagram as InstagramIco
 import ConfirmRemove from './ConfirmRemove';
 import { changeRole } from '../../../services/orgs';
 
-const roleNames = { 'owner': 'Owner', 'admin': 'Administrator', 'vol': 'Volunteer' };
+const roleNames = { owner: 'Owner', admin: 'Administrator', vol: 'Volunteer' };
+const roleColors = (theme, role) => ({ owner: theme.palette.primary.main, admin: theme.palette.secondary.main, vol: theme.palette.success.main }[role]);
 
 const useStyles = makeStyles(theme => ({
     container: {
@@ -18,18 +19,13 @@ const useStyles = makeStyles(theme => ({
     containerTable: {
         boxShadow: 'none'
     },
-    header: {
+    header: props => ({
         fontWeight: 'bold',
-    },
-    owner: {
-        color: theme.palette.primary.main
-    },
-    admin: {
-        color: theme.palette.secondary.main
-    },
-    vol: {
-        color: theme.palette.success.main
-    },
+        color: roleColors(theme, props.role)
+    }),
+    editMenuRoleName: props => ({
+        color: roleColors(theme, props.role)
+    }),
     roleDescription: {
         fontSize: 12,
         color: 'rgba(0, 0, 0, 0.64)'
@@ -88,8 +84,15 @@ const useStyles = makeStyles(theme => ({
     image: {
         borderRadius: '50%',
         display: 'inline',
-        border: '1px solid gray'
+        border: '1px solid black',
     },
+    imagePlaceholder: props => ({
+        borderRadius: '50%',
+        display: 'inline-block',
+        border: `1px solid ${roleColors(theme, props.role)}`,
+        minHeight: 75,
+        minWidth: 75,
+    }),
     imageText: {
         paddingLeft: 15,
         paddingTop: 12,
@@ -135,14 +138,14 @@ const EditMenu = props => {
         });
     };
 
-    const classes = useStyles();
+    const classes = useStyles({ role: props.member.role });
     return (
         <>
             {
                 loading &&
                 <CircularProgress color='secondary' size={28} className={classes.loading} />
             }
-            <Button variant='outlined' onClick={handleClick} endIcon={<OpenMenuIcon />} className={classes[props.member.role]}>
+            <Button variant='outlined' onClick={handleClick} endIcon={<OpenMenuIcon />} className={classes.editMenuRoleName}>
                 {roleNames[props.member.role]}
             </Button>
 
@@ -167,19 +170,24 @@ const Member = props => {
     const [error, setError] = useState('');
     const [removeOpen, setRemoveOpen] = useState(false);
 
-    const classes = useStyles();
+    const classes = useStyles({ role: props.member.role });
     return (
         <Card className={`${classes.container} ${props.table ? classes.containerTable : ''}`}>
             <CardContent>
                 <Grid container style={{ paddingBottom: 3 }}>
                     <Grid item>
-                        <img src={member.image?.length > 0 ? member.image : 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNgYAAAAAMAASsJTYQAAAAASUVORK5CYII='} height={75} width={75} alt='' className={classes.image} />
+                        {
+                            member.image?.length > 0
+                                ? <img src={member.image} height={75} width={75} alt='' className={classes.image} />
+                                : <div className={classes.imagePlaceholder}></div>
+                        }
+
                     </Grid>
                     <Grid item className={classes.imageText}>
                         {
                             edit
                                 ? <EditMenu token={props.user.token} member={member} org={props.org} members={props.members} setMembers={props.setMembers} setError={setError} setEdit={setEdit} />
-                                : <div className={`${classes.header} ${classes[member.role]}`}>{roleNames[member.role]}</div>
+                                : <div className={classes.header}>{roleNames[member.role]}</div>
                         }
                         <Typography variant='h6'>{member.firstName} {member.lastName}</Typography>
                     </Grid>
