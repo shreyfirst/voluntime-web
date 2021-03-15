@@ -4,7 +4,7 @@ import { Refresh as RefreshIcon, Search as SearchIcon, GroupAdd as InviteIcon, L
 import { Alert } from '@material-ui/lab';
 import { makeStyles } from '@material-ui/core/styles';
 import { getMembers } from '../../../services/orgs';
-import Fetching from '../Fetching';
+import Fetching from '../../helpers/Fetching';
 import Member from './Member';
 import InviteLink from './InviteLink';
 import TableView from './TableView';

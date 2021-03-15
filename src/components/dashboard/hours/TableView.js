@@ -1,4 +1,4 @@
-import { useState, useCallback, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TableFooter, TablePagination, Typography, IconButton } from '@material-ui/core';
 import { KeyboardArrowRight as RightArrow, KeyboardArrowLeft as LeftArrow, LastPage, FirstPage } from '@material-ui/icons';
 import { makeStyles } from '@material-ui/core/styles';
@@ -42,12 +42,6 @@ const TablePaginationActions = ({ count, page, rowsPerPage, onChangePage }) => {
 
 const TableView = props => {
 
-    const updateLogs = useCallback(data => {
-        var newLogs = [...props.allLogs];
-        newLogs[newLogs.findIndex(l => l.id === data.id)] = ({ ...data, vol: props.members.find(m => m.id === data.userId), ...(data.status !== 'pending' && { approverInfo: props.members.find(m => m.id === data.approver) }) });
-        props.setLogs(newLogs);
-    }, [props.allLogs, props.members]);
-
     const [rowsPerPage, setRowsPerPage] = useState(15);
     const [page, setPage] = useState(0);
 
@@ -66,10 +60,7 @@ const TableView = props => {
                             <TableCell />
                             <TableCell>Status</TableCell>
                             <TableCell>Hours</TableCell>
-                            {props.org.role !== 'vol' &&
-                                <TableCell>Volunteer</TableCell>
-                            }
-                            <TableCell>Approver/Denier</TableCell>
+                            <TableCell>Organization</TableCell>
                             <TableCell>Start</TableCell>
                             <TableCell>End</TableCell>
                         </TableRow>
@@ -79,7 +70,7 @@ const TableView = props => {
                             ? props.logs.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                             : props.logs
                         ).map(log =>
-                            <LogRow key={log.id} log={log} token={props.user.token} role={props.org.role} handleResponse={updateLogs} refresh={props.refresh} />
+                            <LogRow key={log.id} user={props.user} log={log} />
                         )}
                     </TableBody>
                     <TableFooter>

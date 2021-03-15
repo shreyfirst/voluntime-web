@@ -5,7 +5,7 @@ import { Grid, IconButton, CircularProgress, Button, Typography, Menu, MenuItem 
 import { Refresh as RefreshIcon, KeyboardArrowDown as OpenMenuIcon, LibraryAddCheckOutlined as AllIcon, Check as ApprovedIcon, Clear as DeniedIcon, Schedule as PendingIcon, AccountCircleOutlined as MemberIcon } from '@material-ui/icons';
 import { makeStyles } from '@material-ui/core/styles';
 import { Alert } from '@material-ui/lab';
-import Fetching from '../Fetching';
+import Fetching from '../../helpers/Fetching';
 import TableView from './TableView';
 
 const filterStatusNames = { all: 'All Status', approved: 'Approved', pending: 'Pending', denied: 'Denied' };
@@ -142,8 +142,16 @@ const ViewHours = props => {
         let userObj = {};
         props.members.forEach(m => userObj[m.id] = m);
         //splice user info
-        data = data.map(log => ({ vol: userObj[log.userId], ...(log.status !== 'pending' && { approverInfo: userObj[log.approver] }), ...log }));
-        props.setLogs(data);
+        var newData = [];
+        for (var i = 0; i < data.length; ++i) {
+            const log = data[i];
+            if (userObj[log.userId] === undefined) {
+                refresh();
+            } else {
+                newData.push({ vol: userObj[log.userId], ...(log.status !== 'pending' && { approverInfo: userObj[log.approver] }), ...log });
+            }
+        }
+        props.setLogs(newData);
     };
 
     const refreshLogs = () => {

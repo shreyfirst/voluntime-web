@@ -6,7 +6,7 @@ import Account from './account/Account';
 import Overview from './Overview';
 import Orgs from './orgs/Orgs';
 import Events from './Events';
-import Hours from './Hours';
+import Hours from './hours/Hours';
 import Contact from './Contact';
 import VIcon from '../../images/icon.png';
 
@@ -96,13 +96,13 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-const View = ({ view, user, setUser }) => {
+const View = ({ view, user, setUser, logs, setLogs }) => {
     switch (view) {
         case 'account': return <Account user={user} setUser={setUser} />
         case 'overview': return <Overview user={user} />
         case 'orgs': return <Orgs user={user} setUser={setUser} />
         case 'events': return <Events user={user} />
-        case 'hours': return <Hours user={user} />
+        case 'hours': return <Hours user={user} logs={logs} setLogs={setLogs} />
         case 'contact': return <Contact user={user} />
         default: return 'Select a page on the left.'
     }
@@ -126,6 +126,8 @@ const Dashboard = props => {
 
     const [view, setView] = useState('orgs');
     const [open, setOpen] = useState(false);
+
+    const [logs, setLogs] = useState(null);
 
     return (
         <div className={classes.container}>
@@ -175,7 +177,7 @@ const Dashboard = props => {
                     {viewNames[view]}
                 </Typography><br />
                 <div className={classes.view}>
-                    {<View view={view} user={props.user} setUser={props.setUser} />}
+                    <View view={view} user={props.user} setUser={props.setUser} logs={logs} setLogs={setLogs} />
                 </div>
             </div>
         </div>
