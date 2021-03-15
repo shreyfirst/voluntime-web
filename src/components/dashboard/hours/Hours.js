@@ -110,8 +110,8 @@ const FilterMenu = props => {
 };
 
 const Hours = props => {
-    console.log(props.user.orgs);
-    const [loadingRefresh, setLoadingRefresh] = useState(false);
+
+    const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
 
     const [filterStatus, setFilterStatus] = useState('all');
@@ -119,22 +119,16 @@ const Hours = props => {
     const [filteredLogs, setFilteredLogs] = useState(null);
 
     const refresh = () => {
-        setLoadingRefresh(true);
+        setLoading(true);
         getLogsUser({
             token: props.user.token,
         }, (err, data) => {
-            setLoadingRefresh(false);
+            setLoading(false);
             if (err) {
                 setError(data.message);
             } else {
                 setError('');
-                data = data.sort((a, b) => b.start.localeCompare(a.start));
-                //orgs object for fast lookup
-                let orgObj = {};
-                props.user.orgs.forEach(o => orgObj[o.id] = o);
-                //splice org info
-                data = data.map(log => ({ org: orgObj[log.orgId], ...log }));
-                props.setLogs(data);
+                props.setLogs(data); //splicing handled in Dashboard.js
             }
         });
     };
@@ -178,8 +172,8 @@ const Hours = props => {
                         <FilterMenu for='status' filterStatus={filterStatus} setFilterStatus={setFilterStatus} />
                         <FilterMenu for='org' filterOrg={filterOrg} setFilterOrg={setFilterOrg} orgs={props.user.orgs} />
 
-                        <IconButton onClick={refresh} disabled={loadingRefresh} className={classes.actionIconButton}>
-                            {loadingRefresh
+                        <IconButton onClick={refresh} disabled={loading} className={classes.actionIconButton}>
+                            {loading
                                 ? <CircularProgress size={32} color='secondary' />
                                 : <RefreshIcon className={classes.actionIcon} />}
                         </IconButton>

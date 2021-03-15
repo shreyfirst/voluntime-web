@@ -3,7 +3,7 @@ import { Divider, Drawer, List, Typography, ListItem, ListItemText, useMediaQuer
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import { Menu as MenuIcon, CancelOutlined as CloseIcon, AccountCircle as AccountIcon, DashboardOutlined as OverviewIcon, Group as OrgIcon, Event as EventsIcon, ListAlt as HoursIcon, ContactSupportOutlined as ContactIcon } from '@material-ui/icons';
 import Account from './account/Account';
-import Overview from './Overview';
+import Overview from './overview/Overview';
 import Orgs from './orgs/Orgs';
 import Events from './Events';
 import Hours from './hours/Hours';
@@ -96,10 +96,11 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
+
 const View = ({ view, user, setUser, logs, setLogs }) => {
     switch (view) {
         case 'account': return <Account user={user} setUser={setUser} />
-        case 'overview': return <Overview user={user} />
+        case 'overview': return <Overview user={user} logs={logs} setLogs={setLogs} />
         case 'orgs': return <Orgs user={user} setUser={setUser} />
         case 'events': return <Events user={user} />
         case 'hours': return <Hours user={user} logs={logs} setLogs={setLogs} />
@@ -127,7 +128,16 @@ const Dashboard = props => {
     const [view, setView] = useState('orgs');
     const [open, setOpen] = useState(false);
 
-    const [logs, setLogs] = useState(null);
+    const [logs, setLogsState] = useState(null);
+    const setLogs = newLogs => {
+        newLogs = newLogs.sort((a, b) => b.start.localeCompare(a.start));
+        //orgs object for fast lookup
+        let orgObj = {};
+        props.user.orgs.forEach(o => orgObj[o.id] = o);
+        //splice org info
+        newLogs = newLogs.map(log => ({ org: orgObj[log.orgId], ...log }));
+        setLogsState(newLogs);
+    };
 
     return (
         <div className={classes.container}>
