@@ -85,7 +85,7 @@ const TableView = props => {
                     <TableFooter>
                         <TableRow>
                             <TablePagination
-                                rowsPerPageOptions={[1, 15, 25, 50, { label: 'All', value: -1 }]}
+                                rowsPerPageOptions={[15, 25, 50, { label: 'All', value: -1 }]}
                                 colSpan={7}
                                 count={props.logs.length}
                                 rowsPerPage={rowsPerPage}
