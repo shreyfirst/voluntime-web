@@ -59,9 +59,9 @@ const StatusIcon = ({ status, ...props }) => {
     const classes = useStyles();
 
     switch (status) {
-        case 'approved': return <ApprovedIcon className={classes[status]} {...props} />
-        case 'pending': return <PendingIcon className={classes[status]} {...props} />
-        case 'denied': return <DeniedIcon className={classes[status]} {...props} />
+        case 'approved': return <ApprovedIcon className={classes[status]} {...props} />;
+        case 'pending': return <PendingIcon className={classes[status]} {...props} />;
+        case 'denied': return <DeniedIcon className={classes[status]} {...props} />;
     }
 };
 

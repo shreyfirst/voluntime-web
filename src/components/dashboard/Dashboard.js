@@ -99,13 +99,13 @@ const useStyles = makeStyles(theme => ({
 
 const View = ({ view, user, setUser, logs, setLogs }) => {
     switch (view) {
-        case 'account': return <Account user={user} setUser={setUser} />
-        case 'overview': return <Overview user={user} logs={logs} setLogs={setLogs} />
-        case 'orgs': return <Orgs user={user} setUser={setUser} />
-        case 'events': return <Events user={user} />
-        case 'hours': return <Hours user={user} logs={logs} setLogs={setLogs} />
-        case 'contact': return <Contact user={user} />
-        default: return 'Select a page on the left.'
+        case 'account': return <Account user={user} setUser={setUser} />;
+        case 'overview': return <Overview user={user} logs={logs} setLogs={setLogs} />;
+        case 'orgs': return <Orgs user={user} setUser={setUser} />;
+        case 'events': return <Events user={user} />;
+        case 'hours': return <Hours user={user} logs={logs} setLogs={setLogs} />;
+        case 'contact': return <Contact user={user} />;
+        default: return 'Select a page on the left.';
     }
 };
 

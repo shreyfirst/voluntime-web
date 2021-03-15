@@ -9,7 +9,6 @@ var years = [];
 for (var i = 2018; i <= currentYear; ++i) {
     years.push(i);
 }
-console.log(years);
 
 const useStyles = makeStyles({
     container: {
@@ -63,12 +62,14 @@ const Heatmap = props => {
     useEffect(() => {
         var newParsedLogs = [];
 
-        props.logs.forEach((log, index) => {
-            const logDay = log.start.split('T')[0];
-            if (index > 0 && newParsedLogs[newParsedLogs.length - 1].day === logDay) {
-                newParsedLogs[newParsedLogs.length - 1].value += log.hours;
-            } else {
-                newParsedLogs.push({ day: logDay, value: log.hours });
+        props.logs.forEach(log => {
+            if (log.status === 'approved') {
+                const logDay = log.start.split('T')[0];
+                if (newParsedLogs.length > 0 && newParsedLogs[newParsedLogs.length - 1].day === logDay) {
+                    newParsedLogs[newParsedLogs.length - 1].value += log.hours;
+                } else {
+                    newParsedLogs.push({ day: logDay, value: log.hours });
+                }
             }
         });
 
