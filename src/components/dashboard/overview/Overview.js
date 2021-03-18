@@ -52,7 +52,7 @@ const Overview = props => {
                     ? <Fetching />
                     : <>
                         <Grid container className={classes.container}>
-                            <Grid item xs={12} xl={11}>
+                            <Grid item xs={6} md={12} xl={11}>
                                 <Heatmap logs={props.logs} />
                             </Grid>
                         </Grid>

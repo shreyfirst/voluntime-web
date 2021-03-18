@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
-import { Button, Typography, Menu, MenuItem } from '@material-ui/core';
+import { Button, Typography, Menu, MenuItem, useMediaQuery } from '@material-ui/core';
 import { KeyboardArrowDown as OpenMenuIcon } from '@material-ui/icons';
 import { ResponsiveCalendar } from '@nivo/calendar';
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles, useTheme } from '@material-ui/core/styles';
 
 const currentYear = new Date().getFullYear();
 var years = [];
@@ -10,15 +10,20 @@ for (var i = 2018; i <= currentYear; ++i) {
     years.push(i);
 }
 
-const useStyles = makeStyles({
+const useStyles = makeStyles(theme => ({
     container: {
         width: '100%',
-        height: 300
+        [theme.breakpoints.up('md')]: {
+            height: 300,
+        },
+        [theme.breakpoints.down('sm')]: {
+            height: 1200
+        },
     },
     filterMenu: {
         marginLeft: 15,
     },
-});
+}));
 
 const YearMenu = props => {
     const [anchorEl, setAnchorEl] = useState(null);
@@ -59,6 +64,9 @@ const Heatmap = props => {
     const [parsedLogs, setParsedLogs] = useState(null);
     const [year, setYear] = useState(currentYear);
 
+    const theme = useTheme();
+    const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+
     useEffect(() => {
         var newParsedLogs = [];
 
@@ -87,8 +95,9 @@ const Heatmap = props => {
                 parsedLogs !== null &&
                 <ResponsiveCalendar
                     data={parsedLogs}
-                    from={`${year}-02-01`}
-                    to={`${year}-11-31`}
+                    from={`${year}-01-02`}
+                    to={`${year}-12-31`}
+                    direction={isMobile ? 'vertical' : 'horizontal'}
                     emptyColor='#eeeeee'
                     colors={['#9be9a8', '#40c463', '#30a14e', '#216e39']} //github colors
                     margin={{ top: 0, right: 0, bottom: 40, left: 0 }}
