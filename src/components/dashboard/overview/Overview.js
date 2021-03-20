@@ -4,6 +4,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { Alert } from '@material-ui/lab';
 import Fetching from '../../helpers/Fetching';
 import { getLogsUser } from '../../../services/logs';
+import Totals from './Totals';
 import Heatmap from './Heatmap';
 
 const useStyles = makeStyles({
@@ -52,6 +53,9 @@ const Overview = props => {
                     ? <Fetching />
                     : <>
                         <Grid container className={classes.container}>
+                            <Grid item xs={12} md={6} lg={5}>
+                                <Totals logs={props.logs} />
+                            </Grid>
                             <Grid item xs={6} md={12} xl={11}>
                                 <Heatmap logs={props.logs} />
                             </Grid>
