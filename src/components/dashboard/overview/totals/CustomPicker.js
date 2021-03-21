@@ -11,6 +11,7 @@ const CustomPicker = props => {
     const closeDialog = () => props.setOpen(false);
 
     const handleSubmit = () => {
+        props.setName('Custom');
         props.setStart(start);
         props.setEnd(end);
         props.closeMenu();

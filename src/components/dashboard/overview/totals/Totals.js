@@ -22,9 +22,9 @@ const ranges = [
     { name: 'All Time' },
     { name: 'Custom' }];
 
-let savedStart = localStorage.getItem('totals-start');
-let savedEnd = localStorage.getItem('totals-end');
-let savedName = localStorage.getItem('totals-name');
+const savedStart = localStorage.getItem('totals-start');
+const savedEnd = localStorage.getItem('totals-end');
+const savedName = localStorage.getItem('totals-name');
 
 
 const RangeMenu = props => {
@@ -36,18 +36,14 @@ const RangeMenu = props => {
     const close = () => setAnchorEl(null);
 
     const handleSelect = to => {
-        props.setName(to.name);
-        localStorage.setItem('totals-name', to.name);
         if (to.name === 'Custom') {
             //open range picker, close() from there
             setCustomOpen(true);
         } else {
+            props.setName(to.name);
             if (to.name !== 'All Time') {
                 props.setStart(to.start);
                 props.setEnd(to.end);
-                localStorage.setItem('totals-start', to.start);
-                localStorage.setItem('totals-end', to.end);
-                console.log('set localstorage');
             }
             close();
         }
@@ -70,7 +66,7 @@ const RangeMenu = props => {
                     }
                 </Menu>
             }
-            <CustomPicker open={customOpen} setOpen={setCustomOpen} start={props.start} end={props.end} setStart={props.setStart} setEnd={props.setEnd} closeMenu={close} />
+            <CustomPicker open={customOpen} setOpen={setCustomOpen} start={props.start} end={props.end} setStart={props.setStart} setEnd={props.setEnd} setName={props.setName} closeMenu={close} />
         </>
     );
 };
@@ -104,19 +100,23 @@ const Totals = props => {
         return sum;
     };
 
-    useEffect(() => setTotal(calculateTotal()), [start, end, name]);
-
     useEffect(() => {
-        savedStart = localStorage.getItem('totals-start');
-        savedEnd = localStorage.getItem('totals-end');
-        savedName = localStorage.getItem('totals-name');
-    }, []);
+        setTotal(calculateTotal());
+        localStorage.setItem('totals-name', name);
+        localStorage.setItem('totals-start', start);
+        localStorage.setItem('totals-end', end);
+    }, [start, end, name]);
 
     return (
         <Grid container spacing={2} alignItems='center'>
             <Grid item xs={12}>
-                <RangeMenu start={start} end={end} setStart={setStart} setEnd={setEnd} name={name} setName={setName} /><br /><br />
-                {start.format('MMM DD, YYYY')} to {end.format('MMM DD, YYYY')}
+                <RangeMenu start={start} end={end} setStart={setStart} setEnd={setEnd} name={name} setName={setName} /><br />
+                {name !== 'All Time' &&
+                    <>
+                        <br />
+                        {start.format('MMM DD, YYYY')} to {end.format('MMM DD, YYYY')}
+                    </>
+                }
             </Grid>
             <Grid item>
                 <Typography variant='h4'><strong>{total.toFixed(1)} hours</strong></Typography>

@@ -60,11 +60,11 @@ const Overview = props => {
                     ? <Fetching />
                     : <>
                         <Grid container spacing={8} className={classes.container}>
-                            <Grid item xs={12} md={6} lg={5} className={classes.section}>
+                            <Grid item xs={12} sm={10} md={6} lg={5} className={classes.section}>
                             <Typography variant='h6'>Total Hours</Typography><br />
                                 <Totals logs={props.logs} />
                             </Grid>
-                            <Grid item xs={12} className={classes.section}>
+                            <Grid item xs={12} sm={10} md={12} className={classes.section}>
                                 <Typography variant='h6'>Contribution Heatmap</Typography><br />
                                 <Heatmap logs={props.logs} />
                             </Grid>
