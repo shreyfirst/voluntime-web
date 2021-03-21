@@ -115,6 +115,7 @@ const AddHours = props => {
                         keyboardIcon={<Alarm />}
                     /><br /><br />
                     <KeyboardDatePicker
+                        minDate={start}
                         format='ddd, MMM D YYYY'
                         margin='normal'
                         label='End date'

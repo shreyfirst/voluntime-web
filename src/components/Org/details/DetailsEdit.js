@@ -114,7 +114,7 @@ const DetailsEdit = props => {
                 setFileName(null);
                 fileInputRef.current.value = '';
                 setSuccess('Your changes have been saved.');
-                var oldUser = props.user;
+                let oldUser = props.user;
                 oldUser.orgs[props.user.orgs.findIndex(o => o.id === props.org.id)] = data;
                 props.setUser({ ...oldUser, orgs: [...oldUser.orgs] });
             }

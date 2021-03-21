@@ -43,7 +43,7 @@ const TablePaginationActions = ({ count, page, rowsPerPage, onChangePage }) => {
 const TableView = props => {
 
     const updateLogs = useCallback(data => {
-        var newLogs = [...props.allLogs];
+        let newLogs = [...props.allLogs];
         newLogs[newLogs.findIndex(l => l.id === data.id)] = ({ ...data, vol: props.members.find(m => m.id === data.userId), ...(data.status !== 'pending' && { approverInfo: props.members.find(m => m.id === data.approver) }) });
         props.setLogs(newLogs);
     }, [props.allLogs, props.members]);

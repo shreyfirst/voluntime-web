@@ -1,12 +1,12 @@
 import { useState, useEffect } from 'react';
-import { Button, Typography, Menu, MenuItem, useMediaQuery } from '@material-ui/core';
+import { Button, Menu, MenuItem, useMediaQuery } from '@material-ui/core';
 import { KeyboardArrowDown as OpenMenuIcon } from '@material-ui/icons';
 import { ResponsiveCalendar } from '@nivo/calendar';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 
 const currentYear = new Date().getFullYear();
-var years = [];
-for (var i = 2018; i <= currentYear; ++i) {
+let years = [];
+for (let i = 2018; i <= currentYear; ++i) {
     years.push(i);
 }
 
@@ -17,11 +17,8 @@ const useStyles = makeStyles(theme => ({
             height: 300,
         },
         [theme.breakpoints.down('sm')]: {
-            height: 1200
+            height: 1400
         },
-    },
-    filterMenu: {
-        marginLeft: 15,
     },
 }));
 
@@ -37,10 +34,9 @@ const YearMenu = props => {
         close();
     };
 
-    const classes = useStyles();
     return (
         <>
-            <Button variant='outlined' onClick={handleClick} endIcon={<OpenMenuIcon />} className={classes.filterMenu}>
+            <Button variant='outlined' onClick={handleClick} endIcon={<OpenMenuIcon />}>
                 {props.year}
             </Button>
             {
@@ -68,11 +64,11 @@ const Heatmap = props => {
     const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
     useEffect(() => {
-        var newParsedLogs = [];
+        let newParsedLogs = [];
 
         props.logs.forEach(log => {
             if (log.status === 'approved') {
-                const logDay = log.start.split('T')[0];
+                const logDay = log.end.split('T')[0];
                 if (newParsedLogs.length > 0 && newParsedLogs[newParsedLogs.length - 1].day === logDay) {
                     newParsedLogs[newParsedLogs.length - 1].value += log.hours;
                 } else {
@@ -87,10 +83,7 @@ const Heatmap = props => {
     const classes = useStyles();
     return (
         <div className={classes.container}>
-            <Typography component='span'>
-                Year:
-            </Typography>
-            <YearMenu year={year} setYear={setYear} /><br />
+            <YearMenu year={year} setYear={setYear} />
             {
                 parsedLogs !== null &&
                 <ResponsiveCalendar
@@ -100,7 +93,7 @@ const Heatmap = props => {
                     direction={isMobile ? 'vertical' : 'horizontal'}
                     emptyColor='#eeeeee'
                     colors={['#9be9a8', '#40c463', '#30a14e', '#216e39']} //github colors
-                    margin={{ top: 0, right: 0, bottom: 40, left: 0 }}
+                    margin={{ top: -10, right: 0, bottom: 40, left: 0 }}
                     yearSpacing={40}
                     monthBorderColor='#fff'
                     monthBorderWidth={5}

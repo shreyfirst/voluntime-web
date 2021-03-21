@@ -48,7 +48,7 @@ const CreateOrg = props => {
             if (err) {
                 setError(data.message);
             } else {
-                var newUser = props.user;
+                let newUser = props.user;
                 newUser.orgs.push(data);
                 props.setUser(newUser);
                 history.push(`/dashboard/${data.id}`);

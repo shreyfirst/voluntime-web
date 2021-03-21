@@ -39,7 +39,7 @@ const ConfirmRemove = props => {
             } else {
                 props.setOpen(false);
                 //remove from members
-                var newMembers = [...props.members];
+                let newMembers = [...props.members];
                 newMembers[newMembers.findIndex(m => m.id === props.member.id)].roleActive = false;
                 props.setMembers(newMembers);
             }

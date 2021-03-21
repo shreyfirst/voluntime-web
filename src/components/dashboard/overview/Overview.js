@@ -1,15 +1,22 @@
 import { useState, useEffect } from 'react';
-import { Grid } from '@material-ui/core';
+import { Grid, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { Alert } from '@material-ui/lab';
 import Fetching from '../../helpers/Fetching';
 import { getLogsUser } from '../../../services/logs';
-import Totals from './Totals';
+import Totals from './totals/Totals';
 import Heatmap from './Heatmap';
 
 const useStyles = makeStyles({
     container: {
-        width: '95%'
+        width: '95%',
+        marginTop: 0,
+    },
+    section: {
+        borderRadius: 10,
+        boxShadow: 'inset 0 1px 4px 0 rgba(0, 0, 0, 0.15), inset 0 0 6px 0 rgba(0, 0, 0, 0.14)',
+        backgroundColor: '#fff', //fdfdfd
+        marginBottom: 30,
     }
 });
 
@@ -52,11 +59,13 @@ const Overview = props => {
                 props.logs === null
                     ? <Fetching />
                     : <>
-                        <Grid container className={classes.container}>
-                            <Grid item xs={12} md={6} lg={5}>
+                        <Grid container spacing={8} className={classes.container}>
+                            <Grid item xs={12} md={6} lg={5} className={classes.section}>
+                            <Typography variant='h6'>Total Hours</Typography><br />
                                 <Totals logs={props.logs} />
                             </Grid>
-                            <Grid item xs={6} md={12} xl={11}>
+                            <Grid item xs={12} className={classes.section}>
+                                <Typography variant='h6'>Contribution Heatmap</Typography><br />
                                 <Heatmap logs={props.logs} />
                             </Grid>
                         </Grid>

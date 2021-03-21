@@ -118,7 +118,7 @@ const JoinOrg = props => {
                 setError(data.message);
             } else {
                 setError('');
-                var newUser = props.user;
+                let newUser = props.user;
                 newUser.orgs.push(data);
                 props.setUser(newUser);
                 setSuccess('Success! ');

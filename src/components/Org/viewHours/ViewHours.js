@@ -121,7 +121,7 @@ const ViewHours = props => {
                 setError('');
                 const roles = ['owner', 'admin', 'vol'];
                 data = data.sort((a, b) => {
-                    var role1 = roles.indexOf(a.role), role2 = roles.indexOf(b.role);
+                    let role1 = roles.indexOf(a.role), role2 = roles.indexOf(b.role);
                     if (role1 < role2) {
                         return -1;
                     }
@@ -142,8 +142,8 @@ const ViewHours = props => {
         let userObj = {};
         props.members.forEach(m => userObj[m.id] = m);
         //splice user info
-        var newData = [];
-        for (var i = 0; i < data.length; ++i) {
+        let newData = [];
+        for (let i = 0; i < data.length; ++i) {
             const log = data[i];
             if (userObj[log.userId] === undefined) {
                 refresh();

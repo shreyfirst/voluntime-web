@@ -32,7 +32,7 @@ const App = () => {
 
         const loginRoutes = ['dashboard', 'j', ''];
 
-        var routeMatch = false;
+        let routeMatch = false;
         const path = location.pathname.split('/')[1];
         for (const r of loginRoutes) {
             if (path === r) {

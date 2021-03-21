@@ -20,7 +20,7 @@ const useStyles = makeStyles({
 });
 
 const sortOrgs = orgs => {
-    var sorted = { owner: [], admin: [], vol: [], archive: [] };
+    let sorted = { owner: [], admin: [], vol: [], archive: [] };
     for (const org of orgs) {
         if (org.roleActive) {
             sorted[org.active ? org.role : 'archive'].push(org);

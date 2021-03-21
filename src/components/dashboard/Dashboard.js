@@ -1,14 +1,15 @@
-import { memo, useState } from 'react';
+import { memo, useState, lazy, Suspense } from 'react';
 import { Divider, Drawer, List, Typography, ListItem, ListItemText, useMediaQuery, IconButton } from '@material-ui/core';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import { Menu as MenuIcon, CancelOutlined as CloseIcon, AccountCircle as AccountIcon, DashboardOutlined as OverviewIcon, Group as OrgIcon, Event as EventsIcon, ListAlt as HoursIcon, ContactSupportOutlined as ContactIcon } from '@material-ui/icons';
 import Account from './account/Account';
-import Overview from './overview/Overview';
 import Orgs from './orgs/Orgs';
 import Events from './Events';
 import Hours from './hours/Hours';
 import Contact from './Contact';
 import VIcon from '../../images/icon.png';
+import Fetching from '../helpers/Fetching';
+const Overview = lazy(() => import('./overview/Overview'));
 
 const viewNames = { overview: 'Overview', hours: 'Hours', orgs: 'Organizations', account: 'Account', events: 'Events', contact: 'Contact Us' };
 
@@ -120,7 +121,6 @@ const NavButton = props => {
 };
 
 const Dashboard = props => {
-    const classes = useStyles();
 
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
@@ -139,6 +139,7 @@ const Dashboard = props => {
         setLogsState(newLogs);
     };
 
+    const classes = useStyles();
     return (
         <div className={classes.container}>
             {
@@ -186,8 +187,10 @@ const Dashboard = props => {
                 <Typography variant='h3' component='h1'>
                     {viewNames[view]}
                 </Typography><br />
-                <div className={classes.view}>
-                    <View view={view} user={props.user} setUser={props.setUser} logs={logs} setLogs={setLogs} />
+                <div>
+                    <Suspense fallback={<Fetching />}>
+                        <View view={view} user={props.user} setUser={props.setUser} logs={logs} setLogs={setLogs} />
+                    </Suspense>
                 </div>
             </div>
         </div>

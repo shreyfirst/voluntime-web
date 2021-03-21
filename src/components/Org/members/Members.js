@@ -44,7 +44,7 @@ const Members = props => {
                 setError('');
                 const roles = ['owner', 'admin', 'vol'];
                 data = data.sort((a, b) => {
-                    var role1 = roles.indexOf(a.role), role2 = roles.indexOf(b.role);
+                    let role1 = roles.indexOf(a.role), role2 = roles.indexOf(b.role);
                     if (role1 < role2) {
                         return -1;
                     }

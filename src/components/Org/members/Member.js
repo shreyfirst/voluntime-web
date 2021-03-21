@@ -131,7 +131,7 @@ const EditMenu = props => {
             } else {
                 props.setError('');
                 props.setEdit(false);
-                var newMembers = [...props.members];
+                let newMembers = [...props.members];
                 newMembers[newMembers.findIndex(m => m.id === props.member.id)].role = data.role;
                 props.setMembers(newMembers);
             }

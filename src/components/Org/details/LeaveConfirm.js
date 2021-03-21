@@ -40,7 +40,7 @@ const LeaveConfirm = props => {
                 setError(data.message);
             } else {
                 //remove from orgs and redirect to dashboard
-                var newUser = props.user;
+                let newUser = props.user;
                 newUser.orgs.splice(newUser.orgs.findIndex(o => o.id === props.org.id), 1);
                 props.setUser(newUser);
                 history.push('/dashboard');
