@@ -19,36 +19,30 @@ const CustomPicker = props => {
     };
 
     return (
-        <Dialog open={props.open} onClose={closeDialog} fullWidth maxWidth="md">
+        <Dialog open={props.open} onClose={closeDialog} fullWidth maxWidth='md'>
             <DialogTitle>Choose Time Range</DialogTitle>
             <DialogContent>
                 <DialogContentText>
                     Select a start and end date to calculate your total hours.
                 </DialogContentText>
                 <MuiPickersUtilsProvider utils={DayjsUtils}>
-                    <Grid container spacing={3}>
-                        <Grid item xs={12} sm={10} md={8} lg={6} align='center'>
+                    <Grid container spacing={3} justify='space-evenly'>
+                        <Grid item align='center'>
                             <Typography variant='h6'><strong>Start</strong></Typography>
                             <KeyboardDatePicker
-                                format='ddd, MMM D YYYY'
-                                margin='normal'
                                 label='Start date'
                                 value={start}
                                 onChange={setStart}
-                                InputProps={{ readOnly: true }}
                                 variant='static'
                             />
                         </Grid>
-                        <Grid item xs={12} sm={10} md={8} lg={6} align='center'>
+                        <Grid item align='center'>
                             <Typography variant='h6'><strong>End</strong></Typography>
                             <KeyboardDatePicker
                                 minDate={start}
-                                format='ddd, MMM D YYYY'
-                                margin='normal'
                                 label='End date'
                                 value={end}
                                 onChange={setEnd}
-                                InputProps={{ readOnly: true }}
                                 variant='static'
                             />
                         </Grid>

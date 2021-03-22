@@ -38,7 +38,7 @@ const TablePaginationActions = ({ count, page, rowsPerPage, onChangePage }) => {
             </IconButton>
         </div>
     );
-}
+};
 
 const TableView = props => {
 

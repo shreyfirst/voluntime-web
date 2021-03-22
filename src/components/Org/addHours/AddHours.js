@@ -98,7 +98,7 @@ const AddHours = props => {
                 </Typography><br />
                 <MuiPickersUtilsProvider utils={DayjsUtils}>
                     <KeyboardDatePicker
-                        format='ddd, MMM D YYYY'
+                        format='ddd, MMM D, YYYY'
                         margin='normal'
                         label='Start date'
                         value={start}
@@ -116,7 +116,7 @@ const AddHours = props => {
                     /><br /><br />
                     <KeyboardDatePicker
                         minDate={start}
-                        format='ddd, MMM D YYYY'
+                        format='ddd, MMM D, YYYY'
                         margin='normal'
                         label='End date'
                         value={end}
