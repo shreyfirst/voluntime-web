@@ -37,7 +37,6 @@ const StatusIcon = ({ status, ...props }) => {
 const LogRow = props => {
     const log = props.log;
 
-    console.log('rendered');
     const classes = useStyles();
     return (
         <>
