@@ -8,19 +8,24 @@ import Totals from './totals/Totals';
 import Recent from './recent/Recent';
 import Heatmap from './heatmap/Heatmap';
 
-const useStyles = makeStyles({
+const useStyles = makeStyles(theme => ({
     container: {
-        width: '95%',
+        [theme.breakpoints.down('sm')]: {
+            width: '85%'
+        },
+        [theme.breakpoints.up('md')]: {
+            width: '95%',
+        },
         marginTop: 0,
         marginLeft: 0,
     },
     section: {
         borderRadius: 10,
         boxShadow: 'inset 0 1px 4px 0 rgba(0, 0, 0, 0.15), inset 0 0 6px 0 rgba(0, 0, 0, 0.14)',
-        backgroundColor: '#fff', //fdfdfd
+        backgroundColor: '#fff',
         marginBottom: 30,
     }
-});
+}));
 
 const Overview = props => {
 
