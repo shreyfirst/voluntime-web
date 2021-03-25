@@ -6,7 +6,7 @@ import Fetching from '../../helpers/Fetching';
 import { getLogsUser } from '../../../services/logs';
 import Totals from './totals/Totals';
 import Recent from './recent/Recent';
-import Heatmap from './Heatmap';
+import Heatmap from './heatmap/Heatmap';
 
 const useStyles = makeStyles({
     container: {
