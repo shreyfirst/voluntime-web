@@ -64,17 +64,17 @@ const Overview = props => {
                         <Grid container spacing={8} className={classes.container}>
                             <Grid item xs={12}>
                                 <Grid container spacing={8} justify='space-between'>
-                                    <Grid item xs={12} md={6} lg={4} className={classes.section}>
+                                    <Grid item xs={12} lg={4} className={classes.section}>
                                         <Typography variant='h6'>Total Hours</Typography><br />
                                         <Totals logs={props.logs} />
                                     </Grid>
-                                    <Grid item xs={12} md={12} lg={7} className={classes.section}>
+                                    <Grid item xs={12} lg={7} className={classes.section}>
                                         <Typography variant='h6'>Recent Logs</Typography><br />
                                         <Recent logs={props.logs} />
                                     </Grid>
                                 </Grid>
                             </Grid>
-                            <Grid item xs={12} md={12} className={classes.section}>
+                            <Grid item xs={12} className={classes.section}>
                                 <Typography variant='h6'>Contribution Heatmap</Typography><br />
                                 <Heatmap logs={props.logs} />
                             </Grid>
