@@ -130,7 +130,7 @@ const Dashboard = props => {
 
     const [logs, setLogsState] = useState(null);
     const setLogs = newLogs => {
-        newLogs = newLogs.sort((a, b) => b.start.localeCompare(a.start));
+        newLogs = newLogs.sort((a, b) => b.end.localeCompare(a.end));
         //orgs object for fast lookup
         let orgObj = {};
         props.user.orgs.forEach(o => orgObj[o.id] = o);

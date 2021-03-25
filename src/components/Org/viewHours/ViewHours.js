@@ -137,7 +137,7 @@ const ViewHours = props => {
 
     const handleLogsResponse = data => {
         setError('');
-        data = data.sort((a, b) => b.start.localeCompare(a.start));
+        data = data.sort((a, b) => b.end.localeCompare(a.end));
         //user object for fast lookup
         let userObj = {};
         props.members.forEach(m => userObj[m.id] = m);
