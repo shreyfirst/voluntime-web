@@ -102,7 +102,7 @@ const Heatmap = props => {
                     to={`${year}-12-31`}
                     direction={isMobile ? 'vertical' : 'horizontal'}
                     emptyColor='#eeeeee'
-                    colors={colorblindSelected ? ['#6983ec', '#f1f022', '#ec6969'] : ['#9be9a8', '#40c463', '#30a14e', '#216e39']} //github colors
+                    colors={colorblindSelected ? ['#FC766A', '#184A45', '#BOB8B4'] : ['#9be9a8', '#40c463', '#30a14e', '#216e39']} //github colors
                     margin={{ top: -10, right: 0, bottom: 0, left: 0 }}
                     yearSpacing={40}
                     monthBorderColor='#fff'
