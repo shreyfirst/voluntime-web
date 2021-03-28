@@ -5,6 +5,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import dayjs from 'dayjs';
 
 const delimeters = { comma: ',', tab: '\t', semicolon: ';' };
+const extensions = { comma: 'csv', tab: 'tsv', semicolon: 'txt' };
 
 const useStyles = makeStyles({
     textarea: {
@@ -19,19 +20,6 @@ const DelimeterIcon = ({ del }) => {
         case 'tab': return <TabIcon />;
         case 'semicolon': return ';';
     }
-};
-
-const generateCsv = (logs, delimeter) => {
-    const del = delimeters[delimeter];
-    let str = `Hours${del}Organization${del}Start Time${del}End Time`;
-    logs.forEach(log => {
-        if (log.status === 'approved') {
-            const start = dayjs(log.start).format('YYYY-MM-DD HH:MM');
-            const end = dayjs(log.end).format('YYYY-MM-DD HH:MM');
-            str += `\n${log.hours}${del}${log.org.name.replaceAll(del, '')}${del}${start}${del}${end}`;
-        }
-    });
-    return str;
 };
 
 const DelimeterMenu = props => {
@@ -73,16 +61,30 @@ const Export = props => {
     const close = () => props.setOpen(false);
 
     const download = () => {
+        const extension = extensions[delimeter];
         const encodedUri = encodeURI(csv);
         const link = document.createElement('a');
-        link.setAttribute('href', 'data:attachment/csv,' + encodedUri);
-        link.setAttribute('download', 'hour-logs.csv');
+        link.setAttribute('href', `data:text/${delimeter === 'semicolon' ? 'plain' : extension},${encodedUri}`);
+        link.setAttribute('download', `hour-logs.${extension}`);
         document.body.appendChild(link); // Required for FF
         link.click();
         link.remove();
     };
 
-    useEffect(() => setCsv(generateCsv(props.logs, delimeter)), [delimeter, props.logs]);
+    const generateCsv = () => {
+        const del = delimeters[delimeter];
+        let str = `Hours${del}Organization${del}Start Time${del}End Time`;
+        props.logs.forEach(log => {
+            if (log.status === 'approved') {
+                const start = dayjs(log.start).format('YYYY-MM-DD HH:MM');
+                const end = dayjs(log.end).format('YYYY-MM-DD HH:MM');
+                str += `\n${log.hours}${del}${log.org.name.replaceAll(del, '')}${del}${start}${del}${end}`;
+            }
+        });
+        return str;
+    };
+
+    useEffect(() => setCsv(generateCsv()), [delimeter, props.logs]);
 
     const classes = useStyles();
     return (
