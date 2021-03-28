@@ -8,14 +8,9 @@ import Totals from './totals/Totals';
 import Recent from './recent/Recent';
 import Heatmap from './heatmap/Heatmap';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles({
     container: {
-        [theme.breakpoints.down('sm')]: {
-            width: '85%'
-        },
-        [theme.breakpoints.up('md')]: {
-            width: '95%',
-        },
+        width: '95%',
         marginTop: 0,
         marginLeft: 0,
     },
@@ -25,7 +20,7 @@ const useStyles = makeStyles(theme => ({
         backgroundColor: '#fff',
         marginBottom: 30,
     }
-}));
+});
 
 const Overview = props => {
 

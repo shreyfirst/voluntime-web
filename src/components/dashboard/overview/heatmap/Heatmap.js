@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
-import { Button, Menu, MenuItem, useMediaQuery, Switch } from '@material-ui/core';
-import { KeyboardArrowDown as OpenMenuIcon, Check as CheckIcon } from '@material-ui/icons';
+import { Button, Menu, MenuItem, useMediaQuery } from '@material-ui/core';
+import { KeyboardArrowDown as OpenMenuIcon } from '@material-ui/icons';
 import { ResponsiveCalendar } from '@nivo/calendar';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 
@@ -19,15 +19,6 @@ const useStyles = makeStyles(theme => ({
         [theme.breakpoints.down('sm')]: {
             height: 1400
         },
-    },
-    colorblind: props => ({
-        display: 'block',
-        float: 'right',
-        marginTop: props.isMobile ? 0 : -30,
-    }),
-    switch: {
-        marginLeft: 10,
-        marginTop: -3
     }
 }));
 
@@ -68,7 +59,6 @@ const YearMenu = props => {
 const Heatmap = props => {
     const [parsedLogs, setParsedLogs] = useState(null);
     const [year, setYear] = useState(currentYear);
-    const [colorblindSelected, setColorblindSelected] = useState(false);
 
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
@@ -102,7 +92,7 @@ const Heatmap = props => {
                     to={`${year}-12-31`}
                     direction={isMobile ? 'vertical' : 'horizontal'}
                     emptyColor='#eeeeee'
-                    colors={colorblindSelected ? ['#FC766A', '#184A45', '#BOB8B4'] : ['#9be9a8', '#40c463', '#30a14e', '#216e39']} //github colors
+                    colors={['#9be9a8', '#40c463', '#30a14e', '#216e39']} //github colors
                     margin={{ top: -10, right: 0, bottom: 0, left: 0 }}
                     yearSpacing={40}
                     monthBorderColor='#fff'
@@ -111,17 +101,6 @@ const Heatmap = props => {
                     dayBorderColor='#ffffff'
                 />
             }
-            <span className={classes.colorblind}>
-                <strong>Colorblind Mode</strong>
-                <Switch
-                    color='primary'
-                    checked={colorblindSelected}
-                    onChange={() => setColorblindSelected(!colorblindSelected)}
-                    className={classes.switch}
-                >
-                    <CheckIcon />
-                </Switch>
-            </span>
         </div>
     );
 };

@@ -54,7 +54,7 @@ const CustomPicker = props => {
                     Cancel
                 </Button>
                 <Button variant='contained' onClick={handleSubmit} color='primary'>
-                    OK
+                    Done
                 </Button>
             </DialogActions>
         </Dialog>

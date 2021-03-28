@@ -49,7 +49,7 @@ const useStyles = makeStyles(theme => ({
         paddingBottom: 30,
         [theme.breakpoints.down('sm')]: {
             marginLeft: 40,
-            width: '100%',
+            width: '90%',
             paddingLeft: '1%',
         },
     },

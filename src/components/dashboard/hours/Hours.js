@@ -1,11 +1,12 @@
 import { useState, useEffect } from 'react';
 import { getLogsUser } from '../../../services/logs';
 import { Grid, IconButton, CircularProgress, Button, Typography, Menu, MenuItem } from '@material-ui/core';
-import { Refresh as RefreshIcon, KeyboardArrowDown as OpenMenuIcon, Group as OrgIcon, LibraryAddCheckOutlined as AllIcon, Check as ApprovedIcon, Clear as DeniedIcon, Schedule as PendingIcon } from '@material-ui/icons';
+import { Publish, Refresh as RefreshIcon, KeyboardArrowDown as OpenMenuIcon, Group as OrgIcon, LibraryAddCheckOutlined as AllIcon, Check as ApprovedIcon, Clear as DeniedIcon, Schedule as PendingIcon } from '@material-ui/icons';
 import { makeStyles } from '@material-ui/core/styles';
 import { Alert } from '@material-ui/lab';
 import Fetching from '../../helpers/Fetching';
 import TableView from './TableView';
+import Export from './Export';
 
 const filterStatusNames = { all: 'All Status', approved: 'Approved', pending: 'Pending', denied: 'Denied' };
 
@@ -118,6 +119,8 @@ const Hours = props => {
     const [filterOrg, setFilterOrg] = useState('all');
     const [filteredLogs, setFilteredLogs] = useState(null);
 
+    const [exportOpen, setExportOpen] = useState(false);
+
     const refresh = () => {
         setLoading(true);
         getLogsUser({
@@ -171,6 +174,7 @@ const Hours = props => {
                         </Typography>
                         <FilterMenu for='status' filterStatus={filterStatus} setFilterStatus={setFilterStatus} />
                         <FilterMenu for='org' filterOrg={filterOrg} setFilterOrg={setFilterOrg} orgs={props.user.orgs} />
+                        <Button variant='outlined' startIcon={<Publish className={classes.owner} />} onClick={() => setExportOpen(true)} className={classes.filterMenu}>Export</Button>
 
                         <IconButton onClick={refresh} disabled={loading} className={classes.actionIconButton}>
                             {loading
@@ -183,6 +187,10 @@ const Hours = props => {
                                 <TableView user={props.user} logs={filteredLogs === null ? props.logs : filteredLogs} />
                             </Grid>
                         </Grid>
+                        {
+                            exportOpen &&
+                            <Export open={exportOpen} setOpen={setExportOpen} logs={props.logs} />
+                        }
                     </>
             }
         </>
