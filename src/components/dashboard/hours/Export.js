@@ -84,7 +84,10 @@ const Export = props => {
         return str;
     };
 
-    useEffect(() => setCsv(generateCsv()), [delimeter, props.logs]);
+    useEffect(() => {
+        setCsv(generateCsv());
+        setCopied(false);
+    }, [delimeter, props.logs]);
 
     const classes = useStyles();
     return (
