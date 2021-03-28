@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { getMembers } from '../../../services/orgs';
 import { getLogsOrg, getLogsUserOrg } from '../../../services/logs';
-import { Grid, IconButton, CircularProgress, Button, Typography, Menu, MenuItem } from '@material-ui/core';
+import { Grid, Hidden, IconButton, CircularProgress, Button, Typography, Menu, MenuItem } from '@material-ui/core';
 import { Refresh as RefreshIcon, KeyboardArrowDown as OpenMenuIcon, LibraryAddCheckOutlined as AllIcon, Check as ApprovedIcon, Clear as DeniedIcon, Schedule as PendingIcon, AccountCircleOutlined as MemberIcon } from '@material-ui/icons';
 import { makeStyles } from '@material-ui/core/styles';
 import { Alert } from '@material-ui/lab';
@@ -221,9 +221,11 @@ const ViewHours = props => {
                 props.logs === null
                     ? <Fetching />
                     : <>
-                        <Typography component='span'>
-                            Filter By:
-                        </Typography>
+                        <Hidden smDown>
+                            <Typography component='span'>
+                                Filter By:
+                            </Typography>
+                        </Hidden>
                         <FilterMenu for='status' filterStatus={filterStatus} setFilterStatus={setFilterStatus} />
                         {props.org.role !== 'vol' && <FilterMenu for='vol' filterVol={filterVol} setFilterVol={setFilterVol} members={props.members} />}
 

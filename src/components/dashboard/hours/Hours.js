@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { getLogsUser } from '../../../services/logs';
-import { Grid, IconButton, CircularProgress, Button, Typography, Menu, MenuItem } from '@material-ui/core';
+import { Grid, Hidden, IconButton, CircularProgress, Button, Typography, Menu, MenuItem } from '@material-ui/core';
 import { Publish, Refresh as RefreshIcon, KeyboardArrowDown as OpenMenuIcon, Group as OrgIcon, LibraryAddCheckOutlined as AllIcon, Check as ApprovedIcon, Clear as DeniedIcon, Schedule as PendingIcon } from '@material-ui/icons';
 import { makeStyles } from '@material-ui/core/styles';
 import { Alert } from '@material-ui/lab';
@@ -169,9 +169,12 @@ const Hours = props => {
                 props.logs === null
                     ? <Fetching />
                     : <>
-                        <Typography component='span'>
-                            Filter By:
-                        </Typography>
+                        <Hidden smDown>
+                            <Typography component='span'>
+                                Filter By:
+                            </Typography>
+                        </Hidden>
+
                         <FilterMenu for='status' filterStatus={filterStatus} setFilterStatus={setFilterStatus} />
                         <FilterMenu for='org' filterOrg={filterOrg} setFilterOrg={setFilterOrg} orgs={props.user.orgs} />
                         <Button variant='outlined' startIcon={<Publish className={classes.owner} />} onClick={() => setExportOpen(true)} className={classes.filterMenu}>Export</Button>
