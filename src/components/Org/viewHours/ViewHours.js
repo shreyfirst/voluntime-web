@@ -2,11 +2,12 @@ import { useState, useEffect, useCallback } from 'react';
 import { getMembers } from '../../../services/orgs';
 import { getLogsOrg, getLogsUserOrg } from '../../../services/logs';
 import { Grid, Hidden, IconButton, CircularProgress, Button, Typography, Menu, MenuItem } from '@material-ui/core';
-import { Refresh as RefreshIcon, KeyboardArrowDown as OpenMenuIcon, LibraryAddCheckOutlined as AllIcon, Check as ApprovedIcon, Clear as DeniedIcon, Schedule as PendingIcon, AccountCircleOutlined as MemberIcon } from '@material-ui/icons';
+import { Publish, Refresh as RefreshIcon, KeyboardArrowDown as OpenMenuIcon, LibraryAddCheckOutlined as AllIcon, Check as ApprovedIcon, Clear as DeniedIcon, Schedule as PendingIcon, AccountCircleOutlined as MemberIcon } from '@material-ui/icons';
 import { makeStyles } from '@material-ui/core/styles';
 import { Alert } from '@material-ui/lab';
 import Fetching from '../../helpers/Fetching';
 import TableView from './TableView';
+import Export from './Export';
 
 const filterStatusNames = { all: 'All Status', approved: 'Approved', pending: 'Pending', denied: 'Denied' };
 
@@ -108,6 +109,8 @@ const ViewHours = props => {
     const [filterStatus, setFilterStatus] = useState('all');
     const [filterVol, setFilterVol] = useState('all');
     const [filteredLogs, setFilteredLogs] = useState(null);
+
+    const [exportOpen, setExportOpen] = useState(false);
 
     const refresh = useCallback(() => {
         setLoadingRefresh(true);
@@ -229,6 +232,8 @@ const ViewHours = props => {
                         <FilterMenu for='status' filterStatus={filterStatus} setFilterStatus={setFilterStatus} />
                         {props.org.role !== 'vol' && <FilterMenu for='vol' filterVol={filterVol} setFilterVol={setFilterVol} members={props.members} />}
 
+                        <Button variant='outlined' startIcon={<Publish className={classes.owner} />} onClick={() => setExportOpen(true)} className={classes.filterMenu}>Export</Button>
+
                         <IconButton onClick={refresh} disabled={loadingRefresh} className={classes.actionIconButton}>
                             {loadingRefresh
                                 ? <CircularProgress size={32} color='secondary' />
@@ -240,6 +245,10 @@ const ViewHours = props => {
                                 <TableView allLogs={props.logs} logs={filteredLogs === null ? props.logs : filteredLogs} setLogs={props.setLogs} user={props.user} org={props.org} members={props.members} refresh={refresh} />
                             </Grid>
                         </Grid>
+                        {
+                            exportOpen &&
+                            <Export open={exportOpen} setOpen={setExportOpen} logs={props.logs} org={props.org} userId={props.user.id} />
+                        }
                     </>
             }
         </>

@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Grid, Menu, MenuItem, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@material-ui/core';
+import { Grid, Menu, MenuItem, Switch, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@material-ui/core';
 import { Assignment as CopyIcon, Done as DoneIcon, GetApp as DownloadIcon, KeyboardArrowDown as OpenMenuIcon, KeyboardTab as TabIcon } from '@material-ui/icons';
 import { makeStyles } from '@material-ui/core/styles';
 import dayjs from 'dayjs';
@@ -11,6 +11,9 @@ const useStyles = makeStyles({
     textarea: {
         width: '100%',
         minHeight: 250
+    },
+    switch: {
+        marginTop: -2
     }
 });
 
@@ -57,6 +60,7 @@ const Export = props => {
     const [csv, setCsv] = useState('');
     const [copied, setCopied] = useState(false);
     const [delimeter, setDelimeter] = useState('comma');
+    const [allMembers, setAllMembers] = useState(false);
 
     const close = () => props.setOpen(false);
 
@@ -73,12 +77,12 @@ const Export = props => {
 
     const generateCsv = () => {
         const del = delimeters[delimeter];
-        let str = `Hours${del}Organization${del}Start Time${del}End Time`;
+        let str = `Hours${del}Approver${del}Start Time${del}End Time${del}Activity Description`;
         props.logs.forEach(log => {
-            if (log.status === 'approved') {
+            if (log.status === 'approved' && (allMembers || log.userId === props.userId)) {
                 const start = dayjs(log.start).format('YYYY-MM-DD HH:MM');
                 const end = dayjs(log.end).format('YYYY-MM-DD HH:MM');
-                str += `\n${log.hours}${del}${log.org.name.replaceAll(del, '')}${del}${start}${del}${end}`;
+                str += `\n${log.hours}${del}${log.approverInfo.firstName.replaceAll(del, '')} ${log.approverInfo.lastName.replaceAll(del, '')}${del}${start}${del}${end}${del}${log.description}`;
             }
         });
         return str;
@@ -87,7 +91,7 @@ const Export = props => {
     useEffect(() => {
         setCsv(generateCsv());
         setCopied(false);
-    }, [delimeter, props.logs]);
+    }, [delimeter, allMembers, props.logs]);
 
     const classes = useStyles();
     return (
@@ -95,9 +99,9 @@ const Export = props => {
             <DialogTitle>Export Hours</DialogTitle>
             <DialogContent>
                 <DialogContentText>
-                    These are your hour logs in a {delimeter}-separated format, which can be imported into most spreadsheet programs. The logs are sorted with most recent hours first.
+                    These are your hour logs for <strong>{props.org.name}</strong> in a {delimeter}-separated format, which can be imported into most spreadsheet programs. The logs are sorted with most recent hours first.
                 </DialogContentText>
-                <Grid container justify='center' spacing={2}>
+                <Grid container justify='center' spacing={1}>
                     <Grid container item xs={12} justify='center' direction='vertical' spacing={3}>
                         <Grid item>
                             <DelimeterMenu delimeter={delimeter} setDelimeter={setDelimeter} />
@@ -116,6 +120,18 @@ const Export = props => {
                             </Button>
                         </Grid>
                     </Grid>
+                    {
+                        props.org.role !== 'vol' &&
+                        <Grid item xs={12} align='center'>
+                            Show All Members
+                            <Switch
+                                checked={allMembers}
+                                onChange={() => setAllMembers(!allMembers)}
+                                color='primary'
+                                className={classes.switch}
+                            />
+                        </Grid>
+                    }
                     <Grid item xs={11} align='center'>
                         <textarea readOnly value={csv} className={classes.textarea} />
                     </Grid>
