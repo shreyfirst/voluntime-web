@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Typography, TextField, Button } from '@material-ui/core';
+import { Grid, Typography, TextField, Button } from '@material-ui/core';
 import { Alert } from '@material-ui/lab';
 import { makeStyles } from '@material-ui/core/styles';
 import { ArrowBack, Add as AddIcon } from '@material-ui/icons';
@@ -9,9 +9,6 @@ import { useHistory } from 'react-router-dom';
 
 
 const useStyles = makeStyles({
-    container: {
-        width: '50%'
-    },
     textField: {
         width: '100%',
         maxWidth: '32em'
@@ -64,25 +61,27 @@ const CreateOrg = props => {
 
     const classes = useStyles();
     return (
-        <div className={classes.container}>
-            <Button variant='outlined' startIcon={<ArrowBack />} onClick={() => props.setView('orgs')}>Back</Button>
-            <br /><br />
-            <Typography variant='h6'>Create Organization</Typography><br />
-            <Typography variant='body2'>
-                Create an organization to start logging hours for your volunteers.<br />
+        <Grid container>
+            <Grid item xs={9} sm={8} md={6} lg={5}>
+                <Button variant='outlined' startIcon={<ArrowBack />} onClick={() => props.setView('orgs')}>Back</Button>
+                <br /><br />
+                <Typography variant='h6'>Create Organization</Typography><br />
+                <Typography variant='body2'>
+                    Create an organization to start logging hours for your volunteers.<br />
                 You may add additional information to your organization by editing it after it's created.
             </Typography><br />
-            <TextField onKeyDown={keyPress} onChange={e => setName(e.target.value)} variant='outlined' label='Organization Name' required className={classes.textField} /><br /><br />
-            <TextField onKeyDown={keyPress} onChange={e => setDescription(e.target.value)} variant='outlined' label='Description' multiline rows={4} className={classes.textField} /><br /><br />
-            <Button variant='contained' color='primary' disabled={loading} onClick={handleSubmit} startIcon={loading ? <CircularProgressButton /> : <AddIcon />}>
-                Create Organization
+                <TextField onKeyDown={keyPress} onChange={e => setName(e.target.value)} variant='outlined' label='Organization Name' required className={classes.textField} /><br /><br />
+                <TextField onKeyDown={keyPress} onChange={e => setDescription(e.target.value)} variant='outlined' label='Description' multiline rows={4} className={classes.textField} /><br /><br />
+                <Button variant='contained' color='primary' disabled={loading} onClick={handleSubmit} startIcon={loading ? <CircularProgressButton /> : <AddIcon />}>
+                    Create Organization
             </Button>
-            <br />
-            {
-                error.length > 0 &&
-                <Alert severity='error'>{error}</Alert>
-            }
-        </div>
+                <br />
+                {
+                    error.length > 0 &&
+                    <Alert severity='error'>{error}</Alert>
+                }
+            </Grid>
+        </Grid>
     );
 };
 

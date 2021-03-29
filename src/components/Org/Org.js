@@ -115,14 +115,14 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-const View = ({ view, user, setUser, org, logs, members, setMembers, setLogs }) => {
+const View = ({ view, user, setUser, org, logs, members, setMembers, setLogs, events, setEvents }) => {
     switch (view) {
         case 'details': return <Details user={user} setUser={setUser} org={org} />;
         case 'metrics': return <Metrics user={user} />;
         case 'members': return <Members user={user} members={members} setMembers={setMembers} org={org} />;
         case 'add': return <AddHours user={user} org={org} />;
         case 'hours': return <ViewHours user={user} members={members} setMembers={setMembers} logs={logs} setLogs={setLogs} org={org} />;
-        case 'events': return <Events user={user} />;
+        case 'events': return <Events user={user} org={org} events={events} setEvents={setEvents} />;
         default: return 'Select a page on the left.';
     }
 };
@@ -196,6 +196,7 @@ const Org = props => {
 
     const [members, setMembers] = useState(null);
     const [logs, setLogs] = useState(null);
+    const [events, setEvents] = useState([]);
 
     useEffect(() => {
         const o = getOrg();
@@ -249,7 +250,7 @@ const Org = props => {
                                 {viewNames[view]}
                             </Typography><br />
                             <div className={classes.view}>
-                                <View view={view} user={props.user} setUser={props.setUser} org={org} members={members} logs={logs} setMembers={setMembers} setLogs={setLogs} />
+                                <View view={view} user={props.user} setUser={props.setUser} org={org} members={members} logs={logs} setMembers={setMembers} setLogs={setLogs} events={events} setEvents={setEvents} />
                             </div>
                         </div>
                     </div>
