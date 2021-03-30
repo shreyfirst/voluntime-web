@@ -77,7 +77,7 @@ const Event = props => {
                     {start.format('ddd, MMM D, YYYY [at] hh:mm A')} &ndash;<br />
                     {end.format('ddd, MMM D, YYYY [at] hh:mm A')}
                 </IconAlign><br />
-                <IconAlign icon={<HoursIcon />}>{event.hours} volunteer hour{event.hours !== 1 && 's'}</IconAlign>
+                <IconAlign icon={<HoursIcon />}><strong>{event.hours}</strong> volunteer hour{event.hours !== 1 && 's'}</IconAlign>
                 {
                     event.location.length > 0 &&
                     <><br /><IconAlign icon={<LocationIcon />}>{event.location}</IconAlign></>
@@ -94,7 +94,7 @@ const Event = props => {
                 {
                     props.role !== 'vol' &&
                     <span className={classes.editButtonContainer}>
-                        <IconButton><EditIcon /></IconButton>
+                        <IconButton onClick={() => props.setEditEvent(event)}><EditIcon /></IconButton>
                     </span>
                 }
             </CardContent>

@@ -4,4 +4,6 @@ const createEvent = (info, callback) => post('/events', info, callback);
 
 const getEventsOrg = (info, callback) => post('/events/getOrg', info, callback);
 
-export { createEvent, getEventsOrg };
+const editEvent = (info, callback) => post('/events/edit', info, callback);
+
+export { createEvent, getEventsOrg, editEvent };

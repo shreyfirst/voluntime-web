@@ -9,6 +9,7 @@ const useStyles = makeStyles(theme => ({
         '& > *': {
             borderBottom: 'unset',
         },
+        contain: 'paint'
     },
     approved: {
         color: theme.palette.success.main,

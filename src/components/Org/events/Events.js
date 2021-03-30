@@ -6,6 +6,7 @@ import { Alert } from '@material-ui/lab';
 import Fetching from '../../helpers/Fetching';
 import EventList from './EventList';
 import CreateEvent from './CreateEvent';
+import EditEvent from './EditEvent';
 import { getEventsOrg } from '../../../services/events';
 
 const useStyles = makeStyles({
@@ -26,7 +27,8 @@ const useStyles = makeStyles({
 });
 
 const Events = props => {
-    const [create, setCreate] = useState(false);
+    const [view, setView] = useState('events');
+    const [editEvent, setEditEvent] = useState(null);
     const [searchValue, setSearchValue] = useState('');
     const [error, setError] = useState('');
     const [loadingRefresh, setLoadingRefresh] = useState(false);
@@ -68,16 +70,16 @@ const Events = props => {
     useEffect(handleSearch, [searchValue, props.events]);
 
     const classes = useStyles({ role: props.org.role });
-    return (
-        create
-            ? <CreateEvent user={props.user} org={props.org} events={props.events} setEvents={props.setEvents} goBack={() => setCreate(false)} />
-            :
+    switch (view) {
+        case 'create': return <CreateEvent user={props.user} org={props.org} events={props.events} setEvents={props.setEvents} goBack={() => setView('events')} />;
+        case 'edit': return <EditEvent user={props.user} org={props.org} events={props.events} setEvents={props.setEvents} event={editEvent} goBack={() => setView('events')} />;
+        case 'events': return (
             <>
                 <Grid container>
                     <Grid item xs={12} sm={9} md={7} lg={6} className={classes.container}>
                         {
                             props.org.role !== 'vol' &&
-                            <Button variant='outlined' startIcon={<AddIcon />} onClick={() => setCreate(true)}>Create Event</Button>
+                            <Button variant='outlined' startIcon={<AddIcon />} onClick={() => setView('create')}>Create Event</Button>
                         }
                         <span className={classes.refresh}>
                             <IconButton onClick={handleRefresh} disabled={loadingRefresh}>
@@ -113,13 +115,14 @@ const Events = props => {
                         {props.events === null
                             ? <Fetching />
                             : <>
-                                <EventList events={searchValue.length < 1 || results === null ? props.events : results} role={props.org.role} />
+                                <EventList events={searchValue.length < 1 || results === null ? props.events : results} setEditEvent={event => { setView('edit'); setEditEvent(event); }} role={props.org.role} />
                                 <br />
                             </>}
                     </Grid>
                 </Grid>
             </>
-    );
+        );
+    }
 };
 
 export default Events;
