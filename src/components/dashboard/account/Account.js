@@ -101,7 +101,7 @@ const Account = props => {
     const classes = useStyles();
     return (
         <Grid container onDragOver={cancelEvent} onDrop={cancelEvent} className={classes.container}>
-            <Grid item xs={9} sm={8} md={6} lg={5}>
+            <Grid item xs={11} sm={9} md={7} lg={5}>
                 View and edit your Voluntime account here.
                 <br /><br />
                 <Typography variant='h6'>
