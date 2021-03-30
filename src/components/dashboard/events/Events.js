@@ -1,26 +1,25 @@
 import { useState, useEffect } from 'react';
-import { Grid, IconButton, Button, CircularProgress, TextField, InputAdornment } from '@material-ui/core';
+import { Grid, IconButton, CircularProgress, TextField, InputAdornment } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import { Add as AddIcon, Refresh as RefreshIcon, Search as SearchIcon } from '@material-ui/icons';
+import { Refresh as RefreshIcon, Search as SearchIcon } from '@material-ui/icons';
 import { Alert } from '@material-ui/lab';
 import Fetching from '../../helpers/Fetching';
 import EventList from './EventList';
-import CreateEvent from './CreateEvent';
 import EditEvent from './EditEvent';
-import { getEventsOrg } from '../../../services/events';
+import { getEventsUser } from '../../../services/events';
 
 const useStyles = makeStyles({
     container: {
         position: 'relative'
     },
-    refresh: props => ({
+    refresh: {
         position: 'absolute',
         right: 0,
-        top: props.role === 'vol' ? 0 : -6,
-    }),
-    search: props => ({
-        width: props.role === 'vol' ? '90%' : '100%'
-    }),
+        top: 0
+    },
+    search: {
+        width: '90%'
+    },
     actionIcon: {
         fontSize: 32,
     },
@@ -35,15 +34,13 @@ const Events = props => {
     const [results, setResults] = useState(null);
 
     const refresh = () => {
-        getEventsOrg({
-            token: props.user.token,
-            id: props.org.id
+        getEventsUser({
+            token: props.user.token
         }, (err, data) => {
             if (err) {
                 setError(data.message);
             } else {
                 setError('');
-                data = data.sort((a, b) => b.start.localeCompare(a.start));
                 props.setEvents(data);
                 setLoadingRefresh(false);
             }
@@ -64,24 +61,19 @@ const Events = props => {
     const handleSearch = () => {
         if (searchValue.length > 0) {
             const search = searchValue.replace(/\s+/g, '').toLowerCase();
-            setResults(props.events.filter(e => e.title.replace(/\s+/g, '').toLowerCase().includes(search)));
+            setResults(props.events.filter(e => e.title.replace(/\s+/g, '').toLowerCase().includes(search) || e.org.name.replace(/\s+/g, '').toLowerCase().includes(search)));
         }
     };
 
     useEffect(handleSearch, [searchValue, props.events]);
 
-    const classes = useStyles({ role: props.org.role });
-    switch (view) {
-        case 'create': return <CreateEvent user={props.user} orgId={props.org.id} events={props.events} setEvents={props.setEvents} goBack={() => setView('events')} />;
-        case 'edit': return <EditEvent user={props.user} orgId={props.org.id} events={props.events} setEvents={props.setEvents} event={editEvent} goBack={() => setView('events')} />;
-        case 'events': return (
-            <>
+    const classes = useStyles();
+    return (
+        view === 'edit'
+            ? <EditEvent user={props.user} events={props.events} setEvents={props.setEvents} event={editEvent} goBack={() => setView('events')} />
+            : <>
                 <Grid container>
                     <Grid item xs={12} sm={9} md={7} lg={6} className={classes.container}>
-                        {
-                            props.org.role !== 'vol' &&
-                            <Button variant='outlined' startIcon={<AddIcon />} onClick={() => setView('create')}>Create Event</Button>
-                        }
                         <span className={classes.refresh}>
                             <IconButton onClick={handleRefresh} disabled={loadingRefresh}>
                                 {loadingRefresh
@@ -89,10 +81,6 @@ const Events = props => {
                                     : <RefreshIcon className={classes.actionIcon} />}
                             </IconButton>
                         </span>
-                        {
-                            props.org.role !== 'vol' &&
-                            <><br /><br /></>
-                        }
                         <TextField onChange={e => setSearchValue(e.target.value)} variant='outlined' fullWidth className={classes.search} InputProps={{
                             placeholder: 'Search Events...', endAdornment: (
                                 <InputAdornment position='end'>
@@ -116,14 +104,13 @@ const Events = props => {
                         {props.events === null
                             ? <Fetching />
                             : <>
-                                <EventList events={searchValue.length < 1 || results === null ? props.events : results} setEditEvent={event => { setView('edit'); setEditEvent(event); }} role={props.org.role} />
+                                <EventList events={searchValue.length < 1 || results === null ? props.events : results} setEditEvent={event => { setView('edit'); setEditEvent(event); }} />
                                 <br />
                             </>}
                     </Grid>
                 </Grid>
             </>
-        );
-    }
+    );
 };
 
 export default Events;

@@ -4,7 +4,7 @@ import { makeStyles, useTheme } from '@material-ui/core/styles';
 import { Menu as MenuIcon, CancelOutlined as CloseIcon, AccountCircle as AccountIcon, DashboardOutlined as OverviewIcon, Group as OrgIcon, Event as EventsIcon, ListAlt as HoursIcon, ContactSupportOutlined as ContactIcon } from '@material-ui/icons';
 import Account from './account/Account';
 import Orgs from './orgs/Orgs';
-import Events from './Events';
+import Events from './events/Events';
 import Hours from './hours/Hours';
 import Contact from './Contact';
 import VIcon from '../../images/icon.png';
@@ -98,12 +98,12 @@ const useStyles = makeStyles(theme => ({
 }));
 
 
-const View = ({ view, user, setUser, logs, setLogs }) => {
+const View = ({ view, user, setUser, logs, setLogs, events, setEvents }) => {
     switch (view) {
         case 'account': return <Account user={user} setUser={setUser} />;
-        case 'overview': return <Overview user={user} logs={logs} setLogs={setLogs} />;
+        case 'overview': return <Overview user={user} logs={logs} setLogs={setLogs} events={events} setEvents={setEvents} />;
         case 'orgs': return <Orgs user={user} setUser={setUser} />;
-        case 'events': return <Events user={user} />;
+        case 'events': return <Events user={user} events={events} setEvents={setEvents} />;
         case 'hours': return <Hours user={user} logs={logs} setLogs={setLogs} />;
         case 'contact': return <Contact user={user} />;
         default: return 'Select a page on the left.';
@@ -137,6 +137,17 @@ const Dashboard = props => {
         //splice org info
         newLogs = newLogs.map(log => ({ org: orgObj[log.orgId], ...log }));
         setLogsState(newLogs);
+    };
+
+    const [events, setEventsState] = useState(null);
+    const setEvents = newEvents => {
+        newEvents = newEvents.sort((a, b) => b.start.localeCompare(a.start));
+        //orgs object for fast lookup
+        let orgObj = {};
+        props.user.orgs.forEach(o => orgObj[o.id] = o);
+        //splice org info
+        newEvents = newEvents.map(event => ({ org: orgObj[event.orgId], ...event }));
+        setEventsState(newEvents);
     };
 
     const classes = useStyles();
@@ -189,7 +200,7 @@ const Dashboard = props => {
                 </Typography><br />
                 <div>
                     <Suspense fallback={<Fetching />}>
-                        <View view={view} user={props.user} setUser={props.setUser} logs={logs} setLogs={setLogs} />
+                        <View view={view} user={props.user} setUser={props.setUser} logs={logs} setLogs={setLogs} events={events} setEvents={setEvents} />
                     </Suspense>
                 </div>
             </div>

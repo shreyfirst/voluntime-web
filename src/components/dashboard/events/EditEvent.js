@@ -2,10 +2,10 @@ import { useState, useEffect } from 'react';
 import { Grid, Link, Typography, TextField, Button, Switch, InputAdornment, IconButton } from '@material-ui/core';
 import { Alert } from '@material-ui/lab';
 import { makeStyles } from '@material-ui/core/styles';
-import { ArrowBack, Add as AddIcon, Event as DateIcon } from '@material-ui/icons';
+import { ArrowBack, Save as SaveIcon, Event as DateIcon } from '@material-ui/icons';
 import CircularProgressButton from '../../helpers/CircularProgressButton';
 import { MuiPickersUtilsProvider, DateTimePicker } from '@material-ui/pickers';
-import { createEvent } from '../../../services/events';
+import { editEvent } from '../../../services/events';
 import DayjsUtils from '@date-io/dayjs';
 import dayjs from 'dayjs';
 import ReactMarkdown from 'react-markdown';
@@ -44,15 +44,16 @@ const useStyles = makeStyles({
     },
 });
 
-const CreateEvent = props => {
+const EditEvent = props => {
+    const event = props.event;
 
-    const [title, setTitle] = useState('');
-    const [description, setDescription] = useState('');
-    const [location, setLocation] = useState('');
-    const [start, setStart] = useState(() => dayjs());
-    const [end, setEnd] = useState(() => dayjs().add(1, 'hour'));
-    const [hours, setHours] = useState(1);
-    const [calcHours, setCalcHours] = useState(true);
+    const [title, setTitle] = useState(event.title);
+    const [description, setDescription] = useState(event.description);
+    const [location, setLocation] = useState(event.location);
+    const [start, setStart] = useState(() => dayjs(event.start));
+    const [end, setEnd] = useState(() => dayjs(event.end));
+    const [hours, setHours] = useState(event.hours);
+    const [calcHours, setCalcHours] = useState(false);
 
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
@@ -68,9 +69,10 @@ const CreateEvent = props => {
             return;
         }
         setLoading(true);
-        createEvent({
+        editEvent({
             token: props.user.token,
-            id: props.orgId,
+            id: event.id,
+            orgId: event.org.id,
             title,
             description,
             location,
@@ -84,17 +86,11 @@ const CreateEvent = props => {
             } else {
                 setError('');
                 setSuccess(true);
-                let events = props.events;
-                events.push(data);
+                let events = [...props.events];
+                events[events.findIndex(e => e.id === event.id)] = data;
                 props.setEvents(events);
             }
         });
-    };
-
-    const goBack = () => {
-        setSuccess(false);
-        setError(false);
-        props.goBack();
     };
 
     useEffect(() => {
@@ -108,19 +104,16 @@ const CreateEvent = props => {
     return (
         <Grid container>
             <Grid item xs={11} sm={9} md={8} lg={5}>
-                <Button variant='outlined' startIcon={<ArrowBack />} onClick={goBack}>Back</Button>
+                <Button variant='outlined' startIcon={<ArrowBack />} onClick={props.goBack}>Back</Button>
                 <br /><br />
-                <Typography variant='h6'>Create Event</Typography>
-                <Typography variant='body2'>
-                    Create an event to let members know about upcoming volunteer opportunities.
-                </Typography><br />
+                <Typography variant='h6'>Edit Event: <strong>{event.title}</strong></Typography><br />
 
-                <TextField onChange={e => setTitle(e.target.value)} variant='outlined' label='Event Title' required fullWidth /><br /><br />
+                <TextField onChange={e => setTitle(e.target.value)} variant='outlined' label='Event Title' defaultValue={event.title} required fullWidth /><br /><br />
 
                 <Grid container justify='flex-end'>
                     <a href='/markdown.html' target='_blank' rel='noopener noreferrer'>Markdown</a><br />
                 </Grid>
-                <TextField onChange={e => setDescription(e.target.value)} variant='outlined' label='Description' InputProps={{
+                <TextField onChange={e => setDescription(e.target.value)} variant='outlined' label='Description' defaultValue={event.description} InputProps={{
                     placeholder: 'This textbox supports markdown! Try **bold** words.'
                 }} multiline fullWidth rows={4} /><br /><br />
                 {description.length > 0 &&
@@ -134,7 +127,7 @@ const CreateEvent = props => {
                     </>
                 }
 
-                <TextField onChange={e => setLocation(e.target.value)} variant='outlined' label='Location' fullWidth InputProps={{
+                <TextField onChange={e => setLocation(e.target.value)} variant='outlined' label='Location' fullWidth defaultValue={event.location} InputProps={{
                     placeholder: 'Where should volunteers go?'
                 }} /><br /><br />
 
@@ -145,7 +138,7 @@ const CreateEvent = props => {
                     if (hours.length < 1 || hours < 0) {
                         setHours(0);
                     }
-                }} variant='outlined' label='Volunteer hours' InputProps={{
+                }} variant='outlined' label='Volunteer hours' defaultValue={event.hours} InputProps={{
                     placeholder: '0'
                 }} inputProps={{ min: 0 }} value={hours} fullWidth /><br />
 
@@ -175,6 +168,7 @@ const CreateEvent = props => {
                                     ),
                                     readOnly: true
                                 }}
+                                defaultValue={event.start}
                             />
                         </Grid>
                         <Grid item xs={12} sm={10} md={9} xl={6}>
@@ -196,13 +190,14 @@ const CreateEvent = props => {
                                     readOnly: true
                                 }}
                                 minDate={start}
+                                defaultValue={event.start}
                             />
                         </Grid>
                     </Grid>
                 </MuiPickersUtilsProvider><br />
 
-                <Button variant='contained' color='primary' disabled={loading || success} onClick={handleSubmit} startIcon={loading ? <CircularProgressButton /> : <AddIcon />}>
-                    Create Event
+                <Button variant='contained' color='primary' disabled={loading || success} onClick={handleSubmit} startIcon={loading ? <CircularProgressButton /> : <SaveIcon />}>
+                    Save Changes
                 </Button>
                 <br />
                 {
@@ -211,11 +206,11 @@ const CreateEvent = props => {
                 }
                 {
                     success &&
-                    <Alert severity='success'>Success! The event has been created. <Link component='button' onClick={goBack}><Typography variant='body2'>View all events</Typography></Link></Alert>
+                    <Alert severity='success'>Success! The event has been edited. <Link component='button' onClick={props.goBack}><Typography variant='body2'>View all events</Typography></Link></Alert>
                 }
             </Grid>
         </Grid>
     );
 };
 
-export default CreateEvent;
+export default EditEvent;

@@ -80,7 +80,8 @@ const Members = props => {
 
     const handleSearch = () => {
         if (searchValue.length > 0) {
-            setResults(props.members.filter(m => (m.firstName + m.lastName).replace(/\s+/g, '').toLowerCase().includes(searchValue.replace(/\s+/g, '').toLowerCase())));
+            const search = searchValue.replace(/\s+/g, '').toLowerCase();
+            setResults(props.members.filter(m => (m.firstName + m.lastName).replace(/\s+/g, '').toLowerCase().includes(search)));
         }
     };
 

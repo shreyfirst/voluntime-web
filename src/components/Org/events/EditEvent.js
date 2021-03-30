@@ -72,7 +72,7 @@ const EditEvent = props => {
         editEvent({
             token: props.user.token,
             id: event.id,
-            orgId: props.org.id,
+            orgId: props.orgId,
             title,
             description,
             location,
