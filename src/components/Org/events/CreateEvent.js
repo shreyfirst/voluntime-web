@@ -91,10 +91,10 @@ const CreateEvent = props => {
         });
     };
 
-    const keyPress = event => {
-        if (event.key === 'Enter') {
-            handleSubmit();
-        }
+    const goBack = () => {
+        setSuccess(false);
+        setError(false);
+        props.goBack();
     };
 
     useEffect(() => {
@@ -108,19 +108,19 @@ const CreateEvent = props => {
     return (
         <Grid container>
             <Grid item xs={11} sm={9} md={8} lg={5}>
-                <Button variant='outlined' startIcon={<ArrowBack />} onClick={props.goBack}>Back</Button>
+                <Button variant='outlined' startIcon={<ArrowBack />} onClick={goBack}>Back</Button>
                 <br /><br />
                 <Typography variant='h6'>Create Event</Typography>
                 <Typography variant='body2'>
                     Create an event to let members know about upcoming volunteer opportunities.
                 </Typography><br />
 
-                <TextField onKeyDown={keyPress} onChange={e => setTitle(e.target.value)} variant='outlined' label='Event Title' required fullWidth /><br /><br />
+                <TextField onChange={e => setTitle(e.target.value)} variant='outlined' label='Event Title' required fullWidth /><br /><br />
 
                 <Grid container justify='flex-end'>
                     <a href='/markdown.html' target='_blank' rel='noopener noreferrer'>Markdown</a><br />
                 </Grid>
-                <TextField onKeyDown={keyPress} onChange={e => setDescription(e.target.value)} variant='outlined' label='Description' InputProps={{
+                <TextField onChange={e => setDescription(e.target.value)} variant='outlined' label='Description' InputProps={{
                     placeholder: 'This textbox supports markdown! Try **bold** words.'
                 }} multiline fullWidth rows={4} /><br /><br />
                 {description.length > 0 &&
@@ -134,11 +134,11 @@ const CreateEvent = props => {
                     </>
                 }
 
-                <TextField onKeyDown={keyPress} onChange={e => setLocation(e.target.value)} variant='outlined' label='Location' fullWidth InputProps={{
+                <TextField onChange={e => setLocation(e.target.value)} variant='outlined' label='Location' fullWidth InputProps={{
                     placeholder: 'Where should volunteers go?'
                 }} /><br /><br />
 
-                <TextField type='number' onKeyDown={keyPress} onChange={e => {
+                <TextField type='number' onChange={e => {
                     setCalcHours(false);
                     setHours(e.target.value)
                 }} onBlur={() => {
@@ -193,7 +193,7 @@ const CreateEvent = props => {
                 }
                 {
                     success &&
-                    <Alert severity='success'>Success! The event has been created. <Link component='button' onClick={props.goBack}>View all events</Link></Alert>
+                    <Alert severity='success'>Success! The event has been created. <Link component='button' onClick={goBack}><Typography variant='body2'>View all events</Typography></Link></Alert>
                 }
             </Grid>
         </Grid>

@@ -196,7 +196,9 @@ const Org = props => {
 
     const [members, setMembers] = useState(null);
     const [logs, setLogs] = useState(null);
-    const [events, setEvents] = useState([]);
+    const [events, setEventsState] = useState(null);
+
+    const setEvents = newEvents => setEventsState(newEvents.sort((a, b) => b.start.localeCompare(a.start)));
 
     useEffect(() => {
         const o = getOrg();
