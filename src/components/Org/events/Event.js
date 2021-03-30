@@ -1,4 +1,4 @@
-import { Grid, Card, CardContent, Typography, IconButton } from '@material-ui/core';
+import { Card, CardContent, Typography, IconButton } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { Edit as EditIcon, LocationOn as LocationIcon, Event as TimeIcon, HourglassEmpty as HoursIcon } from '@material-ui/icons';
 import dayjs from 'dayjs';
