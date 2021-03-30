@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
-import { Grid, Link, Typography, TextField, Button, Switch } from '@material-ui/core';
+import { Grid, Link, Typography, TextField, Button, Switch, InputAdornment, IconButton } from '@material-ui/core';
 import { Alert } from '@material-ui/lab';
 import { makeStyles } from '@material-ui/core/styles';
-import { ArrowBack, Add as AddIcon } from '@material-ui/icons';
+import { ArrowBack, Add as AddIcon, Event as DateIcon } from '@material-ui/icons';
 import CircularProgressButton from '../../helpers/CircularProgressButton';
 import { MuiPickersUtilsProvider, DateTimePicker } from '@material-ui/pickers';
 import { createEvent } from '../../../services/events';
@@ -165,7 +165,16 @@ const CreateEvent = props => {
                                 value={start}
                                 onChange={setStart}
                                 fullWidth
-                                InputProps={{ readOnly: true }}
+                                InputProps={{
+                                    endAdornment: (
+                                        <InputAdornment position='end'>
+                                            <IconButton>
+                                                <DateIcon />
+                                            </IconButton>
+                                        </InputAdornment>
+                                    ),
+                                    readOnly: true
+                                }}
                             />
                         </Grid>
                         <Grid item xs={12} sm={10} md={9} xl={6}>
@@ -176,7 +185,16 @@ const CreateEvent = props => {
                                 value={end}
                                 onChange={setEnd}
                                 fullWidth
-                                InputProps={{ readOnly: true }}
+                                InputProps={{
+                                    endAdornment: (
+                                        <InputAdornment position='end'>
+                                            <IconButton>
+                                                <DateIcon />
+                                            </IconButton>
+                                        </InputAdornment>
+                                    ),
+                                    readOnly: true
+                                }}
                                 minDate={start}
                             />
                         </Grid>

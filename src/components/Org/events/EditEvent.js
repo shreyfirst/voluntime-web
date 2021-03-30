@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
-import { Grid, Link, Typography, TextField, Button, Switch } from '@material-ui/core';
+import { Grid, Link, Typography, TextField, Button, Switch, InputAdornment, IconButton } from '@material-ui/core';
 import { Alert } from '@material-ui/lab';
 import { makeStyles } from '@material-ui/core/styles';
-import { ArrowBack, Save as SaveIcon } from '@material-ui/icons';
+import { ArrowBack, Save as SaveIcon, Event as DateIcon } from '@material-ui/icons';
 import CircularProgressButton from '../../helpers/CircularProgressButton';
 import { MuiPickersUtilsProvider, DateTimePicker } from '@material-ui/pickers';
 import { editEvent } from '../../../services/events';
@@ -158,7 +158,16 @@ const EditEvent = props => {
                                 value={start}
                                 onChange={setStart}
                                 fullWidth
-                                InputProps={{ readOnly: true }}
+                                InputProps={{
+                                    endAdornment: (
+                                        <InputAdornment position='end'>
+                                            <IconButton>
+                                                <DateIcon />
+                                            </IconButton>
+                                        </InputAdornment>
+                                    ),
+                                    readOnly: true
+                                }}
                                 defaultValue={event.start}
                             />
                         </Grid>
@@ -170,7 +179,16 @@ const EditEvent = props => {
                                 value={end}
                                 onChange={setEnd}
                                 fullWidth
-                                InputProps={{ readOnly: true }}
+                                InputProps={{
+                                    endAdornment: (
+                                        <InputAdornment position='end'>
+                                            <IconButton>
+                                                <DateIcon />
+                                            </IconButton>
+                                        </InputAdornment>
+                                    ),
+                                    readOnly: true
+                                }}
                                 minDate={start}
                                 defaultValue={event.start}
                             />

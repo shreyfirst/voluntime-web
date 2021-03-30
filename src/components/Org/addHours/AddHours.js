@@ -1,9 +1,9 @@
 import { useState, useEffect, useRef } from 'react';
-import { Grid, TextField, Button, Typography } from '@material-ui/core';
+import { Grid, TextField, Button, Typography, InputAdornment, IconButton } from '@material-ui/core';
 import { Alert } from '@material-ui/lab';
 import { makeStyles } from '@material-ui/core/styles';
-import { MuiPickersUtilsProvider, KeyboardDatePicker, KeyboardTimePicker } from '@material-ui/pickers';
-import { Alarm, PlaylistAdd as SubmitIcon } from '@material-ui/icons';
+import { MuiPickersUtilsProvider, DatePicker, TimePicker } from '@material-ui/pickers';
+import { Alarm as TimeIcon, Event as DateIcon, PlaylistAdd as SubmitIcon } from '@material-ui/icons';
 import CircularProgressButton from '../../helpers/CircularProgressButton';
 import ImagePreview from '../../helpers/ImagePreview';
 import LinearProgressWithLabel from '../../helpers/LinearProgressWithLabel';
@@ -97,40 +97,70 @@ const AddHours = props => {
                     Log some volunteer hours.
                 </Typography><br />
                 <MuiPickersUtilsProvider utils={DayjsUtils}>
-                    <KeyboardDatePicker
+                    <DatePicker
                         format='ddd, MMM D, YYYY'
                         margin='normal'
                         label='Start date'
                         value={start}
                         onChange={setStart}
-                        InputProps={{ readOnly: true }}
+                        InputProps={{
+                            endAdornment: (
+                                <InputAdornment position='end'>
+                                    <IconButton>
+                                        <DateIcon />
+                                    </IconButton>
+                                </InputAdornment>
+                            ), readOnly: true
+                        }}
                         className={classes.datePicker}
                     />
-                    <KeyboardTimePicker
+                    <TimePicker
                         margin='normal'
                         label='Start time'
                         value={start}
                         onChange={setStart}
-                        InputProps={{ readOnly: true }}
-                        keyboardIcon={<Alarm />}
+                        InputProps={{
+                            endAdornment: (
+                                <InputAdornment position='end'>
+                                    <IconButton>
+                                        <TimeIcon />
+                                    </IconButton>
+                                </InputAdornment>
+                            ), readOnly: true
+                        }}
                     /><br /><br />
-                    <KeyboardDatePicker
+                    <DatePicker
                         minDate={start}
                         format='ddd, MMM D, YYYY'
                         margin='normal'
                         label='End date'
                         value={end}
                         onChange={setEnd}
-                        InputProps={{ readOnly: true }}
+                        InputProps={{
+                            endAdornment: (
+                                <InputAdornment position='end'>
+                                    <IconButton>
+                                        <DateIcon />
+                                    </IconButton>
+                                </InputAdornment>
+                            ), readOnly: true
+                        }}
                         className={classes.datePicker}
                     />
-                    <KeyboardTimePicker
+                    <TimePicker
                         margin='normal'
                         label='End time'
                         value={end}
                         onChange={setEnd}
-                        InputProps={{ readOnly: true }}
-                        keyboardIcon={<Alarm />}
+                        InputProps={{
+                            endAdornment: (
+                                <InputAdornment position='end'>
+                                    <IconButton>
+                                        <TimeIcon />
+                                    </IconButton>
+                                </InputAdornment>
+                            ), readOnly: true
+                        }}
                     />
                 </MuiPickersUtilsProvider><br /><br />
                 <Typography>Number of hours: <strong>{hours}</strong></Typography><br />

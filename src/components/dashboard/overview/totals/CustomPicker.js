@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Grid, Button, Typography, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@material-ui/core';
-import { MuiPickersUtilsProvider, KeyboardDatePicker } from '@material-ui/pickers';
+import { MuiPickersUtilsProvider, DatePicker } from '@material-ui/pickers';
 import DayjsUtils from '@date-io/dayjs';
 
 const CustomPicker = props => {
@@ -29,7 +29,7 @@ const CustomPicker = props => {
                     <Grid container spacing={3} justify='space-evenly'>
                         <Grid item align='center'>
                             <Typography variant='h6'><strong>Start</strong></Typography>
-                            <KeyboardDatePicker
+                            <DatePicker
                                 label='Start date'
                                 value={start}
                                 onChange={setStart}
@@ -38,7 +38,7 @@ const CustomPicker = props => {
                         </Grid>
                         <Grid item align='center'>
                             <Typography variant='h6'><strong>End</strong></Typography>
-                            <KeyboardDatePicker
+                            <DatePicker
                                 minDate={start}
                                 label='End date'
                                 value={end}
