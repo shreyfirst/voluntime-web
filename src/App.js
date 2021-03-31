@@ -51,7 +51,9 @@ const App = () => {
                 history.replace('/dashboard');
             }
             loginToken(storedUser.token, (err, data) => {
-                if (!err) {
+                if (err) { //couldn't log in with token
+                    history.replace({ pathname: '/', state: location.pathname === '/' ? undefined : { from: location.pathname } });
+                } else {
                     setUser(data);
                 }
             });

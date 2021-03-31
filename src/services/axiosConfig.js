@@ -1,7 +1,11 @@
 const axiosPackage = require('axios');
 
+
+const DEV = true;
+
+
 const axios = axiosPackage.create({
-    baseURL: 'https://api.mittaldev.com/voluntime-dev/',
+    baseURL: `https://api.mittaldev.com/voluntime${DEV ? '-dev' : ''}/`,
     headers: {},
     validateStatus: () => true
 });
