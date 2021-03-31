@@ -71,7 +71,7 @@ const DetailsView = props => {
                     className={classes.description}>{props.org.description}</ReactMarkdown>
             </Typography>
             <br /><br /><br />
-            <Button variant='outlined' onClick={() => setLeaveOpen(true)} startIcon={<LeaveIcon />} className={classes.leaveButton}>LEAVE ORGANIZATION</Button>
+            <Button variant='outlined' onClick={() => setLeaveOpen(true)} startIcon={<LeaveIcon />} className={classes.leaveButton}>Leave Organization</Button>
             <LeaveConfirm open={leaveOpen} setOpen={setLeaveOpen} user={props.user} setUser={props.setUser} org={props.org} />
         </>
     );

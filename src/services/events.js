@@ -8,4 +8,6 @@ const getEventsUser = (info, callback) => post('/events/getUser', info, callback
 
 const editEvent = (info, callback) => post('/events/edit', info, callback);
 
-export { createEvent, getEventsOrg, getEventsUser, editEvent };
+const deleteEvent = (info, callback) => post('/events/delete', info, callback);
+
+export { createEvent, getEventsOrg, getEventsUser, editEvent, deleteEvent };

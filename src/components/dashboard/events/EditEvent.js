@@ -2,9 +2,10 @@ import { useState, useEffect } from 'react';
 import { Grid, Link, Typography, TextField, Button, Switch, InputAdornment, IconButton } from '@material-ui/core';
 import { Alert } from '@material-ui/lab';
 import { makeStyles } from '@material-ui/core/styles';
-import { ArrowBack, Save as SaveIcon, Event as DateIcon } from '@material-ui/icons';
+import { ArrowBack, Save as SaveIcon, Event as DateIcon, DeleteForever as DeleteIcon } from '@material-ui/icons';
 import CircularProgressButton from '../../helpers/CircularProgressButton';
 import { MuiPickersUtilsProvider, DateTimePicker } from '@material-ui/pickers';
+import DeleteConfirm from '../../org/events/DeleteConfirm';
 import { editEvent } from '../../../services/events';
 import DayjsUtils from '@date-io/dayjs';
 import dayjs from 'dayjs';
@@ -42,6 +43,15 @@ const useStyles = makeStyles({
             border: '1px solid #dee2e6'
         }
     },
+    deleteButton: {
+        color: '#d73a49',
+        fontWeight: 'bold',
+        borderColor: '#d73a49',
+        '&:hover': {
+            color: '#FFF',
+            backgroundColor: '#d73a49',
+        }
+    },
 });
 
 const EditEvent = props => {
@@ -58,6 +68,8 @@ const EditEvent = props => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
     const [success, setSuccess] = useState(false);
+
+    const [deleteOpen, setDeleteOpen] = useState(false);
 
     const handleSubmit = () => {
         if (title.length < 1) {
@@ -138,7 +150,7 @@ const EditEvent = props => {
                     if (hours.length < 1 || hours < 0) {
                         setHours(0);
                     }
-                }} variant='outlined' label='Volunteer hours' defaultValue={event.hours} InputProps={{
+                }} variant='outlined' label='Volunteer hours' InputProps={{
                     placeholder: '0'
                 }} inputProps={{ min: 0 }} value={hours} fullWidth /><br />
 
@@ -196,9 +208,16 @@ const EditEvent = props => {
                     </Grid>
                 </MuiPickersUtilsProvider><br />
 
-                <Button variant='contained' color='primary' disabled={loading || success} onClick={handleSubmit} startIcon={loading ? <CircularProgressButton /> : <SaveIcon />}>
-                    Save Changes
-                </Button>
+                <Grid container justify='space-between'>
+                    <Grid item>
+                        <Button variant='outlined' onClick={() => setDeleteOpen(true)} startIcon={<DeleteIcon />} className={classes.deleteButton}>Delete Event</Button>
+                    </Grid>
+                    <Grid item>
+                        <Button variant='contained' color='primary' disabled={loading || success} onClick={handleSubmit} startIcon={loading ? <CircularProgressButton /> : <SaveIcon />}>
+                            Save Changes
+                        </Button>
+                    </Grid>
+                </Grid>
                 <br />
                 {
                     error.length > 0 &&
@@ -209,6 +228,7 @@ const EditEvent = props => {
                     <Alert severity='success'>Success! The event has been edited. <Link component='button' onClick={props.goBack}><Typography variant='body2'>View all events</Typography></Link></Alert>
                 }
             </Grid>
+            <DeleteConfirm open={deleteOpen} setOpen={setDeleteOpen} user={props.user} events={props.events} setEvents={props.setEvents} goBack={props.goBack} event={event} />
         </Grid>
     );
 };
