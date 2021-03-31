@@ -80,7 +80,7 @@ const FilterMenu = props => {
     return (
         <>
             <Button variant='outlined' onClick={handleClick} endIcon={<OpenMenuIcon />} startIcon={props.for === 'status' ? <StatusIcon status={props.filterStatus} /> : props.filterOrg === 'all' ? <StatusIcon status='all' /> : <OrgIcon className={classes[selectedOrg.role]} />} className={classes.filterMenu}>
-                {props.for === 'status' ? filterStatusNames[props.filterStatus] : props.filterOrg === 'all' ? 'All Organizations' : selectedOrg.name}
+                {props.for === 'status' ? filterStatusNames[props.filterStatus] : props.filterOrg === 'all' ? 'All Organizations' : (selectedOrg.name.length > 50 ? selectedOrg.name.substring(0, 49) + '...' : selectedOrg.name)}
             </Button>
             {
                 props.for === 'status'

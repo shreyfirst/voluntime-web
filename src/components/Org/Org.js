@@ -118,7 +118,7 @@ const useStyles = makeStyles(theme => ({
 const View = ({ view, user, setUser, org, logs, members, setMembers, setLogs, events, setEvents }) => {
     switch (view) {
         case 'details': return <Details user={user} setUser={setUser} org={org} />;
-        case 'metrics': return <Metrics user={user} />;
+        case 'metrics': return <Metrics user={user} org={org} logs={logs} setLogs={setLogs} events={events} setEvents={setEvents} />;
         case 'members': return <Members user={user} members={members} setMembers={setMembers} org={org} />;
         case 'add': return <AddHours user={user} org={org} />;
         case 'hours': return <ViewHours user={user} members={members} setMembers={setMembers} logs={logs} setLogs={setLogs} org={org} />;

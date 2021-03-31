@@ -4,8 +4,10 @@ import { makeStyles } from '@material-ui/core/styles';
 import { Alert } from '@material-ui/lab';
 import Fetching from '../../helpers/Fetching';
 import { getLogsUser } from '../../../services/logs';
+import { getEventsUser } from '../../../services/events';
 import Totals from './totals/Totals';
 import Recent from './recent/Recent';
+import Events from './events/Events';
 import Heatmap from './heatmap/Heatmap';
 
 const useStyles = makeStyles({
@@ -25,6 +27,7 @@ const useStyles = makeStyles({
 const Overview = props => {
 
     const [error, setError] = useState('');
+    const [upcoming, setUpcoming] = useState(true); //if there are no future events, set to false
 
     const fetchLogs = () => {
         getLogsUser({
@@ -39,9 +42,25 @@ const Overview = props => {
         });
     };
 
+    const fetchEvents = () => {
+        getEventsUser({
+            token: props.user.token,
+        }, (err, data) => {
+            if (err) {
+                setError(data.message);
+            } else {
+                setError('');
+                props.setEvents(data); //splicing handled in Dashboard.js
+            }
+        });
+    };
+
     useEffect(() => {
         if (props.logs === null) {
             fetchLogs();
+        }
+        if (props.events === null) {
+            fetchEvents();
         }
     }, []);
 
@@ -58,7 +77,7 @@ const Overview = props => {
                 </Grid>
             }
             {
-                props.logs === null
+                props.logs === null || props.events === null
                     ? <Fetching />
                     : <>
                         <Grid container spacing={8} className={classes.container}>
@@ -74,6 +93,13 @@ const Overview = props => {
                                     </Grid>
                                 </Grid>
                             </Grid>
+                            {
+                                props.events.length > 0 &&
+                                <Grid item xs={12} className={classes.section}>
+                                    <Typography variant='h6'>{upcoming ? 'Upcoming' : 'Past'} Events</Typography><br />
+                                    <Events events={props.events} setUpcoming={setUpcoming} />
+                                </Grid>
+                            }
                             <Grid item xs={12} className={classes.section}>
                                 <Typography variant='h6'>Contribution Heatmap</Typography><br />
                                 <Heatmap logs={props.logs} />
