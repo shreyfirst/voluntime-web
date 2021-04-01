@@ -81,7 +81,7 @@ const Landing = props => {
                     </Paper>
                 </Grid>
             </Grid>
-            <Grid ref={aboutRef} container className={classes.about} alignItems='center' justify='center'>
+            <Grid ref={aboutRef} container className={classes.about} alignItems='center' justify='center' spacing={4}>
                 <About aboutSignUpClicked={aboutSignUpClicked} />
             </Grid>
         </Container>

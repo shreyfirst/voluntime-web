@@ -34,8 +34,8 @@ const Product = props => {
                     Voluntime
                 </Typography>
                 <Typography variant='body1' component='span' className={classes.description}>
-                    An all-in-one volunteer management suite built for students by students.
-                    Voluntime connects organizations and volunteers together to help educate the youth and build the future.
+                    An fully-featured volunteer management system built for students by students.
+                    Voluntime seamlessly connects organizations and volunteers together to help build the future.
                 </Typography>
                 <Hidden xsDown>{' '}</Hidden>
                 <Hidden smUp><br /></Hidden>
