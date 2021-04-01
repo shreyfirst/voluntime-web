@@ -140,21 +140,7 @@ const ViewHours = props => {
 
     const handleLogsResponse = data => {
         setError('');
-        data = data.sort((a, b) => b.end.localeCompare(a.end));
-        //user object for fast lookup
-        let userObj = {};
-        props.members.forEach(m => userObj[m.id] = m);
-        //splice user info
-        let newData = [];
-        for (let i = 0; i < data.length; ++i) {
-            const log = data[i];
-            if (userObj[log.userId] === undefined) {
-                refresh();
-            } else {
-                newData.push({ vol: userObj[log.userId], ...(log.status !== 'pending' && { approverInfo: userObj[log.approver] }), ...log });
-            }
-        }
-        props.setLogs(newData);
+        props.setLogs(data); //splicing handled in Org.js
     };
 
     const refreshLogs = () => {

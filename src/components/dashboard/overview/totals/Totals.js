@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Button, Grid, Typography, Menu, MenuItem } from '@material-ui/core';
-import { KeyboardArrowDown as OpenMenuIcon } from '@material-ui/icons';
+import { DateRange as RangeIcon, KeyboardArrowDown as OpenMenuIcon } from '@material-ui/icons';
 import CustomPicker from './CustomPicker';
 import dayjs from 'dayjs';
 import isBetween from 'dayjs/plugin/isBetween';
@@ -51,7 +51,7 @@ const RangeMenu = props => {
 
     return (
         <>
-            <Button variant='outlined' onClick={handleClick} endIcon={<OpenMenuIcon />}>
+            <Button variant='outlined' onClick={handleClick} startIcon={<RangeIcon />} endIcon={<OpenMenuIcon />}>
                 {props.name}
             </Button>
             {

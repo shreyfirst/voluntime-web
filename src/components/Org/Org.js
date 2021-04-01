@@ -12,6 +12,8 @@ import ViewHours from './viewHours/ViewHours';
 import Events from './events/Events';
 import VIcon from '../../images/icon.png';
 
+const roles = ['owner', 'admin', 'vol'];
+
 const getViewNames = o => {
     if (o !== null) {
         if (o.role === 'owner') {
@@ -118,7 +120,7 @@ const useStyles = makeStyles(theme => ({
 const View = ({ view, user, setUser, org, logs, members, setMembers, setLogs, events, setEvents }) => {
     switch (view) {
         case 'details': return <Details user={user} setUser={setUser} org={org} />;
-        case 'metrics': return <Metrics user={user} org={org} logs={logs} setLogs={setLogs} events={events} setEvents={setEvents} />;
+        case 'metrics': return <Metrics user={user} org={org} logs={logs} setLogs={setLogs} members={members} setMembers={setMembers} />;
         case 'members': return <Members user={user} members={members} setMembers={setMembers} org={org} />;
         case 'add': return <AddHours user={user} org={org} />;
         case 'hours': return <ViewHours user={user} members={members} setMembers={setMembers} logs={logs} setLogs={setLogs} org={org} />;
@@ -194,9 +196,37 @@ const Org = props => {
     const [view, setView] = useState(location.state === undefined ? 'details' : location.state.view);
     const [open, setOpen] = useState(false);
 
-    const [members, setMembers] = useState(null);
-    const [logs, setLogs] = useState(null);
+    const [members, setMembersState] = useState(null);
+    const [logs, setLogsState] = useState(null);
     const [events, setEventsState] = useState(null);
+
+    const setMembers = newMembers => {
+        newMembers = newMembers.sort((a, b) => {
+            let role1 = roles.indexOf(a.role), role2 = roles.indexOf(b.role);
+            if (role1 < role2) {
+                return -1;
+            }
+            if (role2 < role1) {
+                return 1;
+            }
+            return a.firstName.localeCompare(b.firstName);
+        });
+        setMembersState(newMembers);
+    };
+
+    const setLogs = newLogs => {
+        newLogs = newLogs.sort((a, b) => b.end.localeCompare(a.end));
+        //user object for fast lookup
+        let userObj = {};
+        members.forEach(m => userObj[m.id] = m);
+        //splice user info
+        let newData = [];
+        for (let i = 0; i < newLogs.length; ++i) {
+            const log = newLogs[i];
+            newData.push({ vol: userObj[log.userId], ...(log.status !== 'pending' && { approverInfo: userObj[log.approver] }), ...log });
+        }
+        setLogsState(newData);
+    };
 
     const setEvents = newEvents => setEventsState(newEvents.sort((a, b) => b.start.localeCompare(a.start)));
 

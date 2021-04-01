@@ -42,17 +42,6 @@ const Members = props => {
                 setError(data.message);
             } else {
                 setError('');
-                const roles = ['owner', 'admin', 'vol'];
-                data = data.sort((a, b) => {
-                    let role1 = roles.indexOf(a.role), role2 = roles.indexOf(b.role);
-                    if (role1 < role2) {
-                        return -1;
-                    }
-                    if (role2 < role1) {
-                        return 1;
-                    }
-                    return a.firstName.localeCompare(b.firstName);
-                });
                 props.setMembers(data);
                 if (callback !== undefined) { callback(); }
             }

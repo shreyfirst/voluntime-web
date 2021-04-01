@@ -170,7 +170,7 @@ const Member = props => {
     const [error, setError] = useState('');
     const [removeOpen, setRemoveOpen] = useState(false);
 
-    const classes = useStyles({ role: props.member.role });
+    const classes = useStyles({ role: member.role });
     return (
         <Card className={`${classes.container} ${props.table ? classes.containerTable : ''}`}>
             <CardContent>
