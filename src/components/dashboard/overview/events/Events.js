@@ -18,7 +18,7 @@ const Events = props => {
 
     useEffect(() => {
         let u = [];
-        for (let i = 0; i < props.events.length; ++i) {
+        for (let i = props.events.length-1; i >= 0; --i) {
             if (dayjs(props.events[i].start).isAfter(now)) {
                 u.push(...props.events.slice(0, i+1).reverse());
                 break;
@@ -31,7 +31,7 @@ const Events = props => {
         }
 
         setUpcoming(u);
-    }, []);
+    }, [props.events]);
 
     const classes = useStyles();
     return (

@@ -41,6 +41,7 @@ const RangeMenu = props => {
                 <MenuItem onClick={() => setRange('month')}>Month</MenuItem>
                 <MenuItem onClick={() => setRange('quarter')}>Quarter</MenuItem>
                 <MenuItem onClick={() => setRange('year')}>Year</MenuItem>
+                <MenuItem onClick={() => setRange('all')}>All Time</MenuItem>
             </Menu>
         </>
     );
@@ -59,7 +60,7 @@ const TopMember = props => {
 
         let memberFound = false;
         logs.forEach(l => {
-            if (l.status === 'approved' && now.isSame(l.end, range)) {
+            if (l.status === 'approved' && (range === 'all' || now.isSame(l.end, range))) {
                 if (memberHours[l.userId] === undefined) {
                     memberHours[l.userId] = l.hours;
                 } else {
