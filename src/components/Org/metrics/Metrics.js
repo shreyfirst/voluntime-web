@@ -7,6 +7,7 @@ import { getLogsOrg } from '../../../services/logs';
 import { getMembers } from '../../../services/orgs';
 import Totals from '../../dashboard/overview/totals/Totals';
 import TopMember from './topMember/TopMember';
+import HoursLine from './hoursLine/HoursLine';
 
 const useStyles = makeStyles({
     container: {
@@ -88,6 +89,7 @@ const Metrics = props => {
                                     <Grid item xs={12} lg={4} className={classes.section}>
                                         <Typography variant='h6'>Total Hours</Typography><br />
                                         <Totals logs={props.logs} />
+                                        <Typography variant='h6'>{props.members.length} member{props.members.length === 1 ? '' : 's'}</Typography>
                                     </Grid>
                                     <Grid item xs={12} lg={7} className={classes.section}>
                                         <Typography variant='h6'>Top Member</Typography><br />
@@ -95,10 +97,10 @@ const Metrics = props => {
                                     </Grid>
                                 </Grid>
                             </Grid>
-                            {/*<Grid item xs={12} className={classes.section}>
-                                <Typography variant='h6'>Contribution Heatmap</Typography><br />
-                                <Heatmap logs={props.logs} />
-                            </Grid>*/}
+                            <Grid item xs={12} className={classes.section}>
+                                <Typography variant='h6'>Hours Graph</Typography><br />
+                                <HoursLine logs={props.logs} />
+                            </Grid>
                         </Grid>
                     </>
             }

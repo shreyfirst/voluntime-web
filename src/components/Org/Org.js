@@ -1,16 +1,17 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, lazy, Suspense } from 'react';
 import { Divider, Drawer, List, Typography, ListItem, ListItemText, useMediaQuery, IconButton } from '@material-ui/core';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import { Menu as MenuIcon, CancelOutlined as CloseIcon, InfoOutlined as DetailsIcon, AssessmentOutlined as MetricsIcon, PeopleAltOutlined as MembersIcon, PlaylistAdd, ListAlt, Event as EventIcon, ArrowBack as BackIcon } from '@material-ui/icons';
 import { useParams, useHistory, useLocation } from 'react-router-dom';
+import Fetching from '../helpers/Fetching';
 import NotFound from './NotFound';
 import Details from './details/Details';
-import Metrics from './metrics/Metrics';
 import Members from './members/Members';
 import AddHours from './addHours/AddHours';
 import ViewHours from './viewHours/ViewHours';
 import Events from './events/Events';
 import VIcon from '../../images/icon.png';
+const Metrics = lazy(() => import('./metrics/Metrics'));
 
 const roles = ['owner', 'admin', 'vol'];
 
@@ -282,7 +283,9 @@ const Org = props => {
                                 {viewNames[view]}
                             </Typography><br />
                             <div className={classes.view}>
-                                <View view={view} user={props.user} setUser={props.setUser} org={org} members={members} logs={logs} setMembers={setMembers} setLogs={setLogs} events={events} setEvents={setEvents} />
+                                <Suspense fallback={<Fetching />}>
+                                    <View view={view} user={props.user} setUser={props.setUser} org={org} members={members} logs={logs} setMembers={setMembers} setLogs={setLogs} events={events} setEvents={setEvents} />
+                                </Suspense>
                             </div>
                         </div>
                     </div>

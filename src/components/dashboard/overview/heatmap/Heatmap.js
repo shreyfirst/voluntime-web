@@ -99,6 +99,7 @@ const Heatmap = props => {
                     monthBorderWidth={5}
                     dayBorderWidth={2}
                     dayBorderColor='#ffffff'
+                    animate={false}
                 />
             }
         </div>
