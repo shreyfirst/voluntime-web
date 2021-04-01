@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Menu, MenuItem, Button } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
 import { DateRange as RangeIcon, KeyboardArrowDown as OpenMenuIcon } from '@material-ui/icons';
 import Member from './Member';
 import dayjs from 'dayjs';
@@ -8,6 +9,11 @@ dayjs.extend(quarterOfYear)
 
 const now = dayjs();
 
+const useStyles = makeStyles({
+    hours: {
+        marginLeft: 15,
+    }
+});
 
 const RangeMenu = props => {
     const [anchorEl, setAnchorEl] = useState(null);
@@ -44,6 +50,7 @@ const TopMember = props => {
     const members = props.members;
     const logs = props.logs;
     const [top, setTop] = useState(null);
+    const [hours, setHours] = useState(0);
     const [range, setRange] = useState('month');
     const [found, setFound] = useState(true);
 
@@ -70,11 +77,13 @@ const TopMember = props => {
         const topId = Object.keys(memberHours).reduce((a, b) => memberHours[a] > memberHours[b] ? a : b, null);
 
         setTop(members.find(m => m.id === topId));
+        setHours(memberHours[topId]);
         setFound(true);
     };
 
-    useEffect(calculateTop, [range]);
+    useEffect(calculateTop, [range, props.logs]);
 
+    const classes = useStyles();
     return (
         <>
             {
@@ -82,7 +91,7 @@ const TopMember = props => {
                     ? top === null
                         ? 'Calculating...'
                         : <>
-                            <RangeMenu range={range} setRange={setRange} />
+                            <RangeMenu range={range} setRange={setRange} /><span className={classes.hours}>{hours} hour{hours === 1 ? '' : 's'}</span>
                             <Member member={top} />
                         </>
                     : 'None'
