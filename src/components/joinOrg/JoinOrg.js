@@ -156,7 +156,7 @@ const JoinOrg = props => {
                                 </>
                         }
                         <br /><br />
-                        <Button disabled={loadingOrg || loading || error.length > 0} onClick={handleSubmit} startIcon={loading ? <CircularProgressButton /> : <JoinIcon />} variant='contained' color='primary' className={classes.button}>
+                        <Button disabled={loadingOrg || loading || error.length > 0 || success} onClick={handleSubmit} startIcon={loading ? <CircularProgressButton /> : <JoinIcon />} variant='contained' color='primary' className={classes.button}>
                             Join Organization
                         </Button>
                         <br />

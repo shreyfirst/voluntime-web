@@ -51,8 +51,8 @@ const HoursLine = props => {
                             }}
                             xFormat="time:%Y-%m-%d"
                             axisBottom={{
-                                format: '%b %d',
-                                tickValues: 'every 7 days',
+                                format: '%b %Y',
+                                tickValues: 'every 1 month',
                             }}
                             useMesh
                             enableSlices={false}

@@ -156,7 +156,7 @@ const EditMenu = props => {
                 onClose={close}
             >
                 <MenuItem onClick={() => handleSelect('owner')}><div>Owner<Typography className={classes.roleDescription}>All permissions, everywhere</Typography></div></MenuItem>
-                <MenuItem onClick={() => handleSelect('admin')}><div>Administrator<Typography className={classes.roleDescription}>Manage volunteers' hours</Typography></div></MenuItem>
+                <MenuItem onClick={() => handleSelect('admin')}><div>Administrator<Typography className={classes.roleDescription}>Manage events and hour logs</Typography></div></MenuItem>
                 <MenuItem onClick={() => handleSelect('vol')}><div>Volunteer<Typography className={classes.roleDescription}>Log hours</Typography></div></MenuItem>
             </Menu>
         </>
