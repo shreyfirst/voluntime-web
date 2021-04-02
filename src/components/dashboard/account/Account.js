@@ -1,8 +1,8 @@
 import { useState, useRef } from 'react';
-import { Typography, TextField, Grid, Button } from '@material-ui/core';
+import { Typography, TextField, Grid, Button, Switch, List, ListItem, ListItemText, ListItemSecondaryAction, ListItemIcon } from '@material-ui/core';
 import { Alert } from '@material-ui/lab';
 import { makeStyles } from '@material-ui/core/styles';
-import { MailOutline as EmailIcon, Phone as PhoneIcon, Instagram as InstagramIcon, LockOutlined as LockIcon, Save as SaveIcon, ExitToApp as LogoutIcon } from '@material-ui/icons';
+import { MailOutline as EmailIcon, Phone as PhoneIcon, Instagram as InstagramIcon, Alarm as ApproveIcon, LockOutlined as LockIcon, Save as SaveIcon, ExitToApp as LogoutIcon } from '@material-ui/icons';
 import TextFieldIcon from '../../helpers/TextFieldIcon';
 import CircularProgressButton from '../../helpers/CircularProgressButton';
 import ImagePreview from '../../helpers/ImagePreview';
@@ -43,6 +43,8 @@ const Account = props => {
     const [lastName, setLastName] = useState(props.user.lastName);
     const [note, setNote] = useState(props.user.note);
 
+    const [emailLogStatus, setEmailLogStatus] = useState(props.user.emailPrefs?.logStatus === true);
+
     const [contactEmail, setContactEmail] = useState(props.user.contactInfo.email);
     const [contactPhone, setContactPhone] = useState(props.user.contactInfo.phone);
     const [contactInstagram, setContactInstagram] = useState(props.user.contactInfo.instagram);
@@ -76,6 +78,9 @@ const Account = props => {
                 email: contactEmail,
                 phone: contactPhone,
                 instagram: contactInstagram
+            },
+            emailPrefs: {
+                logStatus: emailLogStatus
             },
             image: encodedImage === null ? '' : encodedImage
         }, (err, data) => {
@@ -118,7 +123,27 @@ const Account = props => {
                 <TextFieldIcon variant='outlined' label='Public Email Address' icon={<EmailIcon />} type='email' onChange={e => setContactEmail(e.target.value)} defaultValue={props.user.contactInfo.email} className={classes.textField} /><br />
                 <TextFieldIcon variant='outlined' label='Public Phone Number' icon={<PhoneIcon />} type='tel' onChange={e => setContactPhone(e.target.value)} defaultValue={props.user.contactInfo.phone} className={classes.textField} /><br />
                 <TextFieldIcon variant='outlined' label='Public Instagram Handle' icon={<InstagramIcon />} onChange={e => setContactInstagram(e.target.value)} defaultValue={props.user.contactInfo.instagram} className={classes.textField} />
-                <br />
+                <br /><br />
+                <Typography variant='body1'>
+                    Email Preferences
+                </Typography><br />
+                <List>
+                    <ListItem>
+                        <ListItemIcon>
+                            <ApproveIcon />
+                        </ListItemIcon>
+                        <ListItemText id='emailLogStatus' primary='Hour log approved/denied' />
+                        <ListItemSecondaryAction>
+                            <Switch
+                                color='primary'
+                                edge='end'
+                                onChange={() => setEmailLogStatus(!emailLogStatus)}
+                                checked={emailLogStatus}
+                            />
+                        </ListItemSecondaryAction>
+                    </ListItem>
+                </List>
+
                 <Grid container justify='flex-end'>
                     <Button variant='contained' color='primary' disabled={loading} onClick={handleSubmit} startIcon={loading ? <CircularProgressButton /> : <SaveIcon />}>
                         Save Changes

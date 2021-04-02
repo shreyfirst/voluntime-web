@@ -1,5 +1,5 @@
 import { Grid, Typography, Button, Hidden, List, ListItem, ListItemIcon, ListItemText } from '@material-ui/core';
-import { PersonAdd as SignUpIcon, Group as RolesIcon, Link as LinkIcon, Check as ApproveIcon, Publish as ExportIcon, Timeline as DataIcon, Build as MobileAppIcon, MoneyOff as FreeIcon } from '@material-ui/icons';
+import { PersonAdd as SignUpIcon, Group as RolesIcon, Link as LinkIcon, Alarm as ApproveIcon, Publish as ExportIcon, Timeline as DataIcon, Build as MobileAppIcon, MoneyOff as FreeIcon } from '@material-ui/icons';
 import { makeStyles } from '@material-ui/core/styles';
 import AppStoreBadge from './AppStoreBadge';
 

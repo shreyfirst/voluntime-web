@@ -1,5 +1,5 @@
 import { useState, useEffect, memo } from 'react';
-import { Box, TableCell, TableRow, IconButton, Collapse, Button } from '@material-ui/core';
+import { Box, TableCell, TableRow, IconButton, Collapse, Button, CircularProgress } from '@material-ui/core';
 import { Check as ApprovedIcon, Clear as DeniedIcon, Schedule as PendingIcon, KeyboardArrowDown as DownArrow, KeyboardArrowUp as UpArrow } from '@material-ui/icons';
 import { Alert } from '@material-ui/lab';
 import { makeStyles } from '@material-ui/core/styles';
@@ -118,12 +118,15 @@ const LogRow = props => {
                 </TableCell>
                 <TableCell onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)}>
                     {
-                        props.role !== 'vol' && log.status === 'pending' && pendingHover
-                            ? <span className={classes.editStatusIcons}>
-                                <IconButton disabled={loadingApprove || loadingDeny} onClick={() => changeStatus('approved')} className={classes.editStatusIcon}><StatusIcon status='approved' /></IconButton>
-                                <IconButton disabled={loadingApprove || loadingDeny} onClick={() => changeStatus('denied')} className={classes.editStatusIcon}><StatusIcon status='denied' /></IconButton>
-                            </span>
-                            : <StatusIcon status={log.status} />
+                        loadingApprove || loadingDeny
+                            ? <CircularProgress color='secondary' size={20} thickness={5} />
+                            : props.role !== 'vol' && log.status === 'pending' && pendingHover
+                                ? <span className={classes.editStatusIcons}>
+                                    <IconButton disabled={loadingApprove || loadingDeny} onClick={() => changeStatus('approved')} className={classes.editStatusIcon}><StatusIcon status='approved' /></IconButton>
+                                    <IconButton disabled={loadingApprove || loadingDeny} onClick={() => changeStatus('denied')} className={classes.editStatusIcon}><StatusIcon status='denied' /></IconButton>
+                                </span>
+                                : <StatusIcon status={log.status} />
+
                     }
                 </TableCell>
                 <TableCell>{log.hours}</TableCell>
