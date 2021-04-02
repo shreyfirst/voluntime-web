@@ -87,15 +87,16 @@ const TopMember = props => {
     const classes = useStyles();
     return (
         <>
+            <RangeMenu range={range} setRange={setRange} />
             {
                 found
                     ? top === null
                         ? 'Calculating...'
                         : <>
-                            <RangeMenu range={range} setRange={setRange} /><span className={classes.hours}>{hours} hour{hours === 1 ? '' : 's'}</span>
+                            <span className={classes.hours}>{hours.toFixed(1)} hour{hours === 1 ? '' : 's'}</span>
                             <Member member={top} />
                         </>
-                    : 'None'
+                    : <><br /><br />None</>
 
             }
         </>
