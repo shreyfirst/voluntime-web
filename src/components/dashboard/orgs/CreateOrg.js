@@ -67,14 +67,14 @@ const CreateOrg = props => {
                 <br /><br />
                 <Typography variant='h6'>Create Organization</Typography><br />
                 <Typography variant='body2'>
-                    Create an organization to start logging hours for your volunteers.<br />
-                You may add additional information to your organization by editing it after it's created.
-            </Typography><br />
+                    Create an organization to let your volunteers start logging hours.<br />
+                    You may add additional information to your organization by editing it after it's created.
+                </Typography><br />
                 <TextField onKeyDown={keyPress} onChange={e => setName(e.target.value)} variant='outlined' label='Organization Name' required className={classes.textField} /><br /><br />
                 <TextField onKeyDown={keyPress} onChange={e => setDescription(e.target.value)} variant='outlined' label='Description' multiline rows={4} className={classes.textField} /><br /><br />
                 <Button variant='contained' color='primary' disabled={loading} onClick={handleSubmit} startIcon={loading ? <CircularProgressButton /> : <AddIcon />}>
                     Create Organization
-            </Button>
+                </Button>
                 <br />
                 {
                     error.length > 0 &&
