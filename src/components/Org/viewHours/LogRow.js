@@ -146,7 +146,7 @@ const LogRow = props => {
                             <span className={classes.collapseTimeLabel}>End Time:</span> <Box fontFamily='Monospace' fontSize={15} letterSpacing={0.8} component='span'>{end.format('ddd, MMM D YYYY [at] hh:mm A')}</Box><br /><br />
                             <strong>Hours:</strong> {log.hours}
                             {
-                                props.role !== 'vol' && log.status === 'pending' &&
+                                props.role !== 'vol' &&
                                 <>
                                     <Button variant='outlined' color='primary' disabled={loadingApprove || loadingDeny} onClick={() => changeStatus('approved')} startIcon={loadingApprove ? <CircularProgressButton /> : <StatusIcon status='approved' />} className={`${classes.button} ${classes.approved}`}>
                                         Approve
