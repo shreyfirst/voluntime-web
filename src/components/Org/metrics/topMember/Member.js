@@ -1,7 +1,5 @@
-import { Grid, Card, CardContent, Typography, List, ListItem, ListItemText, ListItemIcon } from '@material-ui/core';
+import { Grid, Card, CardContent, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import { MailOutline as EmailIcon, Phone as PhoneIcon, Instagram as InstagramIcon } from '@material-ui/icons';
-import DiscordIcon from '../../../helpers/DiscordIcon';
 
 const roleNames = { owner: 'Owner', admin: 'Administrator', vol: 'Volunteer' };
 const roleColors = (theme, role) => ({ owner: theme.palette.primary.main, admin: theme.palette.secondary.main, vol: theme.palette.success.main }[role]);
@@ -19,27 +17,6 @@ const useStyles = makeStyles(theme => ({
     note: {
         color: 'rgba(0, 0, 0, 0.64)'
     },
-    contactValue: {
-        marginLeft: -10,
-        color: '#000',
-        textDecoration: 'none',
-        '&:visited': {
-            color: '#000',
-            textDecoration: 'none',
-        },
-        '&:active': {
-            color: '#000',
-            textDecoration: 'none',
-        },
-        '&:hover': {
-            color: '#000',
-            textDecoration: 'none',
-        },
-        '&:focus': {
-            color: '#000',
-            textDecoration: 'none',
-        },
-    },
     image: {
         borderRadius: '50%',
         display: 'inline',
@@ -56,17 +33,7 @@ const useStyles = makeStyles(theme => ({
         paddingLeft: 15,
         paddingTop: 12,
     },
-    contactItem: {
-        padding: 0
-    }
 }));
-
-const Contact = props => {
-    const classes = useStyles();
-    return (
-        <a href={props.href} target='_blank' rel='noopener noreferrer' className={classes.contactValue}>{props.value}</a>
-    );
-};
 
 const Member = props => {
     const member = props.member;
@@ -91,47 +58,6 @@ const Member = props => {
                     </Grid>
                 </Grid>
                 <Typography variant='body1' className={classes.note}>{member.note}</Typography>
-                {
-                    (member.contactInfo.email.length > 0 || member.contactInfo.phone.length > 0 || member.contactInfo.instagram.length > 0 || member.contactInfo.discord?.length > 0) &&
-                    <List>
-                        {
-                            member.contactInfo.email.length > 0 &&
-                            <ListItem className={classes.contactItem}>
-                                <ListItemIcon>
-                                    <EmailIcon />
-                                </ListItemIcon>
-                                <ListItemText id='contactEmail' primary={<Contact href={`mailto:${member.contactInfo.email}`} value={member.contactInfo.email} />} />
-                            </ListItem>
-                        }
-                        {
-                            member.contactInfo.phone.length > 0 &&
-                            <ListItem className={classes.contactItem}>
-                                <ListItemIcon>
-                                    <PhoneIcon />
-                                </ListItemIcon>
-                                <ListItemText id='contactPhone' primary={<Contact href={`tel:${member.contactInfo.phone}`} value={member.contactInfo.phone} />} />
-                            </ListItem>
-                        }
-                        {
-                            member.contactInfo.instagram.length > 0 &&
-                            <ListItem className={classes.contactItem}>
-                                <ListItemIcon>
-                                    <InstagramIcon />
-                                </ListItemIcon>
-                                <ListItemText id='contactInstagram' primary={<Contact href={`https://instagram.com/${member.contactInfo.instagram.replace('@', '')}`} value={member.contactInfo.instagram} />} />
-                            </ListItem>
-                        }
-                        {
-                            member.contactInfo.discord?.length > 0 &&
-                            <ListItem className={classes.contactItem}>
-                                <ListItemIcon>
-                                    <DiscordIcon list />
-                                </ListItemIcon>
-                                <ListItemText id='contactDiscord' primary={<Contact href='https://discord.com/' value={member.contactInfo.discord} />} />
-                            </ListItem>
-                        }
-                    </List>
-                }
             </CardContent>
         </Card>
     );
