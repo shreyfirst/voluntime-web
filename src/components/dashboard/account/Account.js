@@ -3,6 +3,7 @@ import { Typography, TextField, Grid, Button, Switch, List, ListItem, ListItemTe
 import { Alert } from '@material-ui/lab';
 import { makeStyles } from '@material-ui/core/styles';
 import { MailOutline as EmailIcon, Phone as PhoneIcon, Instagram as InstagramIcon, Alarm as ApproveIcon, GroupAdd as NewMemberIcon, RemoveCircleOutline as OrgRemovedIcon, LockOutlined as LockIcon, Save as SaveIcon, ExitToApp as LogoutIcon } from '@material-ui/icons';
+import DiscordIcon from '../../helpers/DiscordIcon';
 import TextFieldIcon from '../../helpers/TextFieldIcon';
 import CircularProgressButton from '../../helpers/CircularProgressButton';
 import ImagePreview from '../../helpers/ImagePreview';
@@ -13,12 +14,6 @@ import { editProfile } from '../../../services/users';
 import { useHistory } from 'react-router-dom';
 
 const useStyles = makeStyles({
-    container: {
-        width: '100%',
-    },
-    textField: {
-        width: '100%',
-    },
     helperText: {
         color: '#414141'
     }
@@ -50,6 +45,7 @@ const Account = props => {
     const [contactEmail, setContactEmail] = useState(props.user.contactInfo.email);
     const [contactPhone, setContactPhone] = useState(props.user.contactInfo.phone);
     const [contactInstagram, setContactInstagram] = useState(props.user.contactInfo.instagram);
+    const [contactDiscord, setContactDiscord] = useState(props.user.contactInfo.discord === undefined ? '' : props.user.contactInfo.discord);
     const [encodedImage, setEncodedImage] = useState(null);
 
     const [emailOpen, setEmailOpen] = useState(false);
@@ -80,6 +76,7 @@ const Account = props => {
                 email: contactEmail,
                 phone: contactPhone,
                 instagram: contactInstagram,
+                discord: contactDiscord,
             },
             emailPrefs: {
                 logStatus: emailLogStatus,
@@ -118,15 +115,16 @@ const Account = props => {
                 </Typography><br />
                 <ImagePreview src={encodedImage === null ? props.user.image : encodedImage} maxWidthOrHeight={150} width={75} height={75} placeholder='No Profile Picture' fileInputRef={fileInputRef} setSuccess={setSuccess} setError={setError} fileName={fileName} setFileName={setFileName} progress={compressProgress} onProgress={setCompressProgress} onFinish={setEncodedImage} />
                 <br /><br />
-                <TextField variant='outlined' label='First Name' required onChange={e => setFirstName(e.target.value)} defaultValue={props.user.firstName} className={classes.textField} /><br /><br />
-                <TextField variant='outlined' label='Last Name' required onChange={e => setLastName(e.target.value)} defaultValue={props.user.lastName} className={classes.textField} /><br /><br />
-                <TextField variant='outlined' label='Note (additional info, public)' multiline rows={4} onChange={e => setNote(e.target.value)} defaultValue={props.user.note} className={classes.textField} /><br /><br />
+                <TextField variant='outlined' label='First Name' required onChange={e => setFirstName(e.target.value)} defaultValue={props.user.firstName} fullWidth /><br /><br />
+                <TextField variant='outlined' label='Last Name' required onChange={e => setLastName(e.target.value)} defaultValue={props.user.lastName} fullWidth /><br /><br />
+                <TextField variant='outlined' label='Note (additional info, public)' multiline rows={4} onChange={e => setNote(e.target.value)} defaultValue={props.user.note} fullWidth /><br /><br />
                 <Typography variant='body1'>
                     Contact Information (Optional)
                 </Typography><br />
-                <TextFieldIcon variant='outlined' label='Public Email Address' icon={<EmailIcon />} type='email' onChange={e => setContactEmail(e.target.value)} defaultValue={props.user.contactInfo.email} className={classes.textField} /><br />
-                <TextFieldIcon variant='outlined' label='Public Phone Number' icon={<PhoneIcon />} type='tel' onChange={e => setContactPhone(e.target.value)} defaultValue={props.user.contactInfo.phone} className={classes.textField} /><br />
-                <TextFieldIcon variant='outlined' label='Public Instagram Handle' icon={<InstagramIcon />} onChange={e => setContactInstagram(e.target.value)} defaultValue={props.user.contactInfo.instagram} className={classes.textField} />
+                <TextFieldIcon variant='outlined' label='Public Email Address' icon={<EmailIcon />} type='email' onChange={e => setContactEmail(e.target.value)} defaultValue={props.user.contactInfo.email} fullWidth /><br />
+                <TextFieldIcon variant='outlined' label='Public Phone Number' icon={<PhoneIcon />} type='tel' onChange={e => setContactPhone(e.target.value)} defaultValue={props.user.contactInfo.phone} fullWidth /><br />
+                <TextFieldIcon variant='outlined' label='Public Instagram Handle' icon={<InstagramIcon />} onChange={e => setContactInstagram(e.target.value)} defaultValue={props.user.contactInfo.instagram} fullWidth /><br />
+                <TextFieldIcon variant='outlined' label='Public Discord Tag' icon={<DiscordIcon />} onChange={e => setContactDiscord(e.target.value)} defaultValue={props.user.contactInfo?.discord} fullWidth />
                 <br /><br />
                 <Typography variant='body1'>
                     Email Preferences

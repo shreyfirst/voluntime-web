@@ -3,6 +3,7 @@ import { Grid, Card, CardContent, Typography, IconButton, Menu, MenuItem, Button
 import { Alert } from '@material-ui/lab';
 import { makeStyles } from '@material-ui/core/styles';
 import { MailOutline as EmailIcon, Phone as PhoneIcon, Instagram as InstagramIcon, Edit as EditIcon, RemoveCircleOutline as RemoveIcon, KeyboardArrowDown as OpenMenuIcon } from '@material-ui/icons';
+import DiscordIcon from '../../helpers/DiscordIcon';
 import ConfirmRemove from './ConfirmRemove';
 import { changeRole } from '../../../services/orgs';
 
@@ -208,6 +209,10 @@ const Member = props => {
                 {
                     member.contactInfo.instagram.length > 0 &&
                     <Contact icon={<InstagramIcon />} href={`https://instagram.com/${member.contactInfo.instagram.replace('@', '')}`}>{member.contactInfo.instagram}</Contact>
+                }
+                {
+                    member.contactInfo.discord !== undefined && member.contactInfo.discord.length > 0 &&
+                    <Contact icon={<DiscordIcon />} href='https://discord.com/'>{member.contactInfo.discord}</Contact>
                 }
                 {
                     props.org.role === 'owner' && member.id !== props.user.id &&

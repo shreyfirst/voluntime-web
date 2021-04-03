@@ -1,6 +1,7 @@
 import { Grid, Card, CardContent, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { MailOutline as EmailIcon, Phone as PhoneIcon, Instagram as InstagramIcon } from '@material-ui/icons';
+import DiscordIcon from '../../../helpers/DiscordIcon';
 
 const roleNames = { owner: 'Owner', admin: 'Administrator', vol: 'Volunteer' };
 const roleColors = (theme, role) => ({ owner: theme.palette.primary.main, admin: theme.palette.secondary.main, vol: theme.palette.success.main }[role]);
@@ -113,6 +114,10 @@ const Member = props => {
                 {
                     member.contactInfo.instagram.length > 0 &&
                     <Contact icon={<InstagramIcon />} href={`https://instagram.com/${member.contactInfo.instagram.replace('@', '')}`}>{member.contactInfo.instagram}</Contact>
+                }
+                {
+                    member.contactInfo.discord !== undefined && member.contactInfo.discord.length > 0 &&
+                    <Contact icon={<DiscordIcon />} href='https://discord.com/'>{member.contactInfo.discord}</Contact>
                 }
             </CardContent>
         </Card>
