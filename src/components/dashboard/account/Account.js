@@ -28,6 +28,7 @@ const Account = props => {
 
     const history = useHistory();
 
+    const [encodedImage, setEncodedImage] = useState(null);
     const [compressProgress, setCompressProgress] = useState(null);
     const [uploadProgress, setUploadProgress] = useState(null);
     const [fileName, setFileName] = useState(null);
@@ -46,7 +47,6 @@ const Account = props => {
     const [contactPhone, setContactPhone] = useState(props.user.contactInfo.phone);
     const [contactInstagram, setContactInstagram] = useState(props.user.contactInfo.instagram);
     const [contactDiscord, setContactDiscord] = useState(props.user.contactInfo.discord === undefined ? '' : props.user.contactInfo.discord);
-    const [encodedImage, setEncodedImage] = useState(null);
 
     const [emailOpen, setEmailOpen] = useState(false);
     const [passwordOpen, setPasswordOpen] = useState(false);
