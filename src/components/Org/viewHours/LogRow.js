@@ -146,15 +146,16 @@ const LogRow = props => {
                             <span className={classes.collapseTimeLabel}>End Time:</span> <Box fontFamily='Monospace' fontSize={15} letterSpacing={0.8} component='span'>{end.format('ddd, MMM D YYYY [at] hh:mm A')}</Box><br /><br />
                             <strong>Hours:</strong> {log.hours}
                             {
-                                props.role !== 'vol' &&
-                                <>
-                                    <Button variant='outlined' color='primary' disabled={loadingApprove || loadingDeny} onClick={() => changeStatus('approved')} startIcon={loadingApprove ? <CircularProgressButton /> : <StatusIcon status='approved' />} className={`${classes.button} ${classes.approved}`}>
-                                        Approve
-                                    </Button>
-                                    <Button variant='outlined' color='primary' disabled={loadingApprove || loadingDeny} onClick={() => changeStatus('denied')} startIcon={loadingDeny ? <CircularProgressButton /> : <StatusIcon status='denied' />} className={`${classes.button} ${classes.denied}`}>
-                                        Deny
-                                    </Button>
-                                </>
+                                props.role !== 'vol' && log.status !== 'approved' &&
+                                <Button variant='outlined' color='primary' disabled={loadingApprove || loadingDeny} onClick={() => changeStatus('approved')} startIcon={loadingApprove ? <CircularProgressButton /> : <StatusIcon status='approved' />} className={`${classes.button} ${classes.approved}`}>
+                                    Approve
+                                </Button>
+                            }
+                            {
+                                props.role !== 'vol' && log.status !== 'denied' &&
+                                <Button variant='outlined' color='primary' disabled={loadingApprove || loadingDeny} onClick={() => changeStatus('denied')} startIcon={loadingDeny ? <CircularProgressButton /> : <StatusIcon status='denied' />} className={`${classes.button} ${classes.denied}`}>
+                                    Deny
+                                </Button>
                             }
                             <br /><br />
                             <strong>Activity Description:</strong> <div className={classes.description}>{log.description.length > 0 ? log.description : <em>No description provided</em>}</div><br />
