@@ -172,28 +172,33 @@ const AddHours = props => {
                     />
                 </MuiPickersUtilsProvider><br /><br />
                 <TextField type='number' onChange={e => {
-                    setCalcHours(false);
-                    setHours(e.target.value)
+                    if (e.target.value.toString().length <= 4) {
+                        setCalcHours(false);
+                        setHours(e.target.value);
+                    }
                 }} onBlur={() => {
                     if (hours.length < 1 || hours < 0) {
                         setHours(0);
                     }
                 }} variant='outlined' label='Volunteer hours' InputProps={{
-                    placeholder: '0'
-                }} inputProps={{ min: 0 }} value={hours} fullWidth /><br />
+                    placeholder: '0',
+                }} inputProps={{
+                    min: 0,
+                    max: 9999
+                }} value={hours} fullWidth /><br />
 
                 Auto-calculate hours: <Switch
                     checked={calcHours}
                     onChange={() => setCalcHours(!calcHours)}
                     color='primary'
                     className={classes.switch} /><br /><br />
-                <TextField variant='outlined' label='Activity description' multiline rows={4} value={description} onChange={e => setDescription(e.target.value)} InputProps={{ placeholder: 'What did you do for these hours? This helps administrators approve your hours.' }} className={classes.textField} />
+                <TextField variant='outlined' label='Activity description' multiline rows={4} value={description} onChange={e => setDescription(e.target.value)} inputProps={{ maxLength: 5000 }} InputProps={{ placeholder: 'What did you do for these hours? This helps administrators approve your hours.' }} className={classes.textField} />
                 <br /><br />
                 <Typography>Attach Image (optional):</Typography>
                 <ImagePreview src={encodedImage === null ? '' : encodedImage} fileInputRef={fileInputRef} setSuccess={setSuccess} setError={setError} fileName={fileName} setFileName={setFileName} progress={compressProgress} onProgress={setCompressProgress} onFinish={setEncodedImage} />
                 <br /><br />
                 <Grid container justify='flex-end'>
-                    <Button variant='contained' color='primary' disabled={loading} onClick={handleSubmit} startIcon={loading ? <CircularProgressButton /> : <SubmitIcon />}>
+                    <Button variant='contained' color='primary' disabled={loading || success.length > 0} onClick={handleSubmit} startIcon={loading ? <CircularProgressButton /> : <SubmitIcon />}>
                         Submit Hours
                     </Button>
                 </Grid>

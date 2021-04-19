@@ -117,7 +117,7 @@ const Account = props => {
                 <br /><br />
                 <TextField variant='outlined' label='First Name' required onChange={e => setFirstName(e.target.value)} defaultValue={props.user.firstName} fullWidth /><br /><br />
                 <TextField variant='outlined' label='Last Name' required onChange={e => setLastName(e.target.value)} defaultValue={props.user.lastName} fullWidth /><br /><br />
-                <TextField variant='outlined' label='Note (additional info, public)' multiline rows={4} onChange={e => setNote(e.target.value)} defaultValue={props.user.note} fullWidth /><br /><br />
+                <TextField variant='outlined' label='Note (additional info, public)' multiline rows={4} onChange={e => setNote(e.target.value)} defaultValue={props.user.note} inputProps={{ maxLength: 1000 }} fullWidth /><br /><br />
                 <Typography variant='body1'>
                     Contact Information (Optional)
                 </Typography><br />

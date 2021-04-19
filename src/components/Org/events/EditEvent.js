@@ -127,7 +127,7 @@ const EditEvent = props => {
                 </Grid>
                 <TextField onChange={e => setDescription(e.target.value)} variant='outlined' label='Description' defaultValue={event.description} InputProps={{
                     placeholder: 'This textbox supports markdown! Try **bold** words.'
-                }} multiline fullWidth rows={4} /><br /><br />
+                }} inputProps={{ maxLength: 8000 }} multiline fullWidth rows={4} /><br /><br />
                 {description.length > 0 &&
                     <>
                         Preview: <br />
@@ -144,15 +144,17 @@ const EditEvent = props => {
                 }} /><br /><br />
 
                 <TextField type='number' onChange={e => {
-                    setCalcHours(false);
-                    setHours(e.target.value)
+                    if (e.target.value.toString().length <= 4) {
+                        setCalcHours(false);
+                        setHours(e.target.value);
+                    }
                 }} onBlur={() => {
                     if (hours.length < 1 || hours < 0) {
                         setHours(0);
                     }
                 }} variant='outlined' label='Volunteer hours' InputProps={{
                     placeholder: '0'
-                }} inputProps={{ min: 0 }} value={hours} fullWidth /><br />
+                }} inputProps={{ min: 0, max: 9999 }} value={hours} fullWidth /><br />
 
                 Auto-calculate hours: <Switch
                     checked={calcHours}
