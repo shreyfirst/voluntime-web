@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { Grid, TextField, Button, Typography, InputAdornment, IconButton } from '@material-ui/core';
+import { Grid, TextField, Button, Typography, InputAdornment, IconButton, Switch } from '@material-ui/core';
 import { Alert } from '@material-ui/lab';
 import { makeStyles } from '@material-ui/core/styles';
 import { MuiPickersUtilsProvider, DatePicker, TimePicker } from '@material-ui/pickers';
@@ -36,6 +36,7 @@ const AddHours = props => {
     const [start, setStart] = useState(() => dayjs().subtract(1, 'hour'));
     const [end, setEnd] = useState(() => dayjs());
     const [hours, setHours] = useState(1);
+    const [calcHours, setCalcHours] = useState(true);
     const [description, setDescription] = useState('');
     const [encodedImage, setEncodedImage] = useState(null);
 
@@ -88,6 +89,13 @@ const AddHours = props => {
             }
         }, encodedImage !== null && setUploadProgress);
     };
+
+    useEffect(() => {
+        if (calcHours) {
+            const h = Math.floor(end.diff(start, 'hour', true) * 100) / 100;
+            setHours(h < 0 ? 0 : h);
+        }
+    }, [calcHours, start, end]);
 
     const classes = useStyles();
     return (
@@ -163,7 +171,22 @@ const AddHours = props => {
                         }}
                     />
                 </MuiPickersUtilsProvider><br /><br />
-                <Typography>Number of hours: <strong>{hours}</strong></Typography><br />
+                <TextField type='number' onChange={e => {
+                    setCalcHours(false);
+                    setHours(e.target.value)
+                }} onBlur={() => {
+                    if (hours.length < 1 || hours < 0) {
+                        setHours(0);
+                    }
+                }} variant='outlined' label='Volunteer hours' InputProps={{
+                    placeholder: '0'
+                }} inputProps={{ min: 0 }} value={hours} fullWidth /><br />
+
+                Auto-calculate hours: <Switch
+                    checked={calcHours}
+                    onChange={() => setCalcHours(!calcHours)}
+                    color='primary'
+                    className={classes.switch} /><br /><br />
                 <TextField variant='outlined' label='Activity description' multiline rows={4} value={description} onChange={e => setDescription(e.target.value)} InputProps={{ placeholder: 'What did you do for these hours? This helps administrators approve your hours.' }} className={classes.textField} />
                 <br /><br />
                 <Typography>Attach Image (optional):</Typography>
